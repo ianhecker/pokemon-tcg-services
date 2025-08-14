@@ -10,8 +10,12 @@ import (
 
 const Timeout = 10 * time.Second
 
+type HTTPClient interface {
+	Do(*http.Request) (*http.Response, error)
+}
+
 type Client struct {
-	httpclient *http.Client
+	httpclient HTTPClient
 }
 
 func NewClient() *Client {
@@ -21,13 +25,13 @@ func NewClient() *Client {
 	return NewClientFromRaw(client)
 }
 
-func NewClientFromRaw(client *http.Client) *Client {
+func NewClientFromRaw(client HTTPClient) *Client {
 	return &Client{
 		httpclient: client,
 	}
 }
 
-func (client *Client) newRequest(method string, url string) (*Request, error) {
+func (client *Client) NewRequest(method string, url string) (*Request, error) {
 	req, err := http.NewRequest(method, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error making request: %w", err)
@@ -49,7 +53,7 @@ func (client *Client) Get(url *url.URL) ([]byte, error) {
 		return nil, errors.New("url is nil")
 	}
 
-	request, err := client.newRequest(http.MethodGet, url.String())
+	request, err := client.NewRequest(http.MethodGet, url.String())
 	if err != nil {
 		return nil, err
 	}
