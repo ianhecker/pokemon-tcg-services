@@ -1,11 +1,9 @@
 package networking
 
 import (
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"time"
 )
 
@@ -16,24 +14,15 @@ type Client struct {
 }
 
 func NewClient() *Client {
-	client := &http.Client{
-		Timeout: Timeout,
-	}
-	return NewClientFromRaw(client)
-}
-
-func NewClientFromRaw(client *http.Client) *Client {
 	return &Client{
-		httpclient: client,
+		httpclient: &http.Client{
+			Timeout: Timeout,
+		},
 	}
 }
 
-func (client *Client) Get(url *url.URL) ([]byte, error) {
-	if url == nil {
-		return nil, errors.New("url is nil")
-	}
-
-	req, err := http.NewRequest(http.MethodGet, url.String(), nil)
+func (client *Client) Get(url string) ([]byte, error) {
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -41,6 +30,11 @@ func (client *Client) Get(url *url.URL) ([]byte, error) {
 	resp, err := client.httpclient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("error doing request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
 	}
 
 	body, err := io.ReadAll(resp.Body)
