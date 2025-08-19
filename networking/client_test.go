@@ -1,6 +1,7 @@
 package networking_test
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -20,6 +21,15 @@ func newTestServer(t *testing.T, status int, body string) *httptest.Server {
 		if body != "" {
 			fmt.Fprint(w, body)
 		}
+	})
+
+	return httptest.NewServer(mux)
+}
+
+func newLazyTestServer(t *testing.T) *httptest.Server {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/sleeping", func(w http.ResponseWriter, r *http.Request) {
+		time.Sleep(5)
 	})
 
 	return httptest.NewServer(mux)
@@ -59,10 +69,12 @@ func TestClient_Get(t *testing.T) {
 			srv := newTestServer(t, test.status, test.body)
 			defer srv.Close()
 
+			ctx := context.Background()
 			logger := zap.NewNop().Sugar()
 			timeout := 3 * time.Second
+
 			client := networking.NewClient(logger, timeout)
-			body, status, err := client.Get(srv.URL + "/hello")
+			body, status, err := client.Get(ctx, srv.URL+"/hello")
 
 			assert.Equal(t, test.status, status)
 			assert.Equal(t, string(test.body), string(body))
@@ -76,4 +88,32 @@ func TestClient_Get(t *testing.T) {
 			}
 		})
 	}
+
+	t.Run("cancels with context", func(t *testing.T) {
+		srv := newLazyTestServer(t)
+		defer srv.Close()
+
+		ctx := context.Background()
+		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+		logger := zap.NewNop().Sugar()
+
+		client := networking.NewClient(logger, 0)
+
+		errorChan := make(chan error, 1)
+		go func() {
+			_, _, err := client.Get(ctx, srv.URL+"/sleeping")
+			errorChan <- err
+		}()
+
+		cancel()
+
+		select {
+		case err := <-errorChan:
+			assert.ErrorContains(t, err, "context canceled")
+
+		case <-time.After(1 * time.Second):
+			assert.Fail(t, "test timed out after 1 sec")
+		}
+
+	})
 }

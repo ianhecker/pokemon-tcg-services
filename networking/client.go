@@ -1,6 +1,7 @@
 package networking
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"net/http"
@@ -10,7 +11,7 @@ import (
 )
 
 type NetworkingClient interface {
-	Get(url string) (body []byte, status int, err error)
+	Get(ctx context.Context, url string) (body []byte, status int, err error)
 }
 
 const Timeout = 60 * time.Second
@@ -32,11 +33,11 @@ func NewClient(
 	}
 }
 
-func (client *Client) Get(url string) ([]byte, int, error) {
+func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) {
 	log := client.logger
 	log.Infow("client fetching url", "url", url)
 
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 
 		log.Errorw("client creating request", "url", url, "error", err)
@@ -64,7 +65,7 @@ func (client *Client) Get(url string) ([]byte, int, error) {
 	}
 
 	if status != http.StatusOK {
-		log.Errorw("status not OK fetching url", "url", url, "time", elapsed, "status", status, "body", string(body))
+		log.Errorw("unexpected status code fetching url", "url", url, "time", elapsed, "status", status, "body", string(body))
 		return body, status, fmt.Errorf("unexpected status code: %d", status)
 	}
 
