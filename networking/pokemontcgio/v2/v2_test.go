@@ -1,4 +1,4 @@
-package pokemontcgio_test
+package v2_test
 
 import (
 	"testing"

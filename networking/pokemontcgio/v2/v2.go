@@ -1,7 +1,10 @@
-package pokemontcgio
+package v2
 
 import (
+	"context"
+	"errors"
 	"fmt"
+	"net"
 	"net/http"
 
 	"github.com/ianhecker/pokemon-tcg-services/retry"
@@ -34,4 +37,24 @@ func RetryForStatus(status int) retry.RetryState {
 		return retry.RetryNoBackoff
 	}
 	return retry.NoRetry
+}
+
+func RetryForError(err error) retry.RetryState {
+	if err == nil {
+		return retry.NoRetry
+	}
+
+	if errors.Is(err, context.Canceled) {
+		return retry.NoRetry
+	}
+
+	if errors.Is(err, context.DeadlineExceeded) {
+		return retry.RetryWithBackoff
+	}
+
+	var netError net.Error
+	if errors.As(err, &netError) && netError.Timeout() {
+		return retry.RetryWithBackoff
+	}
+	return retry.RetryWithBackoff
 }
