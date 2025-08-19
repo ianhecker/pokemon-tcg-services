@@ -9,6 +9,10 @@ import (
 	"go.uber.org/zap"
 )
 
+type NetworkingClient interface {
+	Get(url string) (body []byte, status int, err error)
+}
+
 const Timeout = 60 * time.Second
 
 type Client struct {
@@ -19,7 +23,7 @@ type Client struct {
 func NewClient(
 	logger *zap.SugaredLogger,
 	timeout time.Duration,
-) *Client {
+) NetworkingClient {
 	return &Client{
 		httpclient: &http.Client{
 			Timeout: timeout,
