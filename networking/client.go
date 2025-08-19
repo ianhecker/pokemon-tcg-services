@@ -16,45 +16,54 @@ type Client struct {
 	logger     *zap.SugaredLogger
 }
 
-func NewClient(logger *zap.SugaredLogger) *Client {
+func NewClient(
+	logger *zap.SugaredLogger,
+	timeout time.Duration,
+) *Client {
 	return &Client{
 		httpclient: &http.Client{
-			Timeout: Timeout,
+			Timeout: timeout,
 		},
 		logger: logger,
 	}
 }
 
-func (client *Client) Get(url string) ([]byte, error) {
-	client.logger.Infow("fetching url", "url", url)
+func (client *Client) Get(url string) ([]byte, int, error) {
+	log := client.logger
+	log.Infow("client fetching url", "url", url)
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		return nil, fmt.Errorf("error creating request: %w", err)
+
+		log.Errorw("client creating request", "url", url, "error", err)
+		return nil, 0, fmt.Errorf("error creating request: %w", err)
 	}
 
 	start := time.Now()
 
 	resp, err := client.httpclient.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("error doing request: %w", err)
+
+		log.Errorw("client fetching url", "url", url, "error", err)
+		return nil, 0, fmt.Errorf("error doing request: %w", err)
 	}
 	defer resp.Body.Close()
 
 	end := time.Now()
 	elapsed := end.Sub(start)
 
-	client.logger.Infow("fetched url", "url", url, "time", elapsed)
-
-	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
-	}
+	status := resp.StatusCode
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("error reading body: %w", err)
+		return nil, status, fmt.Errorf("error reading body: %w", err)
 	}
-	client.logger.Infow("payload for url", "url", url, "body", string(body))
 
-	return body, nil
+	if status != http.StatusOK {
+		log.Errorw("status not OK fetching url", "url", url, "time", elapsed, "status", status, "body", string(body))
+		return body, status, fmt.Errorf("unexpected status code: %d", status)
+	}
+
+	log.Infow("fetched url", "url", url, "time", elapsed, "body", string(body))
+	return body, status, nil
 }

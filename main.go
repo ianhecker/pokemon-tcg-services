@@ -13,9 +13,9 @@ func main() {
 	defer logger.Sync()
 	sugar := logger.Sugar()
 
-	client := networking.NewClient(sugar)
+	client := networking.NewClient(sugar, networking.Timeout)
 
-	_, err := client.Get("https://api.pokemontcg.io/v2/cards/xy1-1")
+	_, _, err := client.Get("https://api.pokemontcg.io/v2/cards/xy1-1")
 	checkErr(sugar, err)
 
 	// fmt.Println(string(body))
