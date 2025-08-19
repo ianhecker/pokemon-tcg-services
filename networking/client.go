@@ -2,6 +2,7 @@ package networking
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -10,11 +11,9 @@ import (
 	"go.uber.org/zap"
 )
 
-type NetworkingClient interface {
+type ClientInterface interface {
 	Get(ctx context.Context, url string) (body []byte, status int, err error)
 }
-
-const Timeout = 60 * time.Second
 
 type Client struct {
 	httpclient *http.Client
@@ -23,11 +22,11 @@ type Client struct {
 
 func NewClient(
 	logger *zap.SugaredLogger,
-	timeout time.Duration,
-) NetworkingClient {
+) ClientInterface {
 	return &Client{
 		httpclient: &http.Client{
-			Timeout: timeout,
+			Timeout:   0,
+			Transport: NewTransport(),
 		},
 		logger: logger,
 	}
@@ -44,31 +43,48 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 		return nil, 0, fmt.Errorf("error creating request: %w", err)
 	}
 
-	start := time.Now()
-
-	resp, err := client.httpclient.Do(req)
+	duration, body, status, err := client.Do(req)
 	if err != nil {
-
-		log.Errorw("client fetching url", "url", url, "error", err)
-		return nil, 0, fmt.Errorf("error doing request: %w", err)
-	}
-	defer resp.Body.Close()
-
-	end := time.Now()
-	elapsed := end.Sub(start)
-
-	status := resp.StatusCode
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, status, fmt.Errorf("error reading body: %w", err)
+		return nil, status, fmt.Errorf("error doing request: %w", err)
 	}
 
 	if status != http.StatusOK {
-		log.Errorw("unexpected status code fetching url", "url", url, "time", elapsed, "status", status, "body", string(body))
+		log.Warnw("unexpected status code",
+			"url", url,
+			"time", duration,
+			"status", status,
+			"body", string(body),
+		)
 		return body, status, fmt.Errorf("unexpected status code: %d", status)
 	}
 
-	log.Infow("fetched url", "url", url, "time", elapsed, "body", string(body))
+	log.Infow("fetched url", "url", url, "time", duration, "body", string(body))
 	return body, status, nil
+}
+
+func (client *Client) Do(request *http.Request) (time.Duration, []byte, int, error) {
+	log := client.logger
+	start := time.Now()
+
+	resp, err := client.httpclient.Do(request)
+	if err != nil {
+		elapsed := time.Since(start)
+
+		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+			log.Infow("request canceled via context", "url", request.URL.String(), "time", elapsed, "error", err)
+
+		} else {
+			log.Errorw("client request error", "url", request.URL.String(), "time", elapsed, "error", err)
+		}
+		return elapsed, nil, 0, err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	elapsed := time.Since(start)
+
+	if err != nil {
+		return elapsed, nil, resp.StatusCode, fmt.Errorf("error reading body: %w", err)
+	}
+	return elapsed, body, resp.StatusCode, nil
 }

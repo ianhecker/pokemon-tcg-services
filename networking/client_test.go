@@ -71,9 +71,8 @@ func TestClient_Get(t *testing.T) {
 
 			ctx := context.Background()
 			logger := zap.NewNop().Sugar()
-			timeout := 3 * time.Second
 
-			client := networking.NewClient(logger, timeout)
+			client := networking.NewClient(logger)
 			body, status, err := client.Get(ctx, srv.URL+"/hello")
 
 			assert.Equal(t, test.status, status)
@@ -97,7 +96,7 @@ func TestClient_Get(t *testing.T) {
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		logger := zap.NewNop().Sugar()
 
-		client := networking.NewClient(logger, 0)
+		client := networking.NewClient(logger)
 
 		errorChan := make(chan error, 1)
 		go func() {
