@@ -3,11 +3,13 @@ package retry
 import (
 	"context"
 	"errors"
+	"fmt"
 	"time"
 )
 
 type RetryableInterface interface {
 	Retry(ctx context.Context) (bool, error)
+	RetriesRemaining() int
 }
 
 type RetryState int
@@ -24,27 +26,42 @@ type Retryable struct {
 	Attempt int
 	Retries int
 	State   RetryState
-	Sleep   time.Duration
+	Sleeper Sleepable
 	Do      RetryFunc
-	Body    []byte
 }
 
 func MakeRetryable(
 	retries int,
-	sleep time.Duration,
+	duration time.Duration,
 	do RetryFunc,
 ) RetryableInterface {
 	return &Retryable{
 		Retries: retries,
-		Sleep:   sleep,
+		Sleeper: NewSleeper(duration),
 		Do:      do,
 		State:   RetryNoBackoff,
 	}
 }
 
+func MakeRetryableFromRaw(
+	attempt int,
+	retries int,
+	state RetryState,
+	sleeper Sleepable,
+	do RetryFunc,
+) RetryableInterface {
+	return &Retryable{
+		Attempt: attempt,
+		Retries: retries,
+		State:   state,
+		Sleeper: sleeper,
+		Do:      do,
+	}
+}
+
 func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 	if r.State == NoRetry {
-		return false, errors.New("retry state was not retriable")
+		return false, errors.New("starting state was not retryable")
 	}
 	if r.Retries <= 0 {
 		return false, errors.New("retries were zero")
@@ -56,14 +73,14 @@ func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 	r.Retries--
 	r.Attempt++
 
-	if r.State == RetryWithBackoff && r.Attempt > 1 && r.Sleep > 0 {
-		timer := time.NewTimer(r.Sleep)
-		defer timer.Stop()
+	if r.State == RetryWithBackoff && r.Attempt > 1 && r.Sleeper.Duration() > 0 {
+		stop, done := r.Sleeper.Sleep()
+		defer stop()
 
 		select {
 		case <-ctx.Done():
 			return false, ctx.Err()
-		case <-timer.C:
+		case <-done:
 		}
 	}
 
@@ -76,8 +93,15 @@ func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 	return true, nil
 }
 
+func (retry Retryable) RetriesRemaining() int {
+	return retry.Retries
+}
+
 func Do(ctx context.Context, retryable RetryableInterface) error {
-	for {
+	retries := retryable.RetriesRemaining()
+
+	for i := retries; i > 0; i-- {
+
 		retry, err := retryable.Retry(ctx)
 		if err != nil {
 			return err
@@ -86,4 +110,5 @@ func Do(ctx context.Context, retryable RetryableInterface) error {
 			return nil
 		}
 	}
+	return fmt.Errorf("retried: %d times. Out of retries", retries)
 }
