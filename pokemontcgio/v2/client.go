@@ -1,4 +1,4 @@
-package pokemontcgio
+package v2
 
 import (
 	"context"
@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/ianhecker/pokemon-tcg-services/networking"
-	v2 "github.com/ianhecker/pokemon-tcg-services/networking/pokemontcgio/v2"
 	"github.com/ianhecker/pokemon-tcg-services/retry"
 )
 
@@ -60,7 +59,7 @@ func (c *Client) MakeRetryFunc(url string) (*Result, retry.RetryFunc) {
 		}
 
 		if status != 0 {
-			switch v2.RetryForStatus(status) {
+			switch RetryForStatus(status) {
 			case retry.No:
 				return retry.No, err
 			case retry.Yes:

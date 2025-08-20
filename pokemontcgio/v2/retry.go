@@ -3,18 +3,11 @@ package v2
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net"
 	"net/http"
 
 	"github.com/ianhecker/pokemon-tcg-services/retry"
 )
-
-const CardByIDFmt string = "api.pokemontcg.io/v2/cards/%s"
-
-func CardByID(ID string) string {
-	return fmt.Sprintf(CardByIDFmt, ID)
-}
 
 func RetryForStatus(status int) retry.RetryState {
 	switch status {

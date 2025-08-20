@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	v2 "github.com/ianhecker/pokemon-tcg-services/networking/pokemontcgio/v2"
+	v2 "github.com/ianhecker/pokemon-tcg-services/pokemontcgio/v2"
 	"github.com/ianhecker/pokemon-tcg-services/retry"
 )
 
