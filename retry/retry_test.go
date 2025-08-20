@@ -204,7 +204,7 @@ func TestRetryable_Retry(t *testing.T) {
 	})
 }
 
-func TestDo(t *testing.T) {
+func TestRunRetryable(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
 		ctx := context.Background()
 
@@ -218,7 +218,7 @@ func TestDo(t *testing.T) {
 			Return(false, nil).
 			Once()
 
-		err := retry.Do(ctx, retryable)
+		err := retry.RunRetryable(ctx, retryable)
 		assert.NoError(t, err)
 		retryable.AssertExpectations(t)
 	})
@@ -240,7 +240,7 @@ func TestDo(t *testing.T) {
 			Return(false, nil).
 			Once()
 
-		err := retry.Do(ctx, retryable)
+		err := retry.RunRetryable(ctx, retryable)
 		assert.NoError(t, err)
 		retryable.AssertExpectations(t)
 	})
@@ -258,7 +258,7 @@ func TestDo(t *testing.T) {
 			On("Retry", ctx).
 			Return(false, expected)
 
-		err := retry.Do(ctx, retryable)
+		err := retry.RunRetryable(ctx, retryable)
 		assert.ErrorIs(t, err, expected)
 	})
 
@@ -271,7 +271,7 @@ func TestDo(t *testing.T) {
 			Return(0).
 			Once()
 
-		err := retry.Do(ctx, retryable)
+		err := retry.RunRetryable(ctx, retryable)
 		assert.ErrorContains(t, err, "retried: 0 times. Out of retries")
 		retryable.AssertExpectations(t)
 	})
@@ -290,7 +290,7 @@ func TestDo(t *testing.T) {
 			Return(true, nil).
 			Times(retries)
 
-		err := retry.Do(ctx, retryable)
+		err := retry.RunRetryable(ctx, retryable)
 		assert.ErrorContains(t, err, "retried: 3 times. Out of retries")
 	})
 }

@@ -39,7 +39,7 @@ func main() {
 	backoff := 2 * time.Second
 	retryable := retry.MakeRetryable(retries, backoff, retryFunc)
 
-	retryErr := retry.Do(ctx, retryable)
+	retryErr := retry.RunRetryable(ctx, retryable)
 	checkErr(sugar, retryErr)
 
 	var out bytes.Buffer

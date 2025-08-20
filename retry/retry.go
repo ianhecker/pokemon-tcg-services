@@ -97,7 +97,7 @@ func (retry Retryable) RetriesRemaining() int {
 	return retry.Retries
 }
 
-func Do(ctx context.Context, retryable RetryableInterface) error {
+func RunRetryable(ctx context.Context, retryable RetryableInterface) error {
 	retries := retryable.RetriesRemaining()
 
 	for i := retries; i > 0; i-- {
