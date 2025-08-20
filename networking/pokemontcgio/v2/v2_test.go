@@ -1,9 +1,15 @@
 package v2_test
 
 import (
+	"context"
+	"errors"
+	"fmt"
+	"io"
+	"net"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	v2 "github.com/ianhecker/pokemon-tcg-services/networking/pokemontcgio/v2"
 	"github.com/ianhecker/pokemon-tcg-services/retry"
@@ -46,6 +52,37 @@ func TestV2_RetryForStatus(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			state := v2.RetryForStatus(test.status)
 			assert.Equal(t, test.state, state)
+		})
+	}
+}
+
+func wrap(e error) error { return fmt.Errorf("wrap: %w", e) }
+
+func TestV2_RetryForError(t *testing.T) {
+	tests := []struct {
+		name  string
+		error error
+		state retry.RetryState
+	}{
+		{"nil", nil, retry.No},
+		{"canceled", context.Canceled, retry.No},
+		{"wrapped canceled", wrap(context.Canceled), retry.No},
+		{"joined canceled", errors.Join(context.Canceled, io.EOF), retry.No},
+
+		{"deadline", context.DeadlineExceeded, retry.WithBackoff},
+		{"wrapped deadline", wrap(context.DeadlineExceeded), retry.WithBackoff},
+
+		{"net timeout", &net.DNSError{IsTimeout: true}, retry.WithBackoff},
+		{"net op timeout", &net.OpError{Op: "dial", Net: "tcp", Err: &net.DNSError{IsTimeout: true}}, retry.WithBackoff},
+
+		{"other", errors.New("other"), retry.WithBackoff},
+	}
+
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			state := v2.RetryForError(test.error)
+			require.Equal(t, test.state, state)
 		})
 	}
 }
