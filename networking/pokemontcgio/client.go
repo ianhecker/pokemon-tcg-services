@@ -47,29 +47,29 @@ func (c *Client) MakeRetryFunc(url string) (*Result, retry.RetryFunc) {
 		status := r.Status
 
 		if errors.Is(err, context.DeadlineExceeded) {
-			return retry.RetryWithBackoff, nil
+			return retry.WithBackoff, nil
 		}
 
 		if errors.Is(err, context.Canceled) {
-			return retry.NoRetry, err
+			return retry.No, err
 		}
 
 		var netError net.Error
 		if errors.As(err, &netError) && netError.Timeout() {
-			return retry.RetryWithBackoff, nil
+			return retry.WithBackoff, nil
 		}
 
 		if status != 0 {
 			switch v2.RetryForStatus(status) {
-			case retry.NoRetry:
-				return retry.NoRetry, err
-			case retry.RetryNoBackoff:
-				return retry.RetryNoBackoff, nil
-			case retry.RetryWithBackoff:
-				return retry.RetryWithBackoff, nil
+			case retry.No:
+				return retry.No, err
+			case retry.Yes:
+				return retry.Yes, nil
+			case retry.WithBackoff:
+				return retry.WithBackoff, nil
 			}
 		}
-		return retry.NoRetry, err
+		return retry.No, err
 	}
 	return result, retryFunc
 }

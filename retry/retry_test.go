@@ -19,7 +19,7 @@ func TestRetryable_Retry(t *testing.T) {
 		calls := 0
 		do := func(ctx context.Context) (retry.RetryState, error) {
 			calls++
-			return retry.NoRetry, nil
+			return retry.No, nil
 		}
 
 		ctx := context.Background()
@@ -38,9 +38,9 @@ func TestRetryable_Retry(t *testing.T) {
 		do := func(ctx context.Context) (retry.RetryState, error) {
 			calls++
 			if calls == 1 {
-				return retry.RetryNoBackoff, nil
+				return retry.Yes, nil
 			} else {
-				return retry.NoRetry, nil
+				return retry.No, nil
 			}
 		}
 
@@ -63,7 +63,7 @@ func TestRetryable_Retry(t *testing.T) {
 		calls := 0
 		do := func(ctx context.Context) (retry.RetryState, error) {
 			calls++
-			return retry.NoRetry, nil
+			return retry.No, nil
 		}
 
 		stop := func() bool { return true }
@@ -86,7 +86,7 @@ func TestRetryable_Retry(t *testing.T) {
 		retry := retry.MakeRetryableFromRaw(
 			1,
 			retries,
-			retry.RetryWithBackoff,
+			retry.WithBackoff,
 			sleepableMock,
 			do,
 		)
@@ -103,7 +103,7 @@ func TestRetryable_Retry(t *testing.T) {
 		calls := 0
 		do := func(ctx context.Context) (retry.RetryState, error) {
 			calls++
-			return retry.NoRetry, nil
+			return retry.No, nil
 		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), 200*time.Millisecond)
@@ -127,7 +127,7 @@ func TestRetryable_Retry(t *testing.T) {
 		retry := retry.MakeRetryableFromRaw(
 			1,
 			retries,
-			retry.RetryWithBackoff,
+			retry.WithBackoff,
 			sleepableMock,
 			do,
 		)
@@ -146,7 +146,7 @@ func TestRetryable_Retry(t *testing.T) {
 		expected := errors.New("error")
 		do := func(ctx context.Context) (retry.RetryState, error) {
 			calls++
-			return retry.NoRetry, expected
+			return retry.No, expected
 		}
 
 		ctx := context.Background()
@@ -163,7 +163,7 @@ func TestRetryable_Retry(t *testing.T) {
 		retry := retry.MakeRetryableFromRaw(
 			0,
 			0,
-			retry.NoRetry,
+			retry.No,
 			nil,
 			nil,
 		)
@@ -178,7 +178,7 @@ func TestRetryable_Retry(t *testing.T) {
 		retry := retry.MakeRetryableFromRaw(
 			0,
 			1,
-			retry.RetryNoBackoff,
+			retry.Yes,
 			nil,
 			nil,
 		)
@@ -193,7 +193,7 @@ func TestRetryable_Retry(t *testing.T) {
 		retry := retry.MakeRetryableFromRaw(
 			0,
 			0,
-			retry.RetryNoBackoff,
+			retry.Yes,
 			nil,
 			nil,
 		)

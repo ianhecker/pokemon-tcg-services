@@ -15,9 +15,9 @@ type RetryableInterface interface {
 type RetryState int
 
 const (
-	NoRetry RetryState = iota
-	RetryNoBackoff
-	RetryWithBackoff
+	No RetryState = iota
+	Yes
+	WithBackoff
 )
 
 type RetryFunc func(ctx context.Context) (RetryState, error)
@@ -39,7 +39,7 @@ func MakeRetryable(
 		Retries: retries,
 		Sleeper: NewSleeper(duration),
 		Do:      do,
-		State:   RetryNoBackoff,
+		State:   Yes,
 	}
 }
 
@@ -60,7 +60,7 @@ func MakeRetryableFromRaw(
 }
 
 func (r *Retryable) Retry(ctx context.Context) (bool, error) {
-	if r.State == NoRetry {
+	if r.State == No {
 		return false, errors.New("starting state was not retryable")
 	}
 	if r.Retries <= 0 {
@@ -73,7 +73,7 @@ func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 	r.Retries--
 	r.Attempt++
 
-	if r.State == RetryWithBackoff && r.Attempt > 1 && r.Sleeper.Duration() > 0 {
+	if r.State == WithBackoff && r.Attempt > 1 && r.Sleeper.Duration() > 0 {
 		stop, done := r.Sleeper.Sleep()
 		defer stop()
 
@@ -87,7 +87,7 @@ func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 	newState, err := r.Do(ctx)
 	r.State = newState
 
-	if newState == NoRetry || err != nil {
+	if newState == No || err != nil {
 		return false, err
 	}
 	return true, nil

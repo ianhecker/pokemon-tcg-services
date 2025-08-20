@@ -25,36 +25,36 @@ func RetryForStatus(status int) retry.RetryState {
 		http.StatusBadGateway,          // 502
 		http.StatusGatewayTimeout:      // 504
 
-		return retry.RetryNoBackoff
+		return retry.Yes
 
 	case http.StatusTooManyRequests, // 429
 		http.StatusServiceUnavailable: // 503
 
-		return retry.RetryWithBackoff
+		return retry.WithBackoff
 	}
 
 	if 500 <= status && status <= 599 {
-		return retry.RetryNoBackoff
+		return retry.Yes
 	}
-	return retry.NoRetry
+	return retry.No
 }
 
 func RetryForError(err error) retry.RetryState {
 	if err == nil {
-		return retry.NoRetry
+		return retry.No
 	}
 
 	if errors.Is(err, context.Canceled) {
-		return retry.NoRetry
+		return retry.No
 	}
 
 	if errors.Is(err, context.DeadlineExceeded) {
-		return retry.RetryWithBackoff
+		return retry.WithBackoff
 	}
 
 	var netError net.Error
 	if errors.As(err, &netError) && netError.Timeout() {
-		return retry.RetryWithBackoff
+		return retry.WithBackoff
 	}
-	return retry.RetryWithBackoff
+	return retry.WithBackoff
 }
