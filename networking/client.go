@@ -34,7 +34,7 @@ func NewClient(
 
 func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) {
 	log := client.logger
-	log.Infow("client fetching url", "url", url)
+	log.Infow("client requesting", "url", url)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
@@ -45,6 +45,19 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 
 	duration, body, status, err := client.Do(req)
 	if err != nil {
+		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+			log.Infow("client request canceled via context",
+				"url", url,
+				"time", duration,
+				"error", err,
+			)
+		} else {
+			log.Errorw("client request error",
+				"url", url,
+				"time", duration,
+				"error", err,
+			)
+		}
 		return nil, status, fmt.Errorf("error doing request: %w", err)
 	}
 
@@ -58,24 +71,16 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 		return body, status, fmt.Errorf("unexpected status code: %d", status)
 	}
 
-	log.Infow("fetched url", "url", url, "time", duration, "body", string(body))
+	log.Infow("client got response", "url", url, "time", duration, "body", string(body))
 	return body, status, nil
 }
 
 func (client *Client) Do(request *http.Request) (time.Duration, []byte, int, error) {
-	log := client.logger
 	start := time.Now()
 
 	resp, err := client.httpclient.Do(request)
 	if err != nil {
 		elapsed := time.Since(start)
-
-		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
-			log.Infow("request canceled via context", "url", request.URL.String(), "time", elapsed, "error", err)
-
-		} else {
-			log.Errorw("client request error", "url", request.URL.String(), "time", elapsed, "error", err)
-		}
 		return elapsed, nil, 0, err
 	}
 	defer resp.Body.Close()
