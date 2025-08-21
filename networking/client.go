@@ -34,25 +34,31 @@ func NewClient(
 
 func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) {
 	log := client.logger
-	log.Infow("client requesting", "url", url)
+	log.Infow("requesting", "url", url)
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 
-		log.Errorw("client creating request", "url", url, "error", err)
+		log.Errorw("creating request", "url", url, "error", err)
 		return nil, 0, fmt.Errorf("error creating request: %w", err)
 	}
 
 	duration, body, status, err := client.Do(req)
 	if err != nil {
-		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
-			log.Infow("client request canceled via context",
+		if errors.Is(err, context.Canceled) {
+			log.Infow("request canceled",
+				"url", url,
+				"time", duration,
+				"error", err,
+			)
+		} else if errors.Is(err, context.DeadlineExceeded) {
+			log.Infow("request deadline exceeded",
 				"url", url,
 				"time", duration,
 				"error", err,
 			)
 		} else {
-			log.Errorw("client request error",
+			log.Errorw("request error",
 				"url", url,
 				"time", duration,
 				"error", err,
@@ -71,7 +77,7 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 		return body, status, fmt.Errorf("unexpected status code: %d", status)
 	}
 
-	log.Infow("client got response", "url", url, "time", duration, "body", string(body))
+	log.Infow("got response", "url", url, "time", duration, "body", string(body))
 	return body, status, nil
 }
 

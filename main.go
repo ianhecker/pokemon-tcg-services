@@ -27,7 +27,7 @@ func main() {
 	defer cancel()
 
 	perAttemptTimeout := 60 * time.Second
-	client := v2.NewClient(httpClient, perAttemptTimeout)
+	client := v2.NewClient(logger, httpClient, perAttemptTimeout)
 
 	_, retryFunc := client.MakeRetryFunc(url)
 
