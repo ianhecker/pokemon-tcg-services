@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
-	"github.com/ianhecker/pokemon-tcg-services/networking"
-	"github.com/ianhecker/pokemon-tcg-services/retry"
+	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"go.uber.org/zap"
 )
 

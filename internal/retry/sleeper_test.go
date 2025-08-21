@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ianhecker/pokemon-tcg-services/retry"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

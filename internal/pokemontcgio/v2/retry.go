@@ -6,7 +6,7 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/ianhecker/pokemon-tcg-services/retry"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 )
 
 func RetryForStatus(status int) retry.RetryState {

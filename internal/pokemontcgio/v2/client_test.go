@@ -12,8 +12,8 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	v2 "github.com/ianhecker/pokemon-tcg-services/pokemontcgio/v2"
-	"github.com/ianhecker/pokemon-tcg-services/retry"
 )
 
 func TestClient_MakeRetryFunc(t *testing.T) {

@@ -11,8 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	v2 "github.com/ianhecker/pokemon-tcg-services/pokemontcgio/v2"
-	"github.com/ianhecker/pokemon-tcg-services/retry"
 )
 
 func TestV2_RetryForStatus(t *testing.T) {

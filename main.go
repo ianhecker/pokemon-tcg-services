@@ -7,9 +7,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/ianhecker/pokemon-tcg-services/networking"
-	v2 "github.com/ianhecker/pokemon-tcg-services/pokemontcgio/v2"
-	"github.com/ianhecker/pokemon-tcg-services/retry"
+	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
+	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 )
 
 func main() {

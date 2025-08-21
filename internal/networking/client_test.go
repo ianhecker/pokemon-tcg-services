@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 
-	"github.com/ianhecker/pokemon-tcg-services/networking"
+	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
 )
 
 func newTestServer(t *testing.T, status int, body string) *httptest.Server {
