@@ -11,7 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
-type ClientInterface interface {
+type HttpClientInterface interface {
 	Get(ctx context.Context, url string) (body []byte, status int, err error)
 }
 
@@ -22,7 +22,7 @@ type Client struct {
 
 func NewClient(
 	logger *zap.SugaredLogger,
-) ClientInterface {
+) HttpClientInterface {
 	return &Client{
 		httpclient: &http.Client{
 			Timeout:   0,

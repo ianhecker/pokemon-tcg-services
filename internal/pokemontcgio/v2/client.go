@@ -9,15 +9,19 @@ import (
 	"go.uber.org/zap"
 )
 
+type APIClientInterface interface {
+	MakeRetryFunc(url string) (*Result, retry.RetryFunc)
+}
+
 type Client struct {
 	log     *zap.SugaredLogger
-	client  networking.ClientInterface
+	client  networking.HttpClientInterface
 	timeout time.Duration
 }
 
 func NewClient(
 	logger *zap.SugaredLogger,
-	client networking.ClientInterface,
+	client networking.HttpClientInterface,
 	timeout time.Duration,
 ) *Client {
 	return &Client{
