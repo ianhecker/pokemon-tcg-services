@@ -52,8 +52,11 @@ func MakeRetryableFromRaw(
 }
 
 func (r *Retryable) Retry(ctx context.Context) (bool, error) {
-	if r.State == No {
+	if r.State == Fail {
 		return false, errors.New("starting state was not retryable")
+	}
+	if r.State == Complete {
+		return false, errors.New("starting state is complete")
 	}
 	if r.Retries <= 0 {
 		return false, errors.New("retries were zero")
@@ -65,7 +68,7 @@ func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 	r.Retries--
 	r.Attempt++
 
-	if r.State == WithBackoff && r.Attempt > 1 && r.Sleeper.Duration() > 0 {
+	if r.State == Backoff && r.Attempt > 1 && r.Sleeper.Duration() > 0 {
 		stop, done := r.Sleeper.Sleep()
 		defer stop()
 
@@ -76,10 +79,13 @@ func (r *Retryable) Retry(ctx context.Context) (bool, error) {
 		}
 	}
 
-	newState, err := r.Do(ctx)
-	r.State = newState
+	state, err := r.Do(ctx)
+	r.State = state
 
-	if newState == No || err != nil {
+	switch state {
+	case Complete:
+		return false, nil
+	case Fail:
 		return false, err
 	}
 	return true, nil

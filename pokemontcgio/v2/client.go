@@ -2,8 +2,6 @@ package v2
 
 import (
 	"context"
-	"errors"
-	"net"
 	"time"
 
 	"github.com/ianhecker/pokemon-tcg-services/networking"
@@ -49,36 +47,36 @@ func (c *Client) MakeRetryFunc(url string) (*Result, retry.RetryFunc) {
 		err := r.Err
 		status := r.Status
 
-		if errors.Is(err, context.DeadlineExceeded) {
-			c.log.Infow("retry deadline met", "url", url, "backoff", c.timeout, "err", err)
-			return retry.WithBackoff, nil
-		}
-
-		if errors.Is(err, context.Canceled) {
-			c.log.Errorw("retry canceled", "url", url, "err", err)
-			return retry.No, err
-		}
-
-		var netError net.Error
-		if errors.As(err, &netError) && netError.Timeout() {
-			c.log.Errorw("retry network error", "url", url, "backoff", c.timeout, "err", err)
-			return retry.WithBackoff, nil
+		if err != nil {
+			state := RetryForError(err)
+			switch state {
+			case retry.Backoff:
+				c.log.Infow("retry with backoff for error", "url", url, "status", status, "err", err)
+				return state, nil
+			case retry.Fail:
+				c.log.Infow("retry fail for error", "url", url, "status", status, "err", err)
+				return state, err
+			}
 		}
 
 		if status != 0 {
-			switch RetryForStatus(status) {
-			case retry.No:
-				c.log.Infow("no retry for status", "url", url, "status", status, "err", err)
-				return retry.No, err
+			state := RetryForStatus(status)
+			switch state {
+			case retry.Complete:
+				c.log.Infow("retry completed", "url", url, "status", status, "err", err)
+				return state, nil
 			case retry.Yes:
 				c.log.Infow("retry for status", "url", url, "status", status, "err", err)
-				return retry.Yes, nil
-			case retry.WithBackoff:
+				return state, err
+			case retry.Backoff:
 				c.log.Infow("retry with backoff for status", "url", url, "status", status, "err", err)
-				return retry.WithBackoff, nil
+				return state, err
+			case retry.Fail:
+				c.log.Infow("no retry for status", "url", url, "status", status, "err", err)
+				return state, err
 			}
 		}
-		return retry.No, err
+		return retry.Fail, err
 	}
 	return result, retryFunc
 }

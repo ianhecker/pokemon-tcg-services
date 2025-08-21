@@ -35,7 +35,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		state, err := retryFunc(ctx)
 		assert.NoError(t, err)
-		assert.Equal(t, retry.WithBackoff, state)
+		assert.Equal(t, retry.Backoff, state)
 		assert.ErrorIs(t, result.Err, context.DeadlineExceeded)
 	})
 
@@ -61,7 +61,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		state, err := retryFunc(ctx)
 		assert.ErrorIs(t, err, context.Canceled)
-		assert.Equal(t, retry.No, state)
+		assert.Equal(t, retry.Fail, state)
 		assert.ErrorIs(t, result.Err, context.Canceled)
 	})
 
@@ -90,19 +90,42 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		state, err := retryFunc(ctx)
 		assert.NoError(t, err)
-		assert.Equal(t, retry.WithBackoff, state)
+		assert.Equal(t, retry.Backoff, state)
 		assert.ErrorAs(t, result.Err, &netError)
+	})
+
+	t.Run("other error", func(t *testing.T) {
+		url := "url"
+		otherErr := errors.New("other")
+
+		mockClient := mocks.NewMockClientInterface(t)
+		mockClient.
+			On("Get", mock.Anything, url).
+			Return(nil, 0, otherErr)
+
+		logger := zap.NewNop().Sugar()
+		timeout := 100 * time.Millisecond
+
+		client := v2.NewClient(logger, mockClient, timeout)
+		result, retryFunc := client.MakeRetryFunc(url)
+
+		ctx, cancel := context.WithTimeout(context.Background(), 1)
+		defer cancel()
+
+		state, err := retryFunc(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, retry.Backoff, state)
+		assert.ErrorIs(t, result.Err, otherErr)
 	})
 
 	t.Run("status no retry", func(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 200
-		expectedErr := errors.New("error")
 		url := "url"
 		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
-			Return(body, status, expectedErr)
+			Return(body, status, nil)
 
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
@@ -111,12 +134,12 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
-		assert.ErrorIs(t, expectedErr, err)
-		assert.Equal(t, retry.No, state)
+		assert.NoError(t, err)
+		assert.Equal(t, retry.Complete, state)
 
 		assert.Equal(t, string(body), string(result.Body))
 		assert.Equal(t, status, result.Status)
-		assert.ErrorIs(t, expectedErr, result.Err)
+		assert.NoError(t, result.Err)
 	})
 
 	t.Run("status retry", func(t *testing.T) {
@@ -160,7 +183,31 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		state, err := retryFunc(context.Background())
 		assert.NoError(t, err)
-		assert.Equal(t, retry.WithBackoff, state)
+		assert.Equal(t, retry.Backoff, state)
+
+		assert.Equal(t, string(body), string(result.Body))
+		assert.Equal(t, status, result.Status)
+		assert.NoError(t, result.Err)
+	})
+
+	t.Run("status fail", func(t *testing.T) {
+		body := []byte(`{"message":"hi"}`)
+		status := 1
+		url := "url"
+		mockClient := mocks.NewMockClientInterface(t)
+		mockClient.
+			On("Get", mock.Anything, url).
+			Return(body, status, nil)
+
+		logger := zap.NewNop().Sugar()
+		timeout := 100 * time.Millisecond
+
+		client := v2.NewClient(logger, mockClient, timeout)
+		result, retryFunc := client.MakeRetryFunc(url)
+
+		state, err := retryFunc(context.Background())
+		assert.NoError(t, err)
+		assert.Equal(t, retry.Fail, state)
 
 		assert.Equal(t, string(body), string(result.Body))
 		assert.Equal(t, status, result.Status)
@@ -184,7 +231,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		state, err := retryFunc(context.Background())
 		assert.NoError(t, err)
-		assert.Equal(t, retry.No, state)
+		assert.Equal(t, retry.Fail, state)
 
 		assert.Equal(t, string(body), string(result.Body))
 		assert.Equal(t, status, result.Status)
