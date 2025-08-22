@@ -26,3 +26,9 @@ mocks:
 
 test: tidy
 	@$(GOTEST) -v -count=1 ./...
+
+docker-build:
+	docker build -t pokemon-tcg-services .
+
+docker-run-cardByID:
+	docker run --rm -p 8080:8080 pokemon-tcg-services:latest cardByID --port 8080
