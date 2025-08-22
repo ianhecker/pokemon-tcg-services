@@ -18,12 +18,13 @@ type CardServiceInterface interface {
 }
 
 type CardService struct {
-	log      *zap.SugaredLogger
-	client   v2.APIClientInterface
-	srv      *http.Server
-	done     chan struct{}
-	err      error
-	shutdown time.Duration
+	log            *zap.SugaredLogger
+	client         v2.APIClientInterface
+	srv            *http.Server
+	handlerFactory *HandlerFactory
+	done           chan struct{}
+	err            error
+	shutdown       time.Duration
 }
 
 func NewService(
@@ -34,14 +35,12 @@ func NewService(
 	srv := &http.Server{
 		Addr: addr,
 	}
-	handlerFactory := NewHandlerFactory(logger)
-	handler := handlerFactory.NewHandler()
-
+	handlerFactory := NewHandlerFactory(logger, client)
 	return NewServiceFromRaw(
 		logger,
 		client,
 		srv,
-		handler,
+		handlerFactory,
 		make(chan struct{}, 1),
 		nil,
 		ServerShutdown,
@@ -52,23 +51,25 @@ func NewServiceFromRaw(
 	logger *zap.SugaredLogger,
 	client v2.APIClientInterface,
 	srv *http.Server,
-	handler http.Handler,
+	handlerFactory *HandlerFactory,
 	done chan struct{},
 	err error,
 	shutdown time.Duration,
 ) CardServiceInterface {
-	srv.Handler = handler
 	return &CardService{
-		log:      logger,
-		client:   client,
-		srv:      srv,
-		done:     done,
-		err:      err,
-		shutdown: shutdown,
+		log:            logger,
+		client:         client,
+		srv:            srv,
+		handlerFactory: handlerFactory,
+		done:           done,
+		err:            err,
+		shutdown:       shutdown,
 	}
 }
 
 func (svc *CardService) Start(ctx context.Context) (stop func()) {
+	handler := svc.handlerFactory.NewHandler(ctx)
+	svc.srv.Handler = handler
 
 	svc.log.Infow("server start", "address", svc.srv.Addr)
 	go func() {
