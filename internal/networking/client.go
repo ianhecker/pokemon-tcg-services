@@ -48,19 +48,19 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 		if errors.Is(err, context.Canceled) {
 			log.Infow("request canceled",
 				"url", url,
-				"time", duration,
+				"time", duration.String(),
 				"error", err,
 			)
 		} else if errors.Is(err, context.DeadlineExceeded) {
 			log.Infow("request deadline exceeded",
 				"url", url,
-				"time", duration,
+				"time", duration.String(),
 				"error", err,
 			)
 		} else {
 			log.Errorw("request error",
 				"url", url,
-				"time", duration,
+				"time", duration.String(),
 				"error", err,
 			)
 		}
@@ -70,14 +70,17 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 	if status != http.StatusOK {
 		log.Warnw("unexpected status code",
 			"url", url,
-			"time", duration,
+			"time", duration.String(),
 			"status", status,
 			"body", string(body),
 		)
 		return body, status, fmt.Errorf("unexpected status code: %d", status)
 	}
 
-	log.Infow("got response", "url", url, "time", duration, "body", string(body))
+	log.Infow("got response",
+		"url", url,
+		"time", duration.String(),
+		"body", string(body))
 	return body, status, nil
 }
 
