@@ -61,7 +61,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 	pattern := "/v1/cards"
 	h.mux.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 
-		cardIDs, err := ParseCardQuery(r)
+		cardID, err := ParseCardQuery(r)
 		if err != nil {
 			h.log.Infow("request bad",
 				"service", ServiceName,
@@ -72,8 +72,6 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 			WriteError(w, http.StatusBadRequest, err.Error())
 			return
 		}
-
-		cardID := cardIDs[0]
 		result, retryable := h.client.MakeRetryable(cardID.ToURL())
 
 		start := time.Now()
@@ -95,7 +93,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 		h.log.Infow("serving request",
 			"service", ServiceName,
 			"path", r.URL.Path,
-			"ids", cardIDs,
+			"cardID", cardID,
 			"elapsed", elapsed.String(),
 		)
 
@@ -103,8 +101,8 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 			map[string]any{
 				"service": ServiceName,
 				"ok":      true,
-				"ids":     cardIDs,
-				"result":  string(result.Body),
+				"cardID":  cardID,
+				"result":  json.RawMessage(result.Body),
 			})
 	})
 }
