@@ -1,0 +1,41 @@
+package cmd
+
+import (
+	"context"
+
+	"github.com/spf13/cobra"
+	"go.uber.org/zap"
+
+	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
+	"github.com/ianhecker/pokemon-tcg-services/internal/services/card"
+)
+
+var cardByIDServiceCmd = &cobra.Command{
+	Use:   "cardByID",
+	Short: "Fetch a pokemon card by card ID",
+	Long:  `A service that fetches pokemon card descriptions via card ID`,
+	Run: func(cmd *cobra.Command, args []string) {
+		port := PortToString(Port)
+		RunCardService(port)
+	},
+}
+
+func RunCardService(port string) {
+	base, _ := zap.NewProduction()
+	defer base.Sync()
+	logger := base.Sugar()
+
+	ctx := context.Background()
+	client := v2.NewClient(logger)
+
+	svc := card.NewService(logger, client, port)
+	stop := svc.Start(ctx)
+	defer stop()
+
+	select {
+	case <-ctx.Done():
+		logger.Errorw("context", "err", ctx.Err())
+	case <-svc.Done():
+		logger.Errorw("server", "err", svc.Err())
+	}
+}
