@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"go.uber.org/zap"
-
-	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
 	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
+	"github.com/ianhecker/pokemon-tcg-services/internal/services/card"
+	"go.uber.org/zap"
 )
 
 func main() {
@@ -17,27 +16,30 @@ func main() {
 	defer base.Sync()
 	logger := base.Sugar()
 
-	httpClient := networking.NewClient(logger)
-
 	api := v2.CardByID("xy1-1")
 	url := fmt.Sprintf("https://%s", api)
+
+	client := v2.NewClient(logger)
+	_, retryable := client.MakeRetryable(url)
 
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Minute)
 	defer cancel()
 
-	perAttemptTimeout := 60 * time.Second
-	client := v2.NewClient(logger, httpClient, perAttemptTimeout)
-
-	_, retryFunc := client.MakeRetryFunc(url)
-
-	retries := 10
-	backoff := 2 * time.Second
-	retryable := retry.MakeRetryable(retries, backoff, retryFunc)
-
 	err := retry.RunRetryable(ctx, retryable)
 	if err != nil {
 		logger.Errorw("retryable error", "url", url, "err", err)
 		return
+	}
+
+	svc := card.NewService(logger, nil, ":8080")
+	stop := svc.Start(ctx)
+	defer stop()
+
+	select {
+	case <-ctx.Done():
+		logger.Errorw("context", "err", ctx.Err())
+	case <-svc.Done():
+		logger.Errorw("server", "err", svc.Err())
 	}
 }
