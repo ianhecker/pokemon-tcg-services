@@ -6,7 +6,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	v2 "github.com/ianhecker/pokemon-tcg-services/pokemontcgio/v2"
+	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
 )
 
 func TestCardByID(t *testing.T) {

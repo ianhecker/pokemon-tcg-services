@@ -4,9 +4,10 @@ import (
 	"context"
 	"time"
 
+	"go.uber.org/zap"
+
 	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
-	"go.uber.org/zap"
 )
 
 type APIClientInterface interface {

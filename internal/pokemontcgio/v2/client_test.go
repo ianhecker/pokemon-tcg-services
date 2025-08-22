@@ -12,14 +12,14 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
+	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
-	v2 "github.com/ianhecker/pokemon-tcg-services/pokemontcgio/v2"
 )
 
 func TestClient_MakeRetryFunc(t *testing.T) {
 	t.Run("deadline exceeded", func(t *testing.T) {
 		url := "url"
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, context.DeadlineExceeded)
@@ -44,7 +44,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 1)
 
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, context.Canceled).
@@ -74,7 +74,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Err: &net.DNSError{Err: "i/o timeout", IsTimeout: true},
 		}
 
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, netError)
@@ -98,7 +98,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		url := "url"
 		otherErr := errors.New("other")
 
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, otherErr)
@@ -122,7 +122,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 200
 		url := "url"
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -146,7 +146,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 504
 		url := "url"
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -170,7 +170,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 429
 		url := "url"
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -194,7 +194,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 1
 		url := "url"
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -218,7 +218,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 0
 		url := "url"
-		mockClient := mocks.NewMockAPIClientInterface(t)
+		mockClient := mocks.NewMockHttpClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
