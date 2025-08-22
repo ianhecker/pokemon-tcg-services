@@ -19,7 +19,7 @@ import (
 func TestClient_MakeRetryFunc(t *testing.T) {
 	t.Run("deadline exceeded", func(t *testing.T) {
 		url := "url"
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, context.DeadlineExceeded)
@@ -27,7 +27,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		ctx, cancel := context.WithTimeout(context.Background(), 1)
@@ -44,7 +44,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 
 		ctx, cancel := context.WithTimeout(context.Background(), 1)
 
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, context.Canceled).
@@ -56,7 +56,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(ctx)
@@ -74,7 +74,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Err: &net.DNSError{Err: "i/o timeout", IsTimeout: true},
 		}
 
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, netError)
@@ -82,7 +82,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		ctx, cancel := context.WithTimeout(context.Background(), 1)
@@ -98,7 +98,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		url := "url"
 		otherErr := errors.New("other")
 
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, otherErr)
@@ -106,7 +106,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		ctx, cancel := context.WithTimeout(context.Background(), 1)
@@ -122,7 +122,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 200
 		url := "url"
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -130,7 +130,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -146,7 +146,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 504
 		url := "url"
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -154,7 +154,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -170,7 +170,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 429
 		url := "url"
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -178,7 +178,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -194,7 +194,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 1
 		url := "url"
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -202,7 +202,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -218,7 +218,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 0
 		url := "url"
-		mockClient := mocks.NewMockClientInterface(t)
+		mockClient := mocks.NewMockAPIClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -226,7 +226,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		logger := zap.NewNop().Sugar()
 		timeout := 100 * time.Millisecond
 
-		client := v2.NewClient(logger, mockClient, timeout)
+		client := v2.NewClientFromRaw(logger, mockClient, timeout)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())

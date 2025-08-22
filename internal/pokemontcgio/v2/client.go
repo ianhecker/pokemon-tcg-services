@@ -11,6 +11,7 @@ import (
 
 type APIClientInterface interface {
 	MakeRetryFunc(url string) (*Result, retry.RetryFunc)
+	MakeRetryable(url string) (*Result, retry.RetryableInterface)
 }
 
 type Client struct {
@@ -19,11 +20,21 @@ type Client struct {
 	timeout time.Duration
 }
 
-func NewClient(
+func NewClient(logger *zap.SugaredLogger) APIClientInterface {
+	httpClient := networking.NewClient(logger)
+
+	return &Client{
+		log:     logger,
+		client:  httpClient,
+		timeout: AttemptTimeout,
+	}
+}
+
+func NewClientFromRaw(
 	logger *zap.SugaredLogger,
 	client networking.HttpClientInterface,
 	timeout time.Duration,
-) *Client {
+) APIClientInterface {
 	return &Client{
 		log:     logger,
 		client:  client,
@@ -83,4 +94,11 @@ func (c *Client) MakeRetryFunc(url string) (*Result, retry.RetryFunc) {
 		return retry.Fail, err
 	}
 	return result, retryFunc
+}
+
+func (c *Client) MakeRetryable(url string) (*Result, retry.RetryableInterface) {
+
+	result, retryFunc := c.MakeRetryFunc(url)
+	retryable := retry.MakeRetryable(Retries, BackoffInSeconds, retryFunc)
+	return result, retryable
 }

@@ -5,9 +5,15 @@ import (
 	"errors"
 	"net"
 	"net/http"
+	"time"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 )
+
+const AttemptsPerMinute = 30
+const AttemptTimeout = 60 * time.Second
+const BackoffInSeconds time.Duration = 60 * time.Second / AttemptsPerMinute
+const Retries int = 10
 
 func RetryForStatus(status int) retry.RetryState {
 	if 200 <= status && status <= 299 {
