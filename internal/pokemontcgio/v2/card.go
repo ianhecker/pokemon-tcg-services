@@ -6,18 +6,40 @@ import (
 	"strings"
 )
 
-const CardByIDFmt string = "api.pokemontcg.io/v2/cards/%s"
+const CardByIDHttpRequestFmt string = "https://api.pokemontcg.io/v2/cards/%s"
 
 var CardIDRegex = regexp.MustCompile(`^[A-Za-z0-9._:-]+$`)
 
-func CardByID(ID string) string {
-	return fmt.Sprintf(CardByIDFmt, ID)
+type CardID string
+
+func MakeCardID(ID string) (CardID, error) {
+	cardID, err := SanitizeCardID(ID)
+	if err != nil {
+		return "", err
+	}
+	return CardID(cardID), nil
+}
+
+func MakeCardIDs(IDs ...string) ([]CardID, error) {
+	sanitized, err := SanitizeCardIDs(IDs...)
+	if err != nil {
+		return nil, err
+	}
+	var cardIDs []CardID
+	for _, sani := range sanitized {
+		cardIDs = append(cardIDs, CardID(sani))
+	}
+	return cardIDs, nil
+}
+
+func (card CardID) ToURL() string {
+	return fmt.Sprintf(CardByIDHttpRequestFmt, string(card))
 }
 
 func SanitizeCardID(ID string) (string, error) {
 	sani := strings.TrimSpace(ID)
 	if sani == "" || !CardIDRegex.MatchString(sani) {
-		return sani, fmt.Errorf("invalid card ID: %s", sani)
+		return "", fmt.Errorf("invalid card ID: %s", sani)
 	}
 	return sani, nil
 }
@@ -35,7 +57,7 @@ func SanitizeCardIDs(IDs ...string) ([]string, error) {
 		}
 	}
 	if len(badIDs) > 0 {
-		return badIDs, fmt.Errorf("invalid card IDs: %v", badIDs)
+		return nil, fmt.Errorf("invalid card IDs: %v", badIDs)
 	}
 	return sanitized, nil
 }

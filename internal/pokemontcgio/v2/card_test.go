@@ -36,10 +36,10 @@ func TestCardByID_SanitizeCardID(t *testing.T) {
 
 			if test.valid {
 				assert.Nil(t, err)
+				assert.Equal(t, test.sanitized, sanitized)
 			} else {
 				assert.ErrorContains(t, err, "invalid card ID: "+test.ID)
 			}
-			assert.Equal(t, test.sanitized, sanitized)
 		})
 	}
 }
@@ -70,7 +70,6 @@ func TestCardByID_AreValidCardIDs(t *testing.T) {
 				assert.Equal(t, test.expected, IDs)
 			} else {
 				assert.ErrorContains(t, err, fmt.Sprintf("invalid card IDs: %v", IDs))
-				assert.Equal(t, test.expected, IDs)
 			}
 		})
 	}
