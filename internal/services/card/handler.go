@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
 	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"go.uber.org/zap"
@@ -61,7 +62,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 	pattern := "/v1/cards"
 	h.mux.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 
-		cardID, err := ParseCardQuery(r)
+		card, err := ParseCardQuery(r)
 		if err != nil {
 			h.log.Infow("request bad",
 				"service", ServiceName,
@@ -72,7 +73,8 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 			WriteError(w, http.StatusBadRequest, err.Error())
 			return
 		}
-		result, retryable := h.client.MakeRetryable(cardID.ToURL())
+		pricesAPI := pokemonpricetracker.MakePricesAPI(card)
+		result, retryable := h.client.MakeRetryable(pricesAPI)
 
 		start := time.Now()
 		err = retry.RunRetryable(ctx, retryable)
@@ -93,7 +95,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 		h.log.Infow("serving request",
 			"service", ServiceName,
 			"path", r.URL.Path,
-			"cardID", cardID,
+			"ID", card.ID,
 			"elapsed", elapsed.String(),
 		)
 
@@ -101,7 +103,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 			map[string]any{
 				"service": ServiceName,
 				"ok":      true,
-				"cardID":  cardID,
+				"ID":      card.ID,
 				"result":  json.RawMessage(result.Body),
 			})
 	})
