@@ -30,5 +30,5 @@ test: tidy
 docker-build:
 	docker build -t pokemon-tcg-services .
 
-docker-run-cardByID:
-	docker run --rm -p 8080:8080 pokemon-tcg-services:latest cardByID --port 8080
+run-card-pricer: docker-build
+	docker run --rm -p 8080:8080 pokemon-tcg-services:latest card-pricer --port 8080

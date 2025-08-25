@@ -21,5 +21,5 @@ func init() {
 	serviceCmd.PersistentFlags().UintVar(&Port, "port", 0, "port to bind")
 	serviceCmd.MarkPersistentFlagRequired("port")
 
-	serviceCmd.AddCommand(cardByIDServiceCmd)
+	serviceCmd.AddCommand(cardPricerCmd)
 }

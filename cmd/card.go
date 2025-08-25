@@ -10,10 +10,10 @@ import (
 	"github.com/ianhecker/pokemon-tcg-services/internal/services/card"
 )
 
-var cardByIDServiceCmd = &cobra.Command{
-	Use:   "cardByID",
-	Short: "Fetch a pokemon card by card ID",
-	Long:  `A service that fetches pokemon card descriptions via card ID`,
+var cardPricerCmd = &cobra.Command{
+	Use:   "card-pricer",
+	Short: "Fetch pricing for a pokemon card by card ID",
+	Long:  `A service that fetches pokemon card prices via card ID`,
 	Run: func(cmd *cobra.Command, args []string) {
 		port := PortToString(Port)
 		RunCardService(port)

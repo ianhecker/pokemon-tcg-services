@@ -10,10 +10,10 @@ import (
 	"go.uber.org/zap"
 )
 
-const ServiceName = "card"
+const ServiceName = "card-pricer"
 const ServerShutdown = 10 * time.Second
 
-type CardServiceInterface interface {
+type CardPricerServiceInterface interface {
 	services.ServiceInterface
 }
 
@@ -31,7 +31,7 @@ func NewService(
 	logger *zap.SugaredLogger,
 	client pokemonpricetracker.APIClientInterface,
 	addr string,
-) CardServiceInterface {
+) CardPricerServiceInterface {
 	srv := &http.Server{
 		Addr: addr,
 	}
@@ -55,7 +55,7 @@ func NewServiceFromRaw(
 	done chan struct{},
 	err error,
 	shutdown time.Duration,
-) CardServiceInterface {
+) CardPricerServiceInterface {
 	return &CardService{
 		log:            logger,
 		client:         client,
