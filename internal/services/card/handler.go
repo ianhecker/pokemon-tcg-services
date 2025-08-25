@@ -59,7 +59,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 	pattern := "/v1/cards"
 	h.mux.HandleFunc(pattern, func(w http.ResponseWriter, r *http.Request) {
 
-		card, err := ParseCardQuery(r)
+		cardID, err := ParseCardQuery(r)
 		if err != nil {
 			h.log.Infow("request bad",
 				"service", ServiceName,
@@ -72,7 +72,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 		}
 
 		start := time.Now()
-		err = h.client.GetPricing(ctx, &card)
+		card, err := h.client.GetPricing(ctx, cardID)
 		end := time.Now()
 		elapsed := end.Sub(start)
 
