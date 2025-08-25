@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 
-	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
+	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
 	"github.com/ianhecker/pokemon-tcg-services/internal/services/card"
 )
 
