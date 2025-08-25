@@ -5,8 +5,9 @@
 package mocks
 
 import (
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
-	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
+	"context"
+
+	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -37,66 +38,59 @@ func (_m *MockAPIClientInterface) EXPECT() *MockAPIClientInterface_Expecter {
 	return &MockAPIClientInterface_Expecter{mock: &_m.Mock}
 }
 
-// MakeRetryFunc provides a mock function for the type MockAPIClientInterface
-func (_mock *MockAPIClientInterface) MakeRetryFunc(url string) (*v2.Result, retry.RetryFunc) {
-	ret := _mock.Called(url)
+// GetPricing provides a mock function for the type MockAPIClientInterface
+func (_mock *MockAPIClientInterface) GetPricing(ctx context.Context, card *pokemontcg.Card) error {
+	ret := _mock.Called(ctx, card)
 
 	if len(ret) == 0 {
-		panic("no return value specified for MakeRetryFunc")
+		panic("no return value specified for GetPricing")
 	}
 
-	var r0 *v2.Result
-	var r1 retry.RetryFunc
-	if returnFunc, ok := ret.Get(0).(func(string) (*v2.Result, retry.RetryFunc)); ok {
-		return returnFunc(url)
-	}
-	if returnFunc, ok := ret.Get(0).(func(string) *v2.Result); ok {
-		r0 = returnFunc(url)
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, *pokemontcg.Card) error); ok {
+		r0 = returnFunc(ctx, card)
 	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*v2.Result)
-		}
+		r0 = ret.Error(0)
 	}
-	if returnFunc, ok := ret.Get(1).(func(string) retry.RetryFunc); ok {
-		r1 = returnFunc(url)
-	} else {
-		if ret.Get(1) != nil {
-			r1 = ret.Get(1).(retry.RetryFunc)
-		}
-	}
-	return r0, r1
+	return r0
 }
 
-// MockAPIClientInterface_MakeRetryFunc_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'MakeRetryFunc'
-type MockAPIClientInterface_MakeRetryFunc_Call struct {
+// MockAPIClientInterface_GetPricing_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetPricing'
+type MockAPIClientInterface_GetPricing_Call struct {
 	*mock.Call
 }
 
-// MakeRetryFunc is a helper method to define mock.On call
-//   - url string
-func (_e *MockAPIClientInterface_Expecter) MakeRetryFunc(url interface{}) *MockAPIClientInterface_MakeRetryFunc_Call {
-	return &MockAPIClientInterface_MakeRetryFunc_Call{Call: _e.mock.On("MakeRetryFunc", url)}
+// GetPricing is a helper method to define mock.On call
+//   - ctx context.Context
+//   - card *pokemontcg.Card
+func (_e *MockAPIClientInterface_Expecter) GetPricing(ctx interface{}, card interface{}) *MockAPIClientInterface_GetPricing_Call {
+	return &MockAPIClientInterface_GetPricing_Call{Call: _e.mock.On("GetPricing", ctx, card)}
 }
 
-func (_c *MockAPIClientInterface_MakeRetryFunc_Call) Run(run func(url string)) *MockAPIClientInterface_MakeRetryFunc_Call {
+func (_c *MockAPIClientInterface_GetPricing_Call) Run(run func(ctx context.Context, card *pokemontcg.Card)) *MockAPIClientInterface_GetPricing_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		var arg0 string
+		var arg0 context.Context
 		if args[0] != nil {
-			arg0 = args[0].(string)
+			arg0 = args[0].(context.Context)
+		}
+		var arg1 *pokemontcg.Card
+		if args[1] != nil {
+			arg1 = args[1].(*pokemontcg.Card)
 		}
 		run(
 			arg0,
+			arg1,
 		)
 	})
 	return _c
 }
 
-func (_c *MockAPIClientInterface_MakeRetryFunc_Call) Return(result *v2.Result, retryFunc retry.RetryFunc) *MockAPIClientInterface_MakeRetryFunc_Call {
-	_c.Call.Return(result, retryFunc)
+func (_c *MockAPIClientInterface_GetPricing_Call) Return(err error) *MockAPIClientInterface_GetPricing_Call {
+	_c.Call.Return(err)
 	return _c
 }
 
-func (_c *MockAPIClientInterface_MakeRetryFunc_Call) RunAndReturn(run func(url string) (*v2.Result, retry.RetryFunc)) *MockAPIClientInterface_MakeRetryFunc_Call {
+func (_c *MockAPIClientInterface_GetPricing_Call) RunAndReturn(run func(ctx context.Context, card *pokemontcg.Card) error) *MockAPIClientInterface_GetPricing_Call {
 	_c.Call.Return(run)
 	return _c
 }

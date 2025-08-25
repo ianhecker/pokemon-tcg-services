@@ -7,8 +7,6 @@ import (
 	"time"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
-	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
-	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"go.uber.org/zap"
 )
 
@@ -25,12 +23,12 @@ func WriteError(w http.ResponseWriter, status int, msg string) {
 type HandlerFactory struct {
 	log    *zap.SugaredLogger
 	mux    *http.ServeMux
-	client v2.APIClientInterface
+	client pokemonpricetracker.APIClientInterface
 }
 
 func NewHandlerFactory(
 	logger *zap.SugaredLogger,
-	client v2.APIClientInterface,
+	client pokemonpricetracker.APIClientInterface,
 ) *HandlerFactory {
 	return &HandlerFactory{
 		log:    logger,
@@ -53,7 +51,6 @@ func (h *HandlerFactory) RegisterHealthzHandler(ctx context.Context) {
 		h.log.Infow("request for", "service", ServiceName, "path", pattern,
 			"status", status,
 		)
-
 		w.WriteHeader(status)
 	})
 }
@@ -73,11 +70,9 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 			WriteError(w, http.StatusBadRequest, err.Error())
 			return
 		}
-		pricesAPI := pokemonpricetracker.MakePricesAPI(card)
-		result, retryable := h.client.MakeRetryable(pricesAPI)
 
 		start := time.Now()
-		err = retry.RunRetryable(ctx, retryable)
+		err = h.client.GetPricing(ctx, &card)
 		end := time.Now()
 		elapsed := end.Sub(start)
 
@@ -104,7 +99,7 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 				"service": ServiceName,
 				"ok":      true,
 				"ID":      card.ID,
-				"result":  json.RawMessage(result.Body),
+				"result":  card,
 			})
 	})
 }

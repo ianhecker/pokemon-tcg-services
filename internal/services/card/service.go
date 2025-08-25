@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcgio/v2"
+	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
 	"github.com/ianhecker/pokemon-tcg-services/internal/services"
 	"go.uber.org/zap"
 )
@@ -19,7 +19,7 @@ type CardServiceInterface interface {
 
 type CardService struct {
 	log            *zap.SugaredLogger
-	client         v2.APIClientInterface
+	client         pokemonpricetracker.APIClientInterface
 	srv            *http.Server
 	handlerFactory *HandlerFactory
 	done           chan struct{}
@@ -29,7 +29,7 @@ type CardService struct {
 
 func NewService(
 	logger *zap.SugaredLogger,
-	client v2.APIClientInterface,
+	client pokemonpricetracker.APIClientInterface,
 	addr string,
 ) CardServiceInterface {
 	srv := &http.Server{
@@ -49,7 +49,7 @@ func NewService(
 
 func NewServiceFromRaw(
 	logger *zap.SugaredLogger,
-	client v2.APIClientInterface,
+	client pokemonpricetracker.APIClientInterface,
 	srv *http.Server,
 	handlerFactory *HandlerFactory,
 	done chan struct{},
