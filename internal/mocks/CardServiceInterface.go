@@ -37,10 +37,113 @@ func (_m *MockCardServiceInterface) EXPECT() *MockCardServiceInterface_Expecter 
 	return &MockCardServiceInterface_Expecter{mock: &_m.Mock}
 }
 
+// Done provides a mock function for the type MockCardServiceInterface
+func (_mock *MockCardServiceInterface) Done() <-chan struct{} {
+	ret := _mock.Called()
+
+	if len(ret) == 0 {
+		panic("no return value specified for Done")
+	}
+
+	var r0 <-chan struct{}
+	if returnFunc, ok := ret.Get(0).(func() <-chan struct{}); ok {
+		r0 = returnFunc()
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(<-chan struct{})
+		}
+	}
+	return r0
+}
+
+// MockCardServiceInterface_Done_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Done'
+type MockCardServiceInterface_Done_Call struct {
+	*mock.Call
+}
+
+// Done is a helper method to define mock.On call
+func (_e *MockCardServiceInterface_Expecter) Done() *MockCardServiceInterface_Done_Call {
+	return &MockCardServiceInterface_Done_Call{Call: _e.mock.On("Done")}
+}
+
+func (_c *MockCardServiceInterface_Done_Call) Run(run func()) *MockCardServiceInterface_Done_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *MockCardServiceInterface_Done_Call) Return(valCh <-chan struct{}) *MockCardServiceInterface_Done_Call {
+	_c.Call.Return(valCh)
+	return _c
+}
+
+func (_c *MockCardServiceInterface_Done_Call) RunAndReturn(run func() <-chan struct{}) *MockCardServiceInterface_Done_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
+// Err provides a mock function for the type MockCardServiceInterface
+func (_mock *MockCardServiceInterface) Err() error {
+	ret := _mock.Called()
+
+	if len(ret) == 0 {
+		panic("no return value specified for Err")
+	}
+
+	var r0 error
+	if returnFunc, ok := ret.Get(0).(func() error); ok {
+		r0 = returnFunc()
+	} else {
+		r0 = ret.Error(0)
+	}
+	return r0
+}
+
+// MockCardServiceInterface_Err_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Err'
+type MockCardServiceInterface_Err_Call struct {
+	*mock.Call
+}
+
+// Err is a helper method to define mock.On call
+func (_e *MockCardServiceInterface_Expecter) Err() *MockCardServiceInterface_Err_Call {
+	return &MockCardServiceInterface_Err_Call{Call: _e.mock.On("Err")}
+}
+
+func (_c *MockCardServiceInterface_Err_Call) Run(run func()) *MockCardServiceInterface_Err_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *MockCardServiceInterface_Err_Call) Return(err error) *MockCardServiceInterface_Err_Call {
+	_c.Call.Return(err)
+	return _c
+}
+
+func (_c *MockCardServiceInterface_Err_Call) RunAndReturn(run func() error) *MockCardServiceInterface_Err_Call {
+	_c.Call.Return(run)
+	return _c
+}
+
 // Start provides a mock function for the type MockCardServiceInterface
-func (_mock *MockCardServiceInterface) Start(ctx context.Context) {
-	_mock.Called(ctx)
-	return
+func (_mock *MockCardServiceInterface) Start(ctx context.Context) func() {
+	ret := _mock.Called(ctx)
+
+	if len(ret) == 0 {
+		panic("no return value specified for Start")
+	}
+
+	var r0 func()
+	if returnFunc, ok := ret.Get(0).(func(context.Context) func()); ok {
+		r0 = returnFunc(ctx)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(func())
+		}
+	}
+	return r0
 }
 
 // MockCardServiceInterface_Start_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Start'
@@ -67,56 +170,12 @@ func (_c *MockCardServiceInterface_Start_Call) Run(run func(ctx context.Context)
 	return _c
 }
 
-func (_c *MockCardServiceInterface_Start_Call) Return() *MockCardServiceInterface_Start_Call {
-	_c.Call.Return()
+func (_c *MockCardServiceInterface_Start_Call) Return(stop func()) *MockCardServiceInterface_Start_Call {
+	_c.Call.Return(stop)
 	return _c
 }
 
-func (_c *MockCardServiceInterface_Start_Call) RunAndReturn(run func(ctx context.Context)) *MockCardServiceInterface_Start_Call {
-	_c.Run(run)
-	return _c
-}
-
-// Stop provides a mock function for the type MockCardServiceInterface
-func (_mock *MockCardServiceInterface) Stop() error {
-	ret := _mock.Called()
-
-	if len(ret) == 0 {
-		panic("no return value specified for Stop")
-	}
-
-	var r0 error
-	if returnFunc, ok := ret.Get(0).(func() error); ok {
-		r0 = returnFunc()
-	} else {
-		r0 = ret.Error(0)
-	}
-	return r0
-}
-
-// MockCardServiceInterface_Stop_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'Stop'
-type MockCardServiceInterface_Stop_Call struct {
-	*mock.Call
-}
-
-// Stop is a helper method to define mock.On call
-func (_e *MockCardServiceInterface_Expecter) Stop() *MockCardServiceInterface_Stop_Call {
-	return &MockCardServiceInterface_Stop_Call{Call: _e.mock.On("Stop")}
-}
-
-func (_c *MockCardServiceInterface_Stop_Call) Run(run func()) *MockCardServiceInterface_Stop_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run()
-	})
-	return _c
-}
-
-func (_c *MockCardServiceInterface_Stop_Call) Return(err error) *MockCardServiceInterface_Stop_Call {
-	_c.Call.Return(err)
-	return _c
-}
-
-func (_c *MockCardServiceInterface_Stop_Call) RunAndReturn(run func() error) *MockCardServiceInterface_Stop_Call {
+func (_c *MockCardServiceInterface_Start_Call) RunAndReturn(run func(ctx context.Context) func()) *MockCardServiceInterface_Start_Call {
 	_c.Call.Return(run)
 	return _c
 }
