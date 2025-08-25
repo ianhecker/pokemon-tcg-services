@@ -9,7 +9,10 @@ import (
 var CardIDRegex = regexp.MustCompile(`^[A-Za-z0-9._:-]+$`)
 
 type Card struct {
-	ID string
+	ID     string
+	Name   string `json:"name"`
+	Number int    `json:"number"`
+	Set    Set    `json:"set"`
 }
 
 func MakeCard(ID string) (Card, error) {
