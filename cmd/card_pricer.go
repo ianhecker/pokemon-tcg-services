@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 
-	v2 "github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
-	"github.com/ianhecker/pokemon-tcg-services/internal/services/card"
+	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
+	"github.com/ianhecker/pokemon-tcg-services/internal/services/cardpricer"
 )
 
 var cardPricerCmd = &cobra.Command{
@@ -26,9 +26,9 @@ func RunCardService(port string) {
 	logger := base.Sugar()
 
 	ctx := context.Background()
-	client := v2.NewClient(logger)
+	client := pokemonpricetracker.NewClient(logger)
 
-	svc := card.NewService(logger, client, port)
+	svc := cardpricer.NewService(logger, client, port)
 	stop := svc.Start(ctx)
 	defer stop()
 
