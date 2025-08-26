@@ -11,18 +11,21 @@ import (
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
 )
 
 func newTestServer(t *testing.T, status int, body string) *httptest.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+		token := r.Header.Get("Authorization")
+		assert.Equal(t, token, "Bearer token")
+
 		w.WriteHeader(status)
 		if body != "" {
 			fmt.Fprint(w, body)
 		}
 	})
-
 	return httptest.NewServer(mux)
 }
 
@@ -71,8 +74,9 @@ func TestClient_Get(t *testing.T) {
 
 			ctx := context.Background()
 			logger := zap.NewNop().Sugar()
+			token := config.NewToken("token")
 
-			client := networking.NewClient(logger)
+			client := networking.NewClient(logger, token)
 			body, status, err := client.Get(ctx, srv.URL+"/hello")
 
 			assert.Equal(t, test.status, status)
@@ -95,15 +99,15 @@ func TestClient_Get(t *testing.T) {
 		ctx := context.Background()
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		logger := zap.NewNop().Sugar()
+		token := config.NewToken("token")
 
-		client := networking.NewClient(logger)
+		client := networking.NewClient(logger, token)
 
 		errorChan := make(chan error, 1)
 		go func() {
 			_, _, err := client.Get(ctx, srv.URL+"/sleeping")
 			errorChan <- err
 		}()
-
 		cancel()
 
 		select {

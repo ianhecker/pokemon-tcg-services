@@ -9,6 +9,8 @@ import (
 	"time"
 
 	"go.uber.org/zap"
+
+	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 )
 
 type HttpClientInterface interface {
@@ -16,19 +18,22 @@ type HttpClientInterface interface {
 }
 
 type Client struct {
-	httpclient *http.Client
 	logger     *zap.SugaredLogger
+	httpclient *http.Client
+	token      *config.Token
 }
 
 func NewClient(
 	logger *zap.SugaredLogger,
+	token *config.Token,
 ) HttpClientInterface {
 	return &Client{
+		logger: logger,
 		httpclient: &http.Client{
 			Timeout:   0,
 			Transport: NewTransport(),
 		},
-		logger: logger,
+		token: token,
 	}
 }
 
@@ -42,6 +47,7 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 		log.Errorw("creating request", "url", url, "error", err)
 		return nil, 0, fmt.Errorf("error creating request: %w", err)
 	}
+	client.SetAuthorization(req)
 
 	duration, body, status, err := client.Do(req)
 	if err != nil {
@@ -82,6 +88,10 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 		"time", duration.String(),
 		"body", string(body))
 	return body, status, nil
+}
+
+func (client *Client) SetAuthorization(request *http.Request) {
+	request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.token.Inject()))
 }
 
 func (client *Client) Do(request *http.Request) (time.Duration, []byte, int, error) {
