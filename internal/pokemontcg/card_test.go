@@ -1,6 +1,7 @@
 package pokemontcg_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -29,7 +30,7 @@ func TestSanitizeCardID(t *testing.T) {
 				assert.Nil(t, err)
 				assert.Equal(t, test.sanitized, ID.String())
 			} else {
-				assert.ErrorContains(t, err, "invalid card ID: "+test.ID)
+				assert.ErrorContains(t, err, fmt.Sprintf("invalid card ID: '%s'", test.ID))
 			}
 		})
 	}
