@@ -6,35 +6,39 @@ import (
 	"time"
 )
 
+// For fast endpoints: quick connect, quick TLS, short header wait,
+// healthy idle pool, and a sane ceiling on in-flight per host.
 func NewTransport() *http.Transport {
 	return &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
+
 		DialContext: (&net.Dialer{
-			Timeout:   10 * time.Second,
-			KeepAlive: 60 * time.Second,
+			Timeout:   3 * time.Second,  // fast connect or bail
+			KeepAlive: 30 * time.Second, // keep connections warm
 		}).DialContext,
 
-		// Let Go negotiate HTTP/2 for better reuse/multiplexing.
+		// Reuse a single HTTP/2 TCP conn with many streams where possible.
 		ForceAttemptHTTP2:   true,
-		TLSHandshakeTimeout: 10 * time.Second,
+		TLSHandshakeTimeout: 3 * time.Second,
 
-		// Important: let your per-request context control total time.
-		// If the API can take ~1m to respond, don't cap header wait here.
-		ResponseHeaderTimeout: 0,
+		// Snappy APIs shouldn't stall; fail fast if headers don't arrive.
+		// If you occasionally see timeouts on good networks, bump to 4–5s.
+		ResponseHeaderTimeout: 2 * time.Second,
 
-		// You’re not sending large bodies (mostly GETs), so 100-continue isn’t needed.
+		// Mostly GETs; don't bother with 100-continue dance.
 		ExpectContinueTimeout: 0,
 
-		// Pooling: generous but not excessive for a rate-limited API.
-		IdleConnTimeout:     120 * time.Second,
-		MaxIdleConns:        64,
-		MaxIdleConnsPerHost: 32,
+		// Keep an idle pool so bursts don't pay new handshakes,
+		// but drain idle conns reasonably quickly.
+		IdleConnTimeout:     45 * time.Second,
+		MaxIdleConns:        128,
+		MaxIdleConnsPerHost: 64,
 
-		// Leave unlimited; enforce rate/parallelism in your own limiter.
-		// (If you want a hard ceiling on in-flight to this host, set 4–8 here.)
-		MaxConnsPerHost: 0,
+		// Hard ceiling to prevent stampede; tune to your parallelism.
+		// Set to 0 if you enforce concurrency elsewhere.
+		MaxConnsPerHost: 64,
 
-		// Keep gzip on for smaller JSON payloads.
+		// Leave gzip on; small JSON gets smaller.
 		DisableCompression: false,
 	}
 }
