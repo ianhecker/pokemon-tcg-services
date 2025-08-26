@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
 	tcg "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
@@ -29,9 +30,11 @@ type Client struct {
 	timeout time.Duration
 }
 
-func NewClient(logger *zap.SugaredLogger) *Client {
-	httpClient := networking.NewClient(logger)
-
+func NewClient(
+	logger *zap.SugaredLogger,
+	token *config.Token,
+) *Client {
+	httpClient := networking.NewClient(logger, token)
 	return &Client{
 		log:    logger,
 		client: httpClient,

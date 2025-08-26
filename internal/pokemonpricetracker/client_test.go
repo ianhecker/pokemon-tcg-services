@@ -5,12 +5,13 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
-	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
+
+	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
+	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 )
 
 func TestClient_MakeRetryFunc(t *testing.T) {
