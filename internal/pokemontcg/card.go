@@ -22,10 +22,10 @@ type Card struct {
 	LastUpdated string `json:"lastUpdated"`
 }
 
-func MakeCardID(ID string) (CardID, error) {
-	sani := strings.TrimSpace(ID)
-	if sani == "" || !CardIDRegex.MatchString(sani) {
-		return "", fmt.Errorf("invalid card ID: %s", sani)
+func MakeCardID(s string) (CardID, error) {
+	ID := strings.TrimSpace(s)
+	if ID == "" || !CardIDRegex.MatchString(ID) {
+		return "", fmt.Errorf("invalid card ID: '%s'", ID)
 	}
-	return CardID(sani), nil
+	return CardID(ID), nil
 }
