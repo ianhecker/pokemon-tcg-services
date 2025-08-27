@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
 	"go.uber.org/zap"
 )
 
@@ -23,12 +23,12 @@ func WriteError(w http.ResponseWriter, status int, msg string) {
 type HandlerFactory struct {
 	log    *zap.SugaredLogger
 	mux    *http.ServeMux
-	client pokemonpricetracker.APIClientInterface
+	client justtcg.APIClientInterface
 }
 
 func NewHandlerFactory(
 	logger *zap.SugaredLogger,
-	client pokemonpricetracker.APIClientInterface,
+	client justtcg.APIClientInterface,
 ) *HandlerFactory {
 	return &HandlerFactory{
 		log:    logger,
