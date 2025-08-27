@@ -16,8 +16,8 @@ func TestSanitizeCardID(t *testing.T) {
 		sanitized string
 		valid     bool
 	}{
-		{"happy path", "xy1-1", "xy1-1", true},
-		{"happy path trim space", " xy1-1 ", "xy1-1", true},
+		{"happy path", "124014", "124014", true},
+		{"happy path trim space", " 124014 ", "124014", true},
 		{"empty", "", "", false},
 		{"bad ID", "bad ID", "bad ID", false},
 	}

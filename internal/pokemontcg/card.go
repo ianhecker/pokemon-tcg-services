@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var CardIDRegex = regexp.MustCompile(`^[A-Za-z0-9._:-]+$`)
+var CardIDRegex = regexp.MustCompile(`^[0-9]+$`)
 
 type CardID string
 
