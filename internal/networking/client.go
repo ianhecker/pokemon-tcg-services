@@ -85,13 +85,12 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 
 	log.Infow("got response",
 		"url", url,
-		"time", duration.String(),
-		"body", string(body))
+		"time", duration.String())
 	return body, status, nil
 }
 
 func (client *Client) SetAuthorization(request *http.Request) {
-	request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", client.token.Inject()))
+	request.Header.Set("X-API-Key", client.token.Inject())
 }
 
 func (client *Client) Do(request *http.Request) (time.Duration, []byte, int, error) {

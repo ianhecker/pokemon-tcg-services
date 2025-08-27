@@ -18,8 +18,8 @@ import (
 func newTestServer(t *testing.T, status int, body string) *httptest.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		token := r.Header.Get("Authorization")
-		assert.Equal(t, token, "Bearer token")
+		token := r.Header.Get("X-API-Key")
+		assert.Equal(t, token, "token")
 
 		w.WriteHeader(status)
 		if body != "" {
