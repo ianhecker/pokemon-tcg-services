@@ -1,10 +1,10 @@
-package pokemonpricetracker_test
+package justtcg_test
 
 import (
 	"fmt"
 	"testing"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"github.com/stretchr/testify/assert"
 )
@@ -37,7 +37,7 @@ func TestRetryForStatus(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			state := pokemonpricetracker.RetryForStatus(test.status)
+			state := justtcg.RetryForStatus(test.status)
 			assert.Equal(t, test.state, state,
 				fmt.Sprintf("status:%d want:%s got:%s", test.status, test.state, state),
 			)

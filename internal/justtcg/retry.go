@@ -1,4 +1,4 @@
-package pokemonpricetracker
+package justtcg
 
 import (
 	"net/http"

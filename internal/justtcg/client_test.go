@@ -1,4 +1,4 @@
-package pokemonpricetracker_test
+package justtcg_test
 
 import (
 	"context"
@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
 	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemonpricetracker"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 )
 
@@ -25,7 +25,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Return(body, status, nil)
 
 		logger := zap.NewNop().Sugar()
-		client := pokemonpricetracker.NewClientFromRaw(logger, mockClient)
+		client := justtcg.NewClientFromRaw(logger, mockClient)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -46,7 +46,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Return(nil, 0, expected)
 
 		logger := zap.NewNop().Sugar()
-		client := pokemonpricetracker.NewClientFromRaw(logger, mockClient)
+		client := justtcg.NewClientFromRaw(logger, mockClient)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -65,7 +65,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Return(body, status, nil)
 
 		logger := zap.NewNop().Sugar()
-		client := pokemonpricetracker.NewClientFromRaw(logger, mockClient)
+		client := justtcg.NewClientFromRaw(logger, mockClient)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -87,7 +87,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Return(body, status, nil)
 
 		logger := zap.NewNop().Sugar()
-		client := pokemonpricetracker.NewClientFromRaw(logger, mockClient)
+		client := justtcg.NewClientFromRaw(logger, mockClient)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -109,7 +109,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Return(body, status, nil)
 
 		logger := zap.NewNop().Sugar()
-		client := pokemonpricetracker.NewClientFromRaw(logger, mockClient)
+		client := justtcg.NewClientFromRaw(logger, mockClient)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
@@ -131,7 +131,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 			Return(body, status, nil)
 
 		logger := zap.NewNop().Sugar()
-		client := pokemonpricetracker.NewClientFromRaw(logger, mockClient)
+		client := justtcg.NewClientFromRaw(logger, mockClient)
 		result, retryFunc := client.MakeRetryFunc(url)
 
 		state, err := retryFunc(context.Background())
