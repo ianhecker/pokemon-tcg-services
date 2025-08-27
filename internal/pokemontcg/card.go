@@ -15,11 +15,13 @@ func (cardID CardID) String() string {
 }
 
 type Card struct {
-	ID          CardID
-	Name        string `json:"name"`
-	Number      int    `json:"number,string"`
-	Set         Set    `json:"set"`
-	LastUpdated string `json:"lastUpdated"`
+	ID          string             `json:"id"`
+	TCGPlayerID CardID             `json:"tcgplayerId"`
+	Name        string             `json:"name"`
+	Number      string             `json:"number"`
+	Rarity      string             `json:"rarity"`
+	Set         string             `json:"set"`
+	Pricing     []ConditionPricing `json:"variants"`
 }
 
 func MakeCardID(s string) (CardID, error) {

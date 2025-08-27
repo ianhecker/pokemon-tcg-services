@@ -4,6 +4,7 @@ import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
 	"github.com/stretchr/testify/assert"
@@ -19,20 +20,24 @@ func readTestdata(t *testing.T, name string) []byte {
 	return bytes
 }
 
-func TestPricingResponse_Unmarshal(t *testing.T) {
+func TestPricingResponse_UnmarshalJSON(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
 		want := pokemontcg.Card{
-			ID:     "xy1-1",
-			Name:   "Venusaur-EX",
-			Number: 1,
-			Set: pokemontcg.Set{
-				ID:          "xy1",
-				Name:        "XY",
-				Series:      "XY",
-				Total:       146,
-				ReleaseDate: "2014/02/05",
+			ID:          "pokemon-xy-evolutions-venusaur-ex-ultra-rare",
+			Name:        "Venusaur EX",
+			Number:      "1/108",
+			Rarity:      "Ultra Rare",
+			Set:         "XY - Evolutions",
+			TCGPlayerID: pokemontcg.CardID("124014"),
+			Pricing: []pokemontcg.ConditionPricing{
+				pokemontcg.ConditionPricing{
+					Condition:   pokemontcg.Damaged,
+					LastUpdated: time.Unix(1756329181, 0).UTC(),
+					Market:      1.05,
+					MaxPrice30d: 1.05,
+					MinPrice30d: 1.04,
+				},
 			},
-			LastUpdated: "2025-08-25T17:16:54.954Z",
 		}
 		bytes := readTestdata(t, "card.json")
 

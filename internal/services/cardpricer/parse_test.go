@@ -22,7 +22,7 @@ func TestParseCardQuery(t *testing.T) {
 		expected string
 		err      string
 	}{
-		{"happy path", newRequest(t, "?id=base1-1"), "base1-1", ""},
+		{"happy path", newRequest(t, "?id=124014"), "124014", ""},
 		{"request is nil", nil, "", "request is nil"},
 		{"missing query", newRequest(t, ""), "", "missing required query: id"},
 		{"empty query", newRequest(t, "?id="), "", "invalid card ID: ''"},

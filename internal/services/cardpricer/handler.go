@@ -90,16 +90,16 @@ func (h *HandlerFactory) RegisterV1CardsHandler(ctx context.Context) {
 		h.log.Infow("serving request",
 			"service", ServiceName,
 			"path", r.URL.Path,
-			"ID", card.ID,
+			"tcgplayerID", card.TCGPlayerID,
 			"elapsed", elapsed.String(),
 		)
 
 		WriteJSON(w, http.StatusOK,
 			map[string]any{
-				"service": ServiceName,
-				"ok":      true,
-				"ID":      card.ID,
-				"result":  card,
+				"service":     ServiceName,
+				"ok":          true,
+				"tcgplayerID": card.TCGPlayerID,
+				"result":      card,
 			})
 	})
 }
