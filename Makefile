@@ -28,7 +28,10 @@ test: tidy
 	@$(GOTEST) -v -count=1 ./...
 
 docker-build:
-	docker build -t pokemon-tcg-services .
+	docker build --no-cache -t pokemon-tcg-services .
 
 run-card-pricer: docker-build
-	docker run --rm -p 8080:8080 pokemon-tcg-services:latest card-pricer --port 8080
+	docker run --rm -p 8080:8080 \
+	 --env-file .env \
+	pokemon-tcg-services:latest \
+	card-pricer --port 8080
