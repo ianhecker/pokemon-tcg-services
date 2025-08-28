@@ -55,8 +55,11 @@ func (card *Card) UnmarshalJSON(bytes []byte) error {
 	if err != nil {
 		return fmt.Errorf("error with variants: %w", err)
 	}
-	prices := MakeConditionPricesFromVariants(m)
-	tmp := MakeCard(
+	prices, err := MakeConditionPricesFromVariants(m)
+	if err != nil {
+		return fmt.Errorf("error creating condition prices: %w", err)
+	}
+	*card = MakeCard(
 		raw.ID,
 		raw.TCGPlayerID,
 		raw.Name,
@@ -65,6 +68,5 @@ func (card *Card) UnmarshalJSON(bytes []byte) error {
 		raw.Set,
 		prices,
 	)
-	*card = tmp
 	return nil
 }
