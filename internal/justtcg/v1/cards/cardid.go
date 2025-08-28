@@ -1,6 +1,7 @@
 package cards
 
 import (
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"strings"
@@ -20,4 +21,18 @@ func MakeCardID(s string) (CardID, error) {
 		return "", fmt.Errorf("invalid card ID: '%s'", ID)
 	}
 	return CardID(ID), nil
+}
+
+func (cardID *CardID) UnmarshalJSON(bytes []byte) error {
+	var tmp string
+	err := json.Unmarshal(bytes, &tmp)
+	if err != nil {
+		return fmt.Errorf("error unmarshaling card ID: %w", err)
+	}
+	ID, err := MakeCardID(tmp)
+	if err != nil {
+		return fmt.Errorf("error unmarshaling card ID: %w", err)
+	}
+	*cardID = ID
+	return nil
 }
