@@ -1,15 +1,14 @@
-package pokemontcg_test
+package cards_test
 
 import (
 	"fmt"
 	"testing"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 	"github.com/stretchr/testify/assert"
-
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
 )
 
-func TestSanitizeCardID(t *testing.T) {
+func TestCard_MakeCardID(t *testing.T) {
 	var tests = []struct {
 		name      string
 		ID        string
@@ -24,7 +23,7 @@ func TestSanitizeCardID(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			ID, err := pokemontcg.MakeCardID(test.ID)
+			ID, err := cards.MakeCardID(test.ID)
 
 			if test.valid {
 				assert.Nil(t, err)

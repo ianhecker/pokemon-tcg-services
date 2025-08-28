@@ -1,4 +1,4 @@
-package pokemontcg
+package cards
 
 import (
 	"fmt"
@@ -12,16 +12,6 @@ type CardID string
 
 func (cardID CardID) String() string {
 	return string(cardID)
-}
-
-type Card struct {
-	ID          string             `json:"id"`
-	TCGPlayerID CardID             `json:"tcgplayerId"`
-	Name        string             `json:"name"`
-	Number      string             `json:"number"`
-	Rarity      string             `json:"rarity"`
-	Set         string             `json:"set"`
-	Pricing     []ConditionPricing `json:"variants"`
 }
 
 func MakeCardID(s string) (CardID, error) {
