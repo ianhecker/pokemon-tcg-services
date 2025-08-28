@@ -19,6 +19,20 @@ func (condition Condition) MarshalJSON() ([]byte, error) {
 	return bytes, nil
 }
 
+func (condition *Condition) UnmarshalJSON(bytes []byte) error {
+	var tmp string
+	err := json.Unmarshal(bytes, &tmp)
+	if err != nil {
+		return fmt.Errorf("error unmarshaling condition: %w", err)
+	}
+	c, err := ParseCondition(tmp)
+	if err != nil {
+		return fmt.Errorf("error unmarshaling condition: %w", err)
+	}
+	*condition = c
+	return nil
+}
+
 const (
 	NearMint Condition = iota
 	LightlyPlayed
