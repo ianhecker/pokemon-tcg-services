@@ -4,18 +4,19 @@ import (
 	"context"
 	"time"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/config"
-	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
-	pokemon "github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
-	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"go.uber.org/zap"
+
+	"github.com/ianhecker/pokemon-tcg-services/internal/config"
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
+	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
+	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 )
 
 const Retries int = 5
 const BackoffInSeconds = 1 * time.Second
 
 type APIClientInterface interface {
-	GetPricing(ctx context.Context, ID pokemon.CardID) (pokemon.Card, error)
+	GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, error)
 }
 
 type Result struct {
@@ -51,24 +52,24 @@ func NewClientFromRaw(
 	}
 }
 
-func (c *Client) GetPricing(ctx context.Context, ID pokemon.CardID) (pokemon.Card, error) {
-	url := MakePricesAPIFromCardID(ID)
+func (c *Client) GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, error) {
+	url := cards.GetCardByID(ID)
 	result, retryFunc := c.MakeRetryFunc(url)
 	retryable := retry.MakeRetryable(Retries, BackoffInSeconds, retryFunc)
 
 	err := retry.RunRetryable(ctx, retryable)
 	if err != nil {
-		return pokemon.Card{}, err
+		return cards.Card{}, err
 	}
 
-	var response pokemon.PricingResponse
+	var response cards.Response
 	err = response.UnmarshalJSON(result.Body)
 	if err != nil {
-		return pokemon.Card{}, err
+		return cards.Card{}, err
 	}
 	card, err := response.GetCardIndex(0)
 	if err != nil {
-		return pokemon.Card{}, err
+		return cards.Card{}, err
 	}
 	return card, nil
 }
