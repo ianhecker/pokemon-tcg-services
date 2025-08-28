@@ -6,7 +6,6 @@ import (
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
 	"github.com/ianhecker/pokemon-tcg-services/internal/services/cardpricer"
 )
@@ -22,13 +21,14 @@ var cardPricerCmd = &cobra.Command{
 }
 
 func RunCardService(port string) {
+	Config.FlightCheck()
+
 	base, _ := zap.NewProduction()
 	defer base.Sync()
 	logger := base.Sugar()
 
 	ctx := context.Background()
-	token := config.NewToken("")
-	client := justtcg.NewClient(logger, token)
+	client := justtcg.NewClient(logger, Config.JustTCG.APIKey)
 
 	svc := cardpricer.NewService(logger, client, port)
 	stop := svc.Start(ctx)
