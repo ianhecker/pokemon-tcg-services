@@ -50,7 +50,7 @@ func TestVariants_ToMap(t *testing.T) {
 			},
 		}
 		expected := map[pokemontcg.Condition]cards.Prices{
-			pokemontcg.NearMint: {
+			pokemontcg.NearMint: cards.Prices{
 				Market:      1.0,
 				MinPrice30d: 1.1,
 				MaxPrice30d: 1.2,
