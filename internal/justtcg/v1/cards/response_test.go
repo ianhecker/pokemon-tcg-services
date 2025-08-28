@@ -1,70 +1,81 @@
 package cards_test
 
-// import (
-// 	"os"
-// 	"path/filepath"
-// 	"testing"
-// 	"time"
+import (
+	"testing"
+	"time"
 
-// 	"github.com/stretchr/testify/assert"
-// 	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
-// 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
-// 	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
-// )
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
+)
 
-// func readTestdata(t *testing.T, name string) []byte {
-// 	path := filepath.Join("testdata", name)
-// 	bytes, err := os.ReadFile(path)
-// 	if err != nil {
-// 		assert.Failf(t, "reading testdata: %s: %v", path, err)
-// 	}
-// 	return bytes
-// }
+func TestResponse_UnmarshalJSON(t *testing.T) {
+	t.Run("happy path", func(t *testing.T) {
+		expected := cards.Card{
+			ID:          "pokemon-xy-evolutions-venusaur-ex-ultra-rare",
+			TCGPlayerID: "124014",
+			Name:        "Venusaur EX",
+			Number:      "1/108",
+			Rarity:      "Ultra Rare",
+			Set:         "XY - Evolutions",
+			Prices: cards.ConditionPrices{
+				NearMint: cards.Prices{
+					Market:      3.25,
+					MinPrice30d: 3.2,
+					MaxPrice30d: 3.49,
+					LastUpdated: time.Unix(1756380625, 0).UTC(),
+				},
+				LightlyPlayed: cards.Prices{
+					Market:      3.01,
+					MinPrice30d: 2.9,
+					MaxPrice30d: 3.01,
+					LastUpdated: time.Unix(1756380625, 0).UTC(),
+				},
+				ModeratelyPlayed: cards.Prices{
+					Market:      2.31,
+					MinPrice30d: 2.25,
+					MaxPrice30d: 2.31,
+					LastUpdated: time.Unix(1756380625, 0).UTC(),
+				},
+				HeavilyPlayed: cards.Prices{
+					Market:      1.56,
+					MinPrice30d: 1.5,
+					MaxPrice30d: 1.56,
+					LastUpdated: time.Unix(1756380625, 0).UTC(),
+				},
+				Damaged: cards.Prices{
+					Market:      1.06,
+					MinPrice30d: 1.04,
+					MaxPrice30d: 1.06,
+					LastUpdated: time.Unix(1756380625, 0).UTC(),
+				},
+			},
+		}
+		bytes := readTestdata(t, "response.json")
 
-// func TestResponse_UnmarshalJSON(t *testing.T) {
-// 	t.Run("happy path", func(t *testing.T) {
-// 		want := cards.Card{
-// 			ID:          "pokemon-xy-evolutions-venusaur-ex-ultra-rare",
-// 			Name:        "Venusaur EX",
-// 			Number:      "1/108",
-// 			Rarity:      "Ultra Rare",
-// 			Set:         "XY - Evolutions",
-// 			TCGPlayerID: cards.CardID("124014"),
-// 			Pricing: []cards.ConditionPricing{
-// 				cards.ConditionPricing{
-// 					Condition:   pokemontcg.Damaged,
-// 					LastUpdated: time.Unix(1756329181, 0).UTC(),
-// 					Market:      1.05,
-// 					MaxPrice30d: 1.05,
-// 					MinPrice30d: 1.04,
-// 				},
-// 			},
-// 		}
-// 		bytes := readTestdata(t, "card.json")
+		var response cards.Response
+		err := response.UnmarshalJSON(bytes)
+		require.NoError(t, err)
 
-// 		var response cards.PricingResponse
-// 		err := response.UnmarshalJSON(bytes)
-// 		require.NoError(t, err)
+		card, err := response.GetCardIndex(0)
+		assert.NoError(t, err)
+		assert.Equal(t, expected, card)
+	})
 
-// 		card, err := response.GetCardIndex(0)
-// 		assert.NoError(t, err)
-// 		assert.Equal(t, want, card)
-// 	})
+	t.Run("bad json", func(t *testing.T) {
+		bytes := readTestdata(t, "bad.json")
 
-// 	t.Run("bad json", func(t *testing.T) {
-// 		bytes := readTestdata(t, "malformed_card.json")
+		var response cards.Response
+		err := response.UnmarshalJSON(bytes)
+		require.ErrorContains(t, err, "error unmarshaling response")
+	})
 
-// 		var response cards.PricingResponse
-// 		err := response.UnmarshalJSON(bytes)
-// 		require.ErrorContains(t, err, "invalid character ',' after top-level value")
-// 	})
+	t.Run("empty cards", func(t *testing.T) {
+		bytes := readTestdata(t, "empty_cards.json")
 
-// 	t.Run("empty cards", func(t *testing.T) {
-// 		bytes := readTestdata(t, "empty_cards.json")
-
-// 		var response cards.PricingResponse
-// 		err := response.UnmarshalJSON(bytes)
-// 		require.ErrorContains(t, err, "zero cards in response")
-// 	})
-// }
+		var response cards.Response
+		err := response.UnmarshalJSON(bytes)
+		require.ErrorContains(t, err, "zero cards in response")
+	})
+}

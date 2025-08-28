@@ -33,7 +33,7 @@ func (response *Response) UnmarshalJSON(bytes []byte) error {
 	}
 	err := json.Unmarshal(bytes, &tmp)
 	if err != nil {
-		return fmt.Errorf("error unmarshaling pricing response: %w", err)
+		return fmt.Errorf("error unmarshaling response: %w", err)
 	}
 	if len(response.Data) == 0 {
 		return fmt.Errorf("zero cards in response")
