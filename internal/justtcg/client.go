@@ -33,7 +33,7 @@ type Client struct {
 
 func NewClient(
 	logger *zap.SugaredLogger,
-	token *config.Token,
+	token config.Token,
 ) *Client {
 	httpClient := networking.NewClient(logger, token)
 	return &Client{

@@ -20,12 +20,12 @@ type HttpClientInterface interface {
 type Client struct {
 	logger     *zap.SugaredLogger
 	httpclient *http.Client
-	token      *config.Token
+	token      config.Token
 }
 
 func NewClient(
 	logger *zap.SugaredLogger,
-	token *config.Token,
+	token config.Token,
 ) HttpClientInterface {
 	return &Client{
 		logger: logger,
@@ -90,7 +90,7 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 }
 
 func (client *Client) SetAuthorization(request *http.Request) {
-	request.Header.Set("X-API-Key", client.token.Inject())
+	request.Header.Set("X-API-Key", client.token.Reveal())
 }
 
 func (client *Client) Do(request *http.Request) (time.Duration, []byte, int, error) {
