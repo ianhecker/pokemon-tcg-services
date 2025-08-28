@@ -7,7 +7,7 @@ package mocks
 import (
 	"context"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 	mock "github.com/stretchr/testify/mock"
 )
 
@@ -39,20 +39,29 @@ func (_m *MockAPIClientInterface) EXPECT() *MockAPIClientInterface_Expecter {
 }
 
 // GetPricing provides a mock function for the type MockAPIClientInterface
-func (_mock *MockAPIClientInterface) GetPricing(ctx context.Context, card *pokemontcg.Card) error {
-	ret := _mock.Called(ctx, card)
+func (_mock *MockAPIClientInterface) GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, error) {
+	ret := _mock.Called(ctx, ID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetPricing")
 	}
 
-	var r0 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context, *pokemontcg.Card) error); ok {
-		r0 = returnFunc(ctx, card)
-	} else {
-		r0 = ret.Error(0)
+	var r0 cards.Card
+	var r1 error
+	if returnFunc, ok := ret.Get(0).(func(context.Context, cards.CardID) (cards.Card, error)); ok {
+		return returnFunc(ctx, ID)
 	}
-	return r0
+	if returnFunc, ok := ret.Get(0).(func(context.Context, cards.CardID) cards.Card); ok {
+		r0 = returnFunc(ctx, ID)
+	} else {
+		r0 = ret.Get(0).(cards.Card)
+	}
+	if returnFunc, ok := ret.Get(1).(func(context.Context, cards.CardID) error); ok {
+		r1 = returnFunc(ctx, ID)
+	} else {
+		r1 = ret.Error(1)
+	}
+	return r0, r1
 }
 
 // MockAPIClientInterface_GetPricing_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetPricing'
@@ -62,20 +71,20 @@ type MockAPIClientInterface_GetPricing_Call struct {
 
 // GetPricing is a helper method to define mock.On call
 //   - ctx context.Context
-//   - card *pokemontcg.Card
-func (_e *MockAPIClientInterface_Expecter) GetPricing(ctx interface{}, card interface{}) *MockAPIClientInterface_GetPricing_Call {
-	return &MockAPIClientInterface_GetPricing_Call{Call: _e.mock.On("GetPricing", ctx, card)}
+//   - ID cards.CardID
+func (_e *MockAPIClientInterface_Expecter) GetPricing(ctx interface{}, ID interface{}) *MockAPIClientInterface_GetPricing_Call {
+	return &MockAPIClientInterface_GetPricing_Call{Call: _e.mock.On("GetPricing", ctx, ID)}
 }
 
-func (_c *MockAPIClientInterface_GetPricing_Call) Run(run func(ctx context.Context, card *pokemontcg.Card)) *MockAPIClientInterface_GetPricing_Call {
+func (_c *MockAPIClientInterface_GetPricing_Call) Run(run func(ctx context.Context, ID cards.CardID)) *MockAPIClientInterface_GetPricing_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 context.Context
 		if args[0] != nil {
 			arg0 = args[0].(context.Context)
 		}
-		var arg1 *pokemontcg.Card
+		var arg1 cards.CardID
 		if args[1] != nil {
-			arg1 = args[1].(*pokemontcg.Card)
+			arg1 = args[1].(cards.CardID)
 		}
 		run(
 			arg0,
@@ -85,12 +94,12 @@ func (_c *MockAPIClientInterface_GetPricing_Call) Run(run func(ctx context.Conte
 	return _c
 }
 
-func (_c *MockAPIClientInterface_GetPricing_Call) Return(err error) *MockAPIClientInterface_GetPricing_Call {
-	_c.Call.Return(err)
+func (_c *MockAPIClientInterface_GetPricing_Call) Return(card cards.Card, err error) *MockAPIClientInterface_GetPricing_Call {
+	_c.Call.Return(card, err)
 	return _c
 }
 
-func (_c *MockAPIClientInterface_GetPricing_Call) RunAndReturn(run func(ctx context.Context, card *pokemontcg.Card) error) *MockAPIClientInterface_GetPricing_Call {
+func (_c *MockAPIClientInterface_GetPricing_Call) RunAndReturn(run func(ctx context.Context, ID cards.CardID) (cards.Card, error)) *MockAPIClientInterface_GetPricing_Call {
 	_c.Call.Return(run)
 	return _c
 }
