@@ -21,7 +21,7 @@ func TestToken_String(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 
-			token := config.NewToken(test.input)
+			token := config.MakeToken(test.input)
 			assert.Equal(t, test.output, token.String())
 		})
 	}

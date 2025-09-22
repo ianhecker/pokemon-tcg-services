@@ -74,7 +74,7 @@ func TestClient_Get(t *testing.T) {
 
 			ctx := context.Background()
 			logger := zap.NewNop().Sugar()
-			token := config.NewToken("token")
+			token := config.MakeToken("token")
 
 			client := networking.NewClient(logger, token)
 			body, status, err := client.Get(ctx, srv.URL+"/hello")
@@ -99,7 +99,7 @@ func TestClient_Get(t *testing.T) {
 		ctx := context.Background()
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		logger := zap.NewNop().Sugar()
-		token := config.NewToken("token")
+		token := config.MakeToken("token")
 
 		client := networking.NewClient(logger, token)
 
