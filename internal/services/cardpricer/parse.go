@@ -8,7 +8,7 @@ import (
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 )
 
-func ParseCardQuery(r *http.Request) (cards.CardID, error) {
+func ParseCardQuery(r *http.Request) (cards.TCGPlayerID, error) {
 	if r == nil {
 		return "", errors.New("request is nil")
 	}
@@ -17,7 +17,7 @@ func ParseCardQuery(r *http.Request) (cards.CardID, error) {
 	if len(queryStrings) == 0 {
 		return "", errors.New("missing required query: id")
 	}
-	ID, err := cards.MakeCardID(queryStrings[0])
+	ID, err := cards.MakeTCGPlayerID(queryStrings[0])
 	if err != nil {
 		return "", fmt.Errorf("error with query: %w", err)
 	}

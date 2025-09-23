@@ -35,7 +35,7 @@ func TestParseCardQuery(t *testing.T) {
 
 			if test.err == "" {
 				assert.NoError(t, err)
-				assert.Equal(t, test.expected, ID.String())
+				assert.Equal(t, test.expected, ID)
 			} else {
 				assert.ErrorContains(t, err, test.err)
 			}

@@ -16,7 +16,7 @@ const Retries int = 5
 const BackoffInSeconds = 1 * time.Second
 
 type APIClientInterface interface {
-	GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, error)
+	GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Card, error)
 }
 
 type Result struct {
@@ -52,7 +52,7 @@ func NewClientFromRaw(
 	}
 }
 
-func (c *Client) GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, error) {
+func (c *Client) GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Card, error) {
 	url := cards.GetCardByID(ID)
 	result, retryFunc := c.MakeRetryFunc(url)
 	retryable := retry.MakeRetryable(Retries, BackoffInSeconds, retryFunc)
@@ -62,12 +62,11 @@ func (c *Client) GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, e
 		return cards.Card{}, err
 	}
 
-	var response cards.Response
-	err = response.UnmarshalJSON(result.Body)
+	response, err := cards.Decode(result.Body)
 	if err != nil {
 		return cards.Card{}, err
 	}
-	card, err := response.GetCardIndex(0)
+	card, err := cards.Map(response)
 	if err != nil {
 		return cards.Card{}, err
 	}
