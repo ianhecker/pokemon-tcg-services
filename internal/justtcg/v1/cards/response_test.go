@@ -19,36 +19,40 @@ func TestResponse_UnmarshalJSON(t *testing.T) {
 			Number:      "1/108",
 			Rarity:      "Ultra Rare",
 			Set:         "XY - Evolutions",
-			Prices: cards.ConditionPrices{
-				NearMint: cards.Prices{
-					Market:      3.25,
-					MinPrice30d: 3.2,
-					MaxPrice30d: 3.49,
-					LastUpdated: time.Unix(1756380625, 0).UTC(),
+			Prices: cards.PrintingConditionPrices{
+				"Holofoil": cards.ConditionPrices{
+					NearMint: cards.Prices{
+						Market:      3.25,
+						MinPrice30d: 3.2,
+						MaxPrice30d: 3.49,
+						LastUpdated: time.Unix(1756380625, 0).UTC(),
+					},
+					LightlyPlayed: cards.Prices{
+						Market:      3.01,
+						MinPrice30d: 2.9,
+						MaxPrice30d: 3.01,
+						LastUpdated: time.Unix(1756380625, 0).UTC(),
+					},
+					ModeratelyPlayed: cards.Prices{
+						Market:      2.31,
+						MinPrice30d: 2.25,
+						MaxPrice30d: 2.31,
+						LastUpdated: time.Unix(1756380625, 0).UTC(),
+					},
 				},
-				LightlyPlayed: cards.Prices{
-					Market:      3.01,
-					MinPrice30d: 2.9,
-					MaxPrice30d: 3.01,
-					LastUpdated: time.Unix(1756380625, 0).UTC(),
-				},
-				ModeratelyPlayed: cards.Prices{
-					Market:      2.31,
-					MinPrice30d: 2.25,
-					MaxPrice30d: 2.31,
-					LastUpdated: time.Unix(1756380625, 0).UTC(),
-				},
-				HeavilyPlayed: cards.Prices{
-					Market:      1.56,
-					MinPrice30d: 1.5,
-					MaxPrice30d: 1.56,
-					LastUpdated: time.Unix(1756380625, 0).UTC(),
-				},
-				Damaged: cards.Prices{
-					Market:      1.06,
-					MinPrice30d: 1.04,
-					MaxPrice30d: 1.06,
-					LastUpdated: time.Unix(1756380625, 0).UTC(),
+				"Unlimited Holofoil": cards.ConditionPrices{
+					HeavilyPlayed: cards.Prices{
+						Market:      1.56,
+						MinPrice30d: 1.5,
+						MaxPrice30d: 1.56,
+						LastUpdated: time.Unix(1756380625, 0).UTC(),
+					},
+					Damaged: cards.Prices{
+						Market:      1.06,
+						MinPrice30d: 1.04,
+						MaxPrice30d: 1.06,
+						LastUpdated: time.Unix(1756380625, 0).UTC(),
+					},
 				},
 			},
 		}

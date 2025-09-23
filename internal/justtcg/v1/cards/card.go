@@ -6,13 +6,13 @@ import (
 )
 
 type Card struct {
-	ID          string          `json:"id"`
-	TCGPlayerID CardID          `json:"tcgplayerId"`
-	Name        string          `json:"name"`
-	Number      string          `json:"number"`
-	Rarity      string          `json:"rarity"`
-	Set         string          `json:"set"`
-	Prices      ConditionPrices `json:"conditionPrices"`
+	ID          string                  `json:"id"`
+	TCGPlayerID CardID                  `json:"tcgplayerId"`
+	Name        string                  `json:"name"`
+	Number      string                  `json:"number"`
+	Rarity      string                  `json:"rarity"`
+	Set         string                  `json:"set"`
+	Prices      PrintingConditionPrices `json:"prices"`
 }
 
 func MakeCard(
@@ -22,7 +22,7 @@ func MakeCard(
 	number string,
 	rarity string,
 	set string,
-	prices ConditionPrices,
+	prices PrintingConditionPrices,
 ) Card {
 	return Card{
 		ID:          ID,
@@ -36,13 +36,13 @@ func MakeCard(
 }
 
 type RawCard struct {
-	ID          string   `json:"id"`
-	TCGPlayerID CardID   `json:"tcgplayerId"`
-	Name        string   `json:"name"`
-	Number      string   `json:"number"`
-	Rarity      string   `json:"rarity"`
-	Set         string   `json:"set"`
-	Variants    Variants `json:"variants"`
+	ID          string    `json:"id"`
+	TCGPlayerID CardID    `json:"tcgplayerId"`
+	Name        string    `json:"name"`
+	Number      string    `json:"number"`
+	Rarity      string    `json:"rarity"`
+	Set         string    `json:"set"`
+	Variants    []Variant `json:"variants"`
 }
 
 func (card *Card) UnmarshalJSON(bytes []byte) error {
@@ -51,14 +51,9 @@ func (card *Card) UnmarshalJSON(bytes []byte) error {
 	if err != nil {
 		return fmt.Errorf("error unmarshaling card: %w", err)
 	}
-	m, err := raw.Variants.ToMap()
-	if err != nil {
-		return fmt.Errorf("error with variants: %w", err)
-	}
-	prices, err := MakeConditionPricesFromVariants(m)
-	if err != nil {
-		return fmt.Errorf("error creating condition prices: %w", err)
-	}
+
+	prices := MakePrintingConditionPricesFromVariants(raw.Variants)
+
 	*card = MakeCard(
 		raw.ID,
 		raw.TCGPlayerID,
