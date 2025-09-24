@@ -39,7 +39,7 @@ func (_m *MockAPIClientInterface) EXPECT() *MockAPIClientInterface_Expecter {
 }
 
 // GetPricing provides a mock function for the type MockAPIClientInterface
-func (_mock *MockAPIClientInterface) GetPricing(ctx context.Context, ID cards.CardID) (cards.Card, error) {
+func (_mock *MockAPIClientInterface) GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Card, error) {
 	ret := _mock.Called(ctx, ID)
 
 	if len(ret) == 0 {
@@ -48,15 +48,15 @@ func (_mock *MockAPIClientInterface) GetPricing(ctx context.Context, ID cards.Ca
 
 	var r0 cards.Card
 	var r1 error
-	if returnFunc, ok := ret.Get(0).(func(context.Context, cards.CardID) (cards.Card, error)); ok {
+	if returnFunc, ok := ret.Get(0).(func(context.Context, cards.TCGPlayerID) (cards.Card, error)); ok {
 		return returnFunc(ctx, ID)
 	}
-	if returnFunc, ok := ret.Get(0).(func(context.Context, cards.CardID) cards.Card); ok {
+	if returnFunc, ok := ret.Get(0).(func(context.Context, cards.TCGPlayerID) cards.Card); ok {
 		r0 = returnFunc(ctx, ID)
 	} else {
 		r0 = ret.Get(0).(cards.Card)
 	}
-	if returnFunc, ok := ret.Get(1).(func(context.Context, cards.CardID) error); ok {
+	if returnFunc, ok := ret.Get(1).(func(context.Context, cards.TCGPlayerID) error); ok {
 		r1 = returnFunc(ctx, ID)
 	} else {
 		r1 = ret.Error(1)
@@ -71,20 +71,20 @@ type MockAPIClientInterface_GetPricing_Call struct {
 
 // GetPricing is a helper method to define mock.On call
 //   - ctx context.Context
-//   - ID cards.CardID
+//   - ID cards.TCGPlayerID
 func (_e *MockAPIClientInterface_Expecter) GetPricing(ctx interface{}, ID interface{}) *MockAPIClientInterface_GetPricing_Call {
 	return &MockAPIClientInterface_GetPricing_Call{Call: _e.mock.On("GetPricing", ctx, ID)}
 }
 
-func (_c *MockAPIClientInterface_GetPricing_Call) Run(run func(ctx context.Context, ID cards.CardID)) *MockAPIClientInterface_GetPricing_Call {
+func (_c *MockAPIClientInterface_GetPricing_Call) Run(run func(ctx context.Context, ID cards.TCGPlayerID)) *MockAPIClientInterface_GetPricing_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		var arg0 context.Context
 		if args[0] != nil {
 			arg0 = args[0].(context.Context)
 		}
-		var arg1 cards.CardID
+		var arg1 cards.TCGPlayerID
 		if args[1] != nil {
-			arg1 = args[1].(cards.CardID)
+			arg1 = args[1].(cards.TCGPlayerID)
 		}
 		run(
 			arg0,
@@ -99,7 +99,7 @@ func (_c *MockAPIClientInterface_GetPricing_Call) Return(card cards.Card, err er
 	return _c
 }
 
-func (_c *MockAPIClientInterface_GetPricing_Call) RunAndReturn(run func(ctx context.Context, ID cards.CardID) (cards.Card, error)) *MockAPIClientInterface_GetPricing_Call {
+func (_c *MockAPIClientInterface_GetPricing_Call) RunAndReturn(run func(ctx context.Context, ID cards.TCGPlayerID) (cards.Card, error)) *MockAPIClientInterface_GetPricing_Call {
 	_c.Call.Return(run)
 	return _c
 }
