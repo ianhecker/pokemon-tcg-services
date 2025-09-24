@@ -1,235 +1,2568 @@
 {
   "data": [
     {
+      "id": "pokemon-base-set-shadowless-charizard-holo-rare",
+      "name": "Charizard",
       "game": "Pokemon",
-      "id": "pokemon-xy-evolutions-venusaur-ex-ultra-rare",
-      "name": "Venusaur EX",
-      "number": "1/108",
-      "rarity": "Ultra Rare",
-      "set": "XY - Evolutions",
-      "tcgplayerId": "124014",
+      "set": "Base Set (Shadowless)",
+      "number": "004/102",
+      "rarity": "Holo Rare",
+      "tcgplayerId": "106999",
+      "details": null,
       "variants": [
         {
-          "avgPrice": 1.05,
-          "avgPrice30d": 1.04,
-          "avgPrice90d": 1.01,
-          "condition": "Damaged",
-          "covPrice30d": 0.004339874154363389,
-          "covPrice7d": 0.004892142473109622,
-          "covPrice90d": 0.058013730096201206,
-          "id": "pokemon-xy-evolutions-venusaur-ex-ultra-rare_damaged_holofoil",
-          "iqrPrice30d": 0,
-          "iqrPrice7d": 0,
-          "iqrPrice90d": 0.07,
-          "language": "English",
-          "lastUpdated": 1756380625,
-          "maxPrice1y": 1.06,
-          "maxPrice30d": 1.06,
-          "maxPrice7d": 1.06,
-          "maxPrice90d": 1.06,
-          "maxPriceAllTime": 1.06,
-          "maxPriceAllTimeDate": "2025-08-28T11:30:25.685621+00:00",
-          "minPrice1y": 0.78,
-          "minPrice30d": 1.04,
-          "minPrice7d": 1.04,
-          "minPrice90d": 0.88,
-          "minPriceAllTime": 0.78,
-          "minPriceAllTimeDate": "2025-04-06T11:31:38.884334+00:00",
-          "price": 1.06,
-          "priceChange24hr": 0.95,
-          "priceChange30d": 1.92,
-          "priceChange7d": 1.92,
-          "priceChange90d": 20.45,
-          "priceChangesCount30d": 2,
-          "priceChangesCount7d": 2,
-          "priceChangesCount90d": 10,
-          "priceRelativeTo30dRange": 1,
-          "priceRelativeTo90dRange": 1,
-          "printing": "Unlimited Holofoil",
-          "stddevPopPrice30d": 0,
-          "stddevPopPrice7d": 0.01,
-          "stddevPopPrice90d": 0.06,
-          "trendSlope30d": 0.000354635636690624,
-          "trendSlope7d": 0.0019273795763146801,
-          "trendSlope90d": 0.0018028480419831799
-        },
-        {
-          "avgPrice": 1.56,
-          "avgPrice30d": 1.53,
-          "avgPrice90d": 1.5,
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_heavily-played_1st-edition-holofoil",
           "condition": "Heavily Played",
-          "covPrice30d": 0.015340667143711455,
-          "covPrice7d": 0,
-          "covPrice90d": 0.03759824231975236,
-          "id": "pokemon-xy-evolutions-venusaur-ex-ultra-rare_heavily-played_holofoil",
-          "iqrPrice30d": 0.06,
+          "printing": "1st Edition Holofoil",
+          "language": null,
+          "price": 225,
+          "lastUpdated": 1743656485,
+          "priceChange24hr": null,
+          "priceChange7d": null,
+          "avgPrice": null,
+          "priceHistory": null,
+          "minPrice7d": null,
+          "maxPrice7d": null,
+          "stddevPopPrice7d": null,
+          "covPrice7d": null,
           "iqrPrice7d": 0,
-          "iqrPrice90d": 0.1,
-          "language": "English",
-          "lastUpdated": 1756380625,
-          "maxPrice1y": 1.56,
-          "maxPrice30d": 1.56,
-          "maxPrice7d": 1.56,
-          "maxPrice90d": 1.56,
-          "maxPriceAllTime": 1.56,
-          "maxPriceAllTimeDate": "2025-08-28T11:30:25.685679+00:00",
-          "minPrice1y": 1.28,
-          "minPrice30d": 1.5,
-          "minPrice7d": 1.56,
-          "minPrice90d": 1.36,
-          "minPriceAllTime": 1.28,
-          "minPriceAllTimeDate": "2025-04-01T17:17:05.606741+00:00",
-          "price": 1.56,
-          "priceChange24hr": 0,
-          "priceChange30d": 2.63,
-          "priceChange7d": 0,
-          "priceChange90d": 13.87,
-          "priceChangesCount30d": 7,
-          "priceChangesCount7d": 1,
-          "priceChangesCount90d": 20,
-          "priceRelativeTo30dRange": 1,
-          "priceRelativeTo90dRange": 1,
-          "printing": "Unlimited Holofoil",
-          "stddevPopPrice30d": 0.02,
-          "stddevPopPrice7d": 0,
-          "stddevPopPrice90d": 0.06,
-          "trendSlope30d": 0.0016390711271605802,
-          "trendSlope7d": 0,
-          "trendSlope90d": 0.00176229044378095
+          "trendSlope7d": null,
+          "priceChangesCount7d": 0,
+          "priceChange30d": null,
+          "avgPrice30d": null,
+          "priceHistory30d": null,
+          "minPrice30d": null,
+          "maxPrice30d": null,
+          "stddevPopPrice30d": null,
+          "covPrice30d": null,
+          "iqrPrice30d": 0,
+          "trendSlope30d": null,
+          "priceChangesCount30d": 0,
+          "priceRelativeTo30dRange": null,
+          "priceChange90d": null,
+          "avgPrice90d": null,
+          "minPrice90d": null,
+          "maxPrice90d": null,
+          "stddevPopPrice90d": null,
+          "covPrice90d": null,
+          "iqrPrice90d": null,
+          "trendSlope90d": null,
+          "priceChangesCount90d": null,
+          "priceRelativeTo90dRange": null,
+          "minPrice1y": 225,
+          "maxPrice1y": 225,
+          "minPriceAllTime": 225,
+          "minPriceAllTimeDate": "2025-04-03T05:01:25.465827+00:00",
+          "maxPriceAllTime": 225,
+          "maxPriceAllTimeDate": "2025-04-03T05:01:25.465827+00:00"
         },
         {
-          "avgPrice": 2.29,
-          "avgPrice30d": 2.27,
-          "avgPrice90d": 2.21,
-          "condition": "Moderately Played",
-          "covPrice30d": 0.008566959271008118,
-          "covPrice7d": 0.003697053345771842,
-          "covPrice90d": 0.03743809681547401,
-          "id": "pokemon-xy-evolutions-venusaur-ex-ultra-rare_moderately-played_holofoil",
-          "iqrPrice30d": 0.04,
-          "iqrPrice7d": 0,
-          "iqrPrice90d": 0.11,
-          "language": "English",
-          "lastUpdated": 1756380625,
-          "maxPrice1y": 2.31,
-          "maxPrice30d": 2.31,
-          "maxPrice7d": 2.31,
-          "maxPrice90d": 2.31,
-          "maxPriceAllTime": 2.31,
-          "maxPriceAllTimeDate": "2025-08-28T11:30:25.685795+00:00",
-          "minPrice1y": 1.9,
-          "minPrice30d": 2.25,
-          "minPrice7d": 2.29,
-          "minPrice90d": 2,
-          "minPriceAllTime": 1.9,
-          "minPriceAllTimeDate": "2025-05-15T13:03:28.059593+00:00",
-          "price": 2.31,
-          "priceChange24hr": 0,
-          "priceChange30d": 1.76,
-          "priceChange7d": 0.87,
-          "priceChange90d": 14.36,
-          "priceChangesCount30d": 5,
-          "priceChangesCount7d": 1,
-          "priceChangesCount90d": 26,
-          "priceRelativeTo30dRange": 1,
-          "priceRelativeTo90dRange": 1,
-          "printing": "Holofoil",
-          "stddevPopPrice30d": 0.02,
-          "stddevPopPrice7d": 0.01,
-          "stddevPopPrice90d": 0.08,
-          "trendSlope30d": 0.00166869817505133,
-          "trendSlope7d": 0.0029458654898931002,
-          "trendSlope90d": 0.0027772470221277402
-        },
-        {
-          "avgPrice": 2.99,
-          "avgPrice30d": 2.97,
-          "avgPrice90d": 2.91,
-          "condition": "Lightly Played",
-          "covPrice30d": 0.012256197980698531,
-          "covPrice7d": 0.002546960384518711,
-          "covPrice90d": 0.023907114171297535,
-          "id": "pokemon-xy-evolutions-venusaur-ex-ultra-rare_lightly-played_holofoil",
-          "iqrPrice30d": 0.04,
-          "iqrPrice7d": 0,
-          "iqrPrice90d": 0.13,
-          "language": "English",
-          "lastUpdated": 1756380625,
-          "maxPrice1y": 3.28,
-          "maxPrice30d": 3.01,
-          "maxPrice7d": 3.01,
-          "maxPrice90d": 3.07,
-          "maxPriceAllTime": 3.28,
-          "maxPriceAllTimeDate": "2025-05-23T03:40:52.983668+00:00",
-          "minPrice1y": 2.68,
-          "minPrice30d": 2.9,
-          "minPrice7d": 2.99,
-          "minPrice90d": 2.73,
-          "minPriceAllTime": 2.68,
-          "minPriceAllTimeDate": "2025-04-22T06:59:27.604179+00:00",
-          "price": 3.01,
-          "priceChange24hr": 0,
-          "priceChange30d": 3.79,
-          "priceChange7d": 0.67,
-          "priceChange90d": -1.95,
-          "priceChangesCount30d": 10,
-          "priceChangesCount7d": 1,
-          "priceChangesCount90d": 51,
-          "priceRelativeTo30dRange": 1,
-          "priceRelativeTo90dRange": 0.823529411764706,
-          "printing": "Holofoil",
-          "stddevPopPrice30d": 0.04,
-          "stddevPopPrice7d": 0.01,
-          "stddevPopPrice90d": 0.07,
-          "trendSlope30d": 0.00364981022139456,
-          "trendSlope7d": 0.00237996644970095,
-          "trendSlope90d": 0.00156372079569082
-        },
-        {
-          "avgPrice": 3.31,
-          "avgPrice30d": 3.34,
-          "avgPrice90d": 3.38,
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_near-mint_1st-edition-holofoil",
           "condition": "Near Mint",
-          "covPrice30d": 0.01885506839326413,
-          "covPrice7d": 0.019878630110694243,
-          "covPrice90d": 0.04179174182751269,
-          "id": "pokemon-xy-evolutions-venusaur-ex-ultra-rare_near-mint_holofoil",
-          "iqrPrice30d": 0.08,
-          "iqrPrice7d": 0.11,
-          "iqrPrice90d": 0.12,
+          "printing": "1st Edition Holofoil",
           "language": "English",
-          "lastUpdated": 1756380625,
-          "maxPrice1y": 3.79,
-          "maxPrice30d": 3.49,
-          "maxPrice7d": 3.39,
-          "maxPrice90d": 3.79,
-          "maxPriceAllTime": 3.79,
-          "maxPriceAllTimeDate": "2025-07-03T01:32:14.688716+00:00",
-          "minPrice1y": 2.7,
-          "minPrice30d": 3.2,
-          "minPrice7d": 3.2,
-          "minPrice90d": 3.09,
-          "minPriceAllTime": 2.7,
-          "minPriceAllTimeDate": "2025-04-26T22:43:01.94614+00:00",
-          "price": 3.25,
-          "priceChange24hr": 0.93,
-          "priceChange30d": -1.81,
-          "priceChange7d": -3.56,
-          "priceChange90d": -0.61,
-          "priceChangesCount30d": 42,
-          "priceChangesCount7d": 9,
-          "priceChangesCount90d": 95,
-          "priceRelativeTo30dRange": 0.172413793103448,
-          "priceRelativeTo90dRange": 0.228571428571429,
-          "printing": "Holofoil",
-          "stddevPopPrice30d": 0.06,
-          "stddevPopPrice7d": 0.07,
-          "stddevPopPrice90d": 0.14,
-          "trendSlope30d": -0.00226649854862996,
-          "trendSlope7d": -0.0267263305325573,
-          "trendSlope90d": 0.000050061408174868194
+          "price": 503.49,
+          "lastUpdated": 1758706033,
+          "priceChange24hr": 0,
+          "priceChange7d": 0,
+          "avgPrice": 503.49,
+          "priceHistory": [
+            {
+              "p": 503.49,
+              "t": 1758123931
+            },
+            {
+              "p": 503.49,
+              "t": 1758155012
+            },
+            {
+              "p": 503.49,
+              "t": 1758187044
+            },
+            {
+              "p": 503.49,
+              "t": 1758217973
+            },
+            {
+              "p": 503.49,
+              "t": 1758250489
+            },
+            {
+              "p": 503.49,
+              "t": 1758283591
+            },
+            {
+              "p": 503.49,
+              "t": 1758316391
+            },
+            {
+              "p": 503.49,
+              "t": 1758348159
+            },
+            {
+              "p": 503.49,
+              "t": 1758382521
+            },
+            {
+              "p": 503.49,
+              "t": 1758415392
+            },
+            {
+              "p": 503.49,
+              "t": 1758481559
+            },
+            {
+              "p": 503.49,
+              "t": 1758514394
+            },
+            {
+              "p": 503.49,
+              "t": 1758547139
+            },
+            {
+              "p": 503.49,
+              "t": 1758579528
+            },
+            {
+              "p": 503.49,
+              "t": 1758643847
+            },
+            {
+              "p": 503.49,
+              "t": 1758674794
+            },
+            {
+              "p": 503.49,
+              "t": 1758706034
+            }
+          ],
+          "minPrice7d": 503.49,
+          "maxPrice7d": 503.49,
+          "stddevPopPrice7d": 0,
+          "covPrice7d": 0,
+          "iqrPrice7d": 0,
+          "trendSlope7d": 0,
+          "priceChangesCount7d": 0,
+          "priceChange30d": 0.5,
+          "avgPrice30d": 503.14,
+          "priceHistory30d": [
+            {
+              "p": 500.99,
+              "t": 1756715317
+            },
+            {
+              "p": 500.99,
+              "t": 1756752281
+            },
+            {
+              "p": 500.99,
+              "t": 1756789397
+            },
+            {
+              "p": 500.99,
+              "t": 1756826644
+            },
+            {
+              "p": 500.99,
+              "t": 1756864199
+            },
+            {
+              "p": 500.99,
+              "t": 1756901938
+            },
+            {
+              "p": 500.99,
+              "t": 1756939473
+            },
+            {
+              "p": 503.49,
+              "t": 1756977395
+            },
+            {
+              "p": 503.49,
+              "t": 1757015061
+            },
+            {
+              "p": 503.49,
+              "t": 1757085999
+            },
+            {
+              "p": 503.49,
+              "t": 1757120008
+            },
+            {
+              "p": 503.49,
+              "t": 1757154307
+            },
+            {
+              "p": 503.49,
+              "t": 1757188158
+            },
+            {
+              "p": 503.49,
+              "t": 1757222205
+            },
+            {
+              "p": 503.49,
+              "t": 1757255991
+            },
+            {
+              "p": 503.49,
+              "t": 1757290097
+            },
+            {
+              "p": 503.49,
+              "t": 1757324327
+            },
+            {
+              "p": 503.49,
+              "t": 1757358434
+            },
+            {
+              "p": 503.49,
+              "t": 1757392546
+            },
+            {
+              "p": 503.49,
+              "t": 1757426597
+            },
+            {
+              "p": 503.49,
+              "t": 1757460509
+            },
+            {
+              "p": 503.49,
+              "t": 1757494640
+            },
+            {
+              "p": 503.49,
+              "t": 1757528723
+            },
+            {
+              "p": 503.49,
+              "t": 1757562069
+            },
+            {
+              "p": 503.49,
+              "t": 1757595573
+            },
+            {
+              "p": 503.49,
+              "t": 1757629551
+            },
+            {
+              "p": 503.49,
+              "t": 1757663587
+            },
+            {
+              "p": 503.49,
+              "t": 1757697230
+            },
+            {
+              "p": 503.49,
+              "t": 1757967318
+            },
+            {
+              "p": 503.49,
+              "t": 1757998669
+            },
+            {
+              "p": 503.49,
+              "t": 1758029646
+            },
+            {
+              "p": 503.49,
+              "t": 1758060927
+            },
+            {
+              "p": 503.49,
+              "t": 1758092137
+            },
+            {
+              "p": 503.49,
+              "t": 1758123931
+            },
+            {
+              "p": 503.49,
+              "t": 1758155012
+            },
+            {
+              "p": 503.49,
+              "t": 1758187044
+            },
+            {
+              "p": 503.49,
+              "t": 1758217973
+            },
+            {
+              "p": 503.49,
+              "t": 1758250489
+            },
+            {
+              "p": 503.49,
+              "t": 1758283591
+            },
+            {
+              "p": 503.49,
+              "t": 1758316391
+            },
+            {
+              "p": 503.49,
+              "t": 1758348159
+            },
+            {
+              "p": 503.49,
+              "t": 1758382521
+            },
+            {
+              "p": 503.49,
+              "t": 1758415392
+            },
+            {
+              "p": 503.49,
+              "t": 1758481559
+            },
+            {
+              "p": 503.49,
+              "t": 1758514394
+            },
+            {
+              "p": 503.49,
+              "t": 1758547139
+            },
+            {
+              "p": 503.49,
+              "t": 1758579528
+            },
+            {
+              "p": 503.49,
+              "t": 1758643847
+            },
+            {
+              "p": 503.49,
+              "t": 1758674794
+            },
+            {
+              "p": 503.49,
+              "t": 1758706034
+            }
+          ],
+          "minPrice30d": 500.99,
+          "maxPrice30d": 503.49,
+          "stddevPopPrice30d": 0.87,
+          "covPrice30d": 0.0017241077605534714,
+          "iqrPrice30d": 0,
+          "trendSlope30d": 0.0724395340904086,
+          "priceChangesCount30d": 2,
+          "priceRelativeTo30dRange": 1,
+          "priceChange90d": -91.61,
+          "avgPrice90d": 1957.93,
+          "minPrice90d": 500.99,
+          "maxPrice90d": 5999,
+          "stddevPopPrice90d": 2424.64,
+          "covPrice90d": 1.2383734875496346,
+          "iqrPrice90d": 5495.51,
+          "trendSlope90d": -88.5383879809949,
+          "priceChangesCount90d": 3,
+          "priceRelativeTo90dRange": 0.000454709976882545,
+          "minPrice1y": 500.99,
+          "maxPrice1y": 5999,
+          "minPriceAllTime": 500.99,
+          "minPriceAllTimeDate": "2025-09-03T22:44:32.9202+00:00",
+          "maxPriceAllTime": 5999,
+          "maxPriceAllTimeDate": "2025-07-31T05:06:47+00:00"
+        },
+        {
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_damaged_unlimited-holofoil",
+          "condition": "Damaged",
+          "printing": "Unlimited Holofoil",
+          "language": "English",
+          "price": 524.96,
+          "lastUpdated": 1758706033,
+          "priceChange24hr": 0,
+          "priceChange7d": 0,
+          "avgPrice": 524.96,
+          "priceHistory": [
+            {
+              "p": 524.96,
+              "t": 1758123931
+            },
+            {
+              "p": 524.96,
+              "t": 1758155012
+            },
+            {
+              "p": 524.96,
+              "t": 1758187044
+            },
+            {
+              "p": 524.96,
+              "t": 1758217973
+            },
+            {
+              "p": 524.96,
+              "t": 1758250489
+            },
+            {
+              "p": 524.96,
+              "t": 1758283591
+            },
+            {
+              "p": 524.96,
+              "t": 1758316391
+            },
+            {
+              "p": 524.96,
+              "t": 1758348159
+            },
+            {
+              "p": 524.96,
+              "t": 1758382521
+            },
+            {
+              "p": 524.96,
+              "t": 1758415392
+            },
+            {
+              "p": 524.96,
+              "t": 1758481559
+            },
+            {
+              "p": 524.96,
+              "t": 1758514394
+            },
+            {
+              "p": 524.96,
+              "t": 1758547139
+            },
+            {
+              "p": 524.96,
+              "t": 1758579528
+            },
+            {
+              "p": 524.96,
+              "t": 1758643847
+            },
+            {
+              "p": 524.96,
+              "t": 1758674794
+            },
+            {
+              "p": 524.96,
+              "t": 1758706034
+            }
+          ],
+          "minPrice7d": 524.96,
+          "maxPrice7d": 524.96,
+          "stddevPopPrice7d": 0,
+          "covPrice7d": 0,
+          "iqrPrice7d": 0,
+          "trendSlope7d": 0,
+          "priceChangesCount7d": 0,
+          "priceChange30d": 0.23,
+          "avgPrice30d": 524.61,
+          "priceHistory30d": [
+            {
+              "p": 523.77,
+              "t": 1756155722
+            },
+            {
+              "p": 523.77,
+              "t": 1756193189
+            },
+            {
+              "p": 523.77,
+              "t": 1756230714
+            },
+            {
+              "p": 523.77,
+              "t": 1756268071
+            },
+            {
+              "p": 523.77,
+              "t": 1756305736
+            },
+            {
+              "p": 523.77,
+              "t": 1756343075
+            },
+            {
+              "p": 523.77,
+              "t": 1756380488
+            },
+            {
+              "p": 523.77,
+              "t": 1756418128
+            },
+            {
+              "p": 533.29,
+              "t": 1756455384
+            },
+            {
+              "p": 533.29,
+              "t": 1756492547
+            },
+            {
+              "p": 523.77,
+              "t": 1756529578
+            },
+            {
+              "p": 523.77,
+              "t": 1756567117
+            },
+            {
+              "p": 523.77,
+              "t": 1756604385
+            },
+            {
+              "p": 523.77,
+              "t": 1756641801
+            },
+            {
+              "p": 523.77,
+              "t": 1756678163
+            },
+            {
+              "p": 523.77,
+              "t": 1756715317
+            },
+            {
+              "p": 523.77,
+              "t": 1756752281
+            },
+            {
+              "p": 523.77,
+              "t": 1756789397
+            },
+            {
+              "p": 523.77,
+              "t": 1756826644
+            },
+            {
+              "p": 523.77,
+              "t": 1756864199
+            },
+            {
+              "p": 523.77,
+              "t": 1756901938
+            },
+            {
+              "p": 523.77,
+              "t": 1756939473
+            },
+            {
+              "p": 523.77,
+              "t": 1756977395
+            },
+            {
+              "p": 523.77,
+              "t": 1757015061
+            },
+            {
+              "p": 523.77,
+              "t": 1757085999
+            },
+            {
+              "p": 523.77,
+              "t": 1757120008
+            },
+            {
+              "p": 523.77,
+              "t": 1757154307
+            },
+            {
+              "p": 523.77,
+              "t": 1757188158
+            },
+            {
+              "p": 523.77,
+              "t": 1757222205
+            },
+            {
+              "p": 523.77,
+              "t": 1757255991
+            },
+            {
+              "p": 523.77,
+              "t": 1757290097
+            },
+            {
+              "p": 523.77,
+              "t": 1757324327
+            },
+            {
+              "p": 523.77,
+              "t": 1757358434
+            },
+            {
+              "p": 523.77,
+              "t": 1757392546
+            },
+            {
+              "p": 523.77,
+              "t": 1757426597
+            },
+            {
+              "p": 524.96,
+              "t": 1757460509
+            },
+            {
+              "p": 524.96,
+              "t": 1757494640
+            },
+            {
+              "p": 524.96,
+              "t": 1757528723
+            },
+            {
+              "p": 524.96,
+              "t": 1757562069
+            },
+            {
+              "p": 524.96,
+              "t": 1757595573
+            },
+            {
+              "p": 524.96,
+              "t": 1757629551
+            },
+            {
+              "p": 524.96,
+              "t": 1757663587
+            },
+            {
+              "p": 524.96,
+              "t": 1757697230
+            },
+            {
+              "p": 524.96,
+              "t": 1757967318
+            },
+            {
+              "p": 524.96,
+              "t": 1757998669
+            },
+            {
+              "p": 524.96,
+              "t": 1758029646
+            },
+            {
+              "p": 524.96,
+              "t": 1758060927
+            },
+            {
+              "p": 524.96,
+              "t": 1758092137
+            },
+            {
+              "p": 524.96,
+              "t": 1758123931
+            },
+            {
+              "p": 524.96,
+              "t": 1758155012
+            },
+            {
+              "p": 524.96,
+              "t": 1758187044
+            },
+            {
+              "p": 524.96,
+              "t": 1758217973
+            },
+            {
+              "p": 524.96,
+              "t": 1758250489
+            },
+            {
+              "p": 524.96,
+              "t": 1758283591
+            },
+            {
+              "p": 524.96,
+              "t": 1758316391
+            },
+            {
+              "p": 524.96,
+              "t": 1758348159
+            },
+            {
+              "p": 524.96,
+              "t": 1758382521
+            },
+            {
+              "p": 524.96,
+              "t": 1758415392
+            },
+            {
+              "p": 524.96,
+              "t": 1758481559
+            },
+            {
+              "p": 524.96,
+              "t": 1758514394
+            },
+            {
+              "p": 524.96,
+              "t": 1758547139
+            },
+            {
+              "p": 524.96,
+              "t": 1758579528
+            },
+            {
+              "p": 524.96,
+              "t": 1758643847
+            },
+            {
+              "p": 524.96,
+              "t": 1758674794
+            },
+            {
+              "p": 524.96,
+              "t": 1758706034
+            }
+          ],
+          "minPrice30d": 523.77,
+          "maxPrice30d": 533.29,
+          "stddevPopPrice30d": 1.65,
+          "covPrice30d": 0.0031512336872194257,
+          "iqrPrice30d": 1.19,
+          "trendSlope30d": 0.0175645193499727,
+          "priceChangesCount30d": 3,
+          "priceRelativeTo30dRange": 0.125,
+          "priceChange90d": -17.22,
+          "avgPrice90d": 536.45,
+          "minPrice90d": 511.07,
+          "maxPrice90d": 634.17,
+          "stddevPopPrice90d": 26.08,
+          "covPrice90d": 0.04861233280861149,
+          "iqrPrice90d": 13.28,
+          "trendSlope90d": -0.64049753589446,
+          "priceChangesCount90d": 13,
+          "priceRelativeTo90dRange": 0.112835093419984,
+          "minPrice1y": 511.07,
+          "maxPrice1y": 634.17,
+          "minPriceAllTime": 511.07,
+          "minPriceAllTimeDate": "2025-08-25T00:32:12.967044+00:00",
+          "maxPriceAllTime": 634.17,
+          "maxPriceAllTimeDate": "2025-07-02T10:32:25.328944+00:00"
+        },
+        {
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_heavily-played_unlimited-holofoil",
+          "condition": "Heavily Played",
+          "printing": "Unlimited Holofoil",
+          "language": "English",
+          "price": 645.05,
+          "lastUpdated": 1758706033,
+          "priceChange24hr": 0,
+          "priceChange7d": 0,
+          "avgPrice": 645.05,
+          "priceHistory": [
+            {
+              "p": 645.05,
+              "t": 1758123931
+            },
+            {
+              "p": 645.05,
+              "t": 1758155012
+            },
+            {
+              "p": 645.05,
+              "t": 1758187044
+            },
+            {
+              "p": 645.05,
+              "t": 1758217973
+            },
+            {
+              "p": 645.05,
+              "t": 1758250489
+            },
+            {
+              "p": 645.05,
+              "t": 1758283591
+            },
+            {
+              "p": 645.05,
+              "t": 1758316391
+            },
+            {
+              "p": 645.05,
+              "t": 1758348159
+            },
+            {
+              "p": 645.05,
+              "t": 1758382521
+            },
+            {
+              "p": 645.05,
+              "t": 1758415392
+            },
+            {
+              "p": 645.05,
+              "t": 1758481559
+            },
+            {
+              "p": 645.05,
+              "t": 1758514394
+            },
+            {
+              "p": 645.05,
+              "t": 1758547139
+            },
+            {
+              "p": 645.05,
+              "t": 1758579528
+            },
+            {
+              "p": 645.05,
+              "t": 1758643847
+            },
+            {
+              "p": 645.05,
+              "t": 1758674794
+            },
+            {
+              "p": 645.05,
+              "t": 1758706034
+            }
+          ],
+          "minPrice7d": 645.05,
+          "maxPrice7d": 645.05,
+          "stddevPopPrice7d": 0,
+          "covPrice7d": 0,
+          "iqrPrice7d": 0,
+          "trendSlope7d": 0,
+          "priceChangesCount7d": 0,
+          "priceChange30d": 0.33,
+          "avgPrice30d": 644.84,
+          "priceHistory30d": [
+            {
+              "p": 642.95,
+              "t": 1756155722
+            },
+            {
+              "p": 642.95,
+              "t": 1756193189
+            },
+            {
+              "p": 642.95,
+              "t": 1756230714
+            },
+            {
+              "p": 642.95,
+              "t": 1756268071
+            },
+            {
+              "p": 642.95,
+              "t": 1756305736
+            },
+            {
+              "p": 642.95,
+              "t": 1756343075
+            },
+            {
+              "p": 642.95,
+              "t": 1756380488
+            },
+            {
+              "p": 642.95,
+              "t": 1756418128
+            },
+            {
+              "p": 642.95,
+              "t": 1756455384
+            },
+            {
+              "p": 642.95,
+              "t": 1756492547
+            },
+            {
+              "p": 642.95,
+              "t": 1756529578
+            },
+            {
+              "p": 642.95,
+              "t": 1756567117
+            },
+            {
+              "p": 642.95,
+              "t": 1756604385
+            },
+            {
+              "p": 642.95,
+              "t": 1756641801
+            },
+            {
+              "p": 642.95,
+              "t": 1756678163
+            },
+            {
+              "p": 642.95,
+              "t": 1756715317
+            },
+            {
+              "p": 642.95,
+              "t": 1756752281
+            },
+            {
+              "p": 642.95,
+              "t": 1756789397
+            },
+            {
+              "p": 642.95,
+              "t": 1756826644
+            },
+            {
+              "p": 642.95,
+              "t": 1756864199
+            },
+            {
+              "p": 642.95,
+              "t": 1756901938
+            },
+            {
+              "p": 642.95,
+              "t": 1756939473
+            },
+            {
+              "p": 642.95,
+              "t": 1756977395
+            },
+            {
+              "p": 642.95,
+              "t": 1757015061
+            },
+            {
+              "p": 642.95,
+              "t": 1757085999
+            },
+            {
+              "p": 642.95,
+              "t": 1757120008
+            },
+            {
+              "p": 642.95,
+              "t": 1757154307
+            },
+            {
+              "p": 642.95,
+              "t": 1757188158
+            },
+            {
+              "p": 642.95,
+              "t": 1757222205
+            },
+            {
+              "p": 648.99,
+              "t": 1757255991
+            },
+            {
+              "p": 648.99,
+              "t": 1757290097
+            },
+            {
+              "p": 648.99,
+              "t": 1757324327
+            },
+            {
+              "p": 648.99,
+              "t": 1757358434
+            },
+            {
+              "p": 648.99,
+              "t": 1757392546
+            },
+            {
+              "p": 648.99,
+              "t": 1757426597
+            },
+            {
+              "p": 648.99,
+              "t": 1757460509
+            },
+            {
+              "p": 649,
+              "t": 1757494640
+            },
+            {
+              "p": 649,
+              "t": 1757528723
+            },
+            {
+              "p": 649,
+              "t": 1757562069
+            },
+            {
+              "p": 649,
+              "t": 1757595573
+            },
+            {
+              "p": 649,
+              "t": 1757629551
+            },
+            {
+              "p": 645.05,
+              "t": 1757663587
+            },
+            {
+              "p": 645.05,
+              "t": 1757697230
+            },
+            {
+              "p": 645.05,
+              "t": 1757967318
+            },
+            {
+              "p": 645.05,
+              "t": 1757998669
+            },
+            {
+              "p": 645.05,
+              "t": 1758029646
+            },
+            {
+              "p": 645.05,
+              "t": 1758060927
+            },
+            {
+              "p": 645.05,
+              "t": 1758092137
+            },
+            {
+              "p": 645.05,
+              "t": 1758123931
+            },
+            {
+              "p": 645.05,
+              "t": 1758155012
+            },
+            {
+              "p": 645.05,
+              "t": 1758187044
+            },
+            {
+              "p": 645.05,
+              "t": 1758217973
+            },
+            {
+              "p": 645.05,
+              "t": 1758250489
+            },
+            {
+              "p": 645.05,
+              "t": 1758283591
+            },
+            {
+              "p": 645.05,
+              "t": 1758316391
+            },
+            {
+              "p": 645.05,
+              "t": 1758348159
+            },
+            {
+              "p": 645.05,
+              "t": 1758382521
+            },
+            {
+              "p": 645.05,
+              "t": 1758415392
+            },
+            {
+              "p": 645.05,
+              "t": 1758481559
+            },
+            {
+              "p": 645.05,
+              "t": 1758514394
+            },
+            {
+              "p": 645.05,
+              "t": 1758547139
+            },
+            {
+              "p": 645.05,
+              "t": 1758579528
+            },
+            {
+              "p": 645.05,
+              "t": 1758643847
+            },
+            {
+              "p": 645.05,
+              "t": 1758674794
+            },
+            {
+              "p": 645.05,
+              "t": 1758706034
+            }
+          ],
+          "minPrice30d": 642.95,
+          "maxPrice30d": 649,
+          "stddevPopPrice30d": 2.19,
+          "covPrice30d": 0.003396120553988072,
+          "iqrPrice30d": 2.1,
+          "trendSlope30d": 0.104685193832842,
+          "priceChangesCount30d": 3,
+          "priceRelativeTo30dRange": 0.347107438016529,
+          "priceChange90d": 1.45,
+          "avgPrice90d": 642.94,
+          "minPrice90d": 635.86,
+          "maxPrice90d": 649,
+          "stddevPopPrice90d": 2.71,
+          "covPrice90d": 0.004214521956777588,
+          "iqrPrice90d": 0,
+          "trendSlope90d": 0.0846805405947732,
+          "priceChangesCount90d": 7,
+          "priceRelativeTo90dRange": 0.699391171993912,
+          "minPrice1y": 619.48,
+          "maxPrice1y": 649,
+          "minPriceAllTime": 619.48,
+          "minPriceAllTimeDate": "2025-04-18T22:48:15.870877+00:00",
+          "maxPriceAllTime": 649,
+          "maxPriceAllTimeDate": "2025-09-11T22:25:50.867069+00:00"
+        },
+        {
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_moderately-played_unlimited-holofoil",
+          "condition": "Moderately Played",
+          "printing": "Unlimited Holofoil",
+          "language": "English",
+          "price": 764.78,
+          "lastUpdated": 1758706033,
+          "priceChange24hr": 0,
+          "priceChange7d": -3.9,
+          "avgPrice": 782.17,
+          "priceHistory": [
+            {
+              "p": 795.84,
+              "t": 1758123931
+            },
+            {
+              "p": 795.84,
+              "t": 1758155012
+            },
+            {
+              "p": 795.84,
+              "t": 1758187044
+            },
+            {
+              "p": 795.84,
+              "t": 1758217973
+            },
+            {
+              "p": 795.84,
+              "t": 1758250489
+            },
+            {
+              "p": 795.84,
+              "t": 1758283591
+            },
+            {
+              "p": 795.84,
+              "t": 1758316391
+            },
+            {
+              "p": 795.84,
+              "t": 1758348159
+            },
+            {
+              "p": 795.84,
+              "t": 1758382521
+            },
+            {
+              "p": 795.84,
+              "t": 1758415392
+            },
+            {
+              "p": 761.02,
+              "t": 1758481559
+            },
+            {
+              "p": 761.02,
+              "t": 1758514394
+            },
+            {
+              "p": 761.02,
+              "t": 1758547139
+            },
+            {
+              "p": 761.02,
+              "t": 1758579528
+            },
+            {
+              "p": 764.78,
+              "t": 1758643847
+            },
+            {
+              "p": 764.78,
+              "t": 1758674794
+            },
+            {
+              "p": 764.78,
+              "t": 1758706034
+            }
+          ],
+          "minPrice7d": 761.02,
+          "maxPrice7d": 795.84,
+          "stddevPopPrice7d": 16.39,
+          "covPrice7d": 0.020951122169748815,
+          "iqrPrice7d": 31.06,
+          "trendSlope7d": -6.66469075709784,
+          "priceChangesCount7d": 2,
+          "priceChange30d": -6.02,
+          "avgPrice30d": 801.19,
+          "priceHistory30d": [
+            {
+              "p": 813.73,
+              "t": 1756155722
+            },
+            {
+              "p": 813.73,
+              "t": 1756193189
+            },
+            {
+              "p": 813.73,
+              "t": 1756230714
+            },
+            {
+              "p": 813.73,
+              "t": 1756268071
+            },
+            {
+              "p": 813.73,
+              "t": 1756305736
+            },
+            {
+              "p": 813.73,
+              "t": 1756343075
+            },
+            {
+              "p": 813.73,
+              "t": 1756380488
+            },
+            {
+              "p": 813.73,
+              "t": 1756418128
+            },
+            {
+              "p": 813.73,
+              "t": 1756455384
+            },
+            {
+              "p": 813.73,
+              "t": 1756492547
+            },
+            {
+              "p": 813.73,
+              "t": 1756529578
+            },
+            {
+              "p": 813.73,
+              "t": 1756567117
+            },
+            {
+              "p": 813.73,
+              "t": 1756604385
+            },
+            {
+              "p": 813.73,
+              "t": 1756641801
+            },
+            {
+              "p": 813.73,
+              "t": 1756678163
+            },
+            {
+              "p": 813.73,
+              "t": 1756715317
+            },
+            {
+              "p": 813.73,
+              "t": 1756752281
+            },
+            {
+              "p": 813.73,
+              "t": 1756789397
+            },
+            {
+              "p": 813.73,
+              "t": 1756826644
+            },
+            {
+              "p": 813.73,
+              "t": 1756864199
+            },
+            {
+              "p": 813.73,
+              "t": 1756901938
+            },
+            {
+              "p": 813.73,
+              "t": 1756939473
+            },
+            {
+              "p": 813.73,
+              "t": 1756977395
+            },
+            {
+              "p": 813.73,
+              "t": 1757015061
+            },
+            {
+              "p": 813.73,
+              "t": 1757085999
+            },
+            {
+              "p": 813.73,
+              "t": 1757120008
+            },
+            {
+              "p": 813.73,
+              "t": 1757154307
+            },
+            {
+              "p": 813.73,
+              "t": 1757188158
+            },
+            {
+              "p": 813.73,
+              "t": 1757222205
+            },
+            {
+              "p": 813.73,
+              "t": 1757255991
+            },
+            {
+              "p": 813.73,
+              "t": 1757290097
+            },
+            {
+              "p": 813.73,
+              "t": 1757324327
+            },
+            {
+              "p": 803.51,
+              "t": 1757358434
+            },
+            {
+              "p": 795.84,
+              "t": 1757392546
+            },
+            {
+              "p": 795.84,
+              "t": 1757426597
+            },
+            {
+              "p": 795.84,
+              "t": 1757460509
+            },
+            {
+              "p": 795.84,
+              "t": 1757494640
+            },
+            {
+              "p": 795.84,
+              "t": 1757528723
+            },
+            {
+              "p": 795.84,
+              "t": 1757562069
+            },
+            {
+              "p": 795.84,
+              "t": 1757595573
+            },
+            {
+              "p": 795.84,
+              "t": 1757629551
+            },
+            {
+              "p": 795.84,
+              "t": 1757663587
+            },
+            {
+              "p": 795.84,
+              "t": 1757697230
+            },
+            {
+              "p": 795.84,
+              "t": 1757967318
+            },
+            {
+              "p": 795.84,
+              "t": 1757998669
+            },
+            {
+              "p": 795.84,
+              "t": 1758029646
+            },
+            {
+              "p": 795.84,
+              "t": 1758060927
+            },
+            {
+              "p": 795.84,
+              "t": 1758092137
+            },
+            {
+              "p": 795.84,
+              "t": 1758123931
+            },
+            {
+              "p": 795.84,
+              "t": 1758155012
+            },
+            {
+              "p": 795.84,
+              "t": 1758187044
+            },
+            {
+              "p": 795.84,
+              "t": 1758217973
+            },
+            {
+              "p": 795.84,
+              "t": 1758250489
+            },
+            {
+              "p": 795.84,
+              "t": 1758283591
+            },
+            {
+              "p": 795.84,
+              "t": 1758316391
+            },
+            {
+              "p": 795.84,
+              "t": 1758348159
+            },
+            {
+              "p": 795.84,
+              "t": 1758382521
+            },
+            {
+              "p": 795.84,
+              "t": 1758415392
+            },
+            {
+              "p": 761.02,
+              "t": 1758481559
+            },
+            {
+              "p": 761.02,
+              "t": 1758514394
+            },
+            {
+              "p": 761.02,
+              "t": 1758547139
+            },
+            {
+              "p": 761.02,
+              "t": 1758579528
+            },
+            {
+              "p": 764.78,
+              "t": 1758643847
+            },
+            {
+              "p": 764.78,
+              "t": 1758674794
+            },
+            {
+              "p": 764.78,
+              "t": 1758706034
+            }
+          ],
+          "minPrice30d": 761.02,
+          "maxPrice30d": 813.73,
+          "stddevPopPrice30d": 15.78,
+          "covPrice30d": 0.019695135109311843,
+          "iqrPrice30d": 17.89,
+          "trendSlope30d": -1.5014151695412499,
+          "priceChangesCount30d": 4,
+          "priceRelativeTo30dRange": 0.0713337127679757,
+          "priceChange90d": -3.65,
+          "avgPrice90d": 803.66,
+          "minPrice90d": 761.02,
+          "maxPrice90d": 818.91,
+          "stddevPopPrice90d": 12.53,
+          "covPrice90d": 0.015594601002762044,
+          "iqrPrice90d": 17.89,
+          "trendSlope90d": 0.000237638727551519,
+          "priceChangesCount90d": 9,
+          "priceRelativeTo90dRange": 0.0649507686992572,
+          "minPrice1y": 761.02,
+          "maxPrice1y": 818.91,
+          "minPriceAllTime": 761.02,
+          "minPriceAllTimeDate": "2025-09-22T22:18:48.051752+00:00",
+          "maxPriceAllTime": 818.91,
+          "maxPriceAllTimeDate": "2025-08-04T04:23:36.89489+00:00"
+        },
+        {
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_lightly-played_unlimited-holofoil",
+          "condition": "Lightly Played",
+          "printing": "Unlimited Holofoil",
+          "language": "English",
+          "price": 1299,
+          "lastUpdated": 1758706033,
+          "priceChange24hr": 0,
+          "priceChange7d": 0,
+          "avgPrice": 1299,
+          "priceHistory": [
+            {
+              "p": 1299,
+              "t": 1758123931
+            },
+            {
+              "p": 1299,
+              "t": 1758155012
+            },
+            {
+              "p": 1299,
+              "t": 1758187044
+            },
+            {
+              "p": 1299,
+              "t": 1758217973
+            },
+            {
+              "p": 1299,
+              "t": 1758250489
+            },
+            {
+              "p": 1299,
+              "t": 1758283591
+            },
+            {
+              "p": 1299,
+              "t": 1758316391
+            },
+            {
+              "p": 1299,
+              "t": 1758348159
+            },
+            {
+              "p": 1299,
+              "t": 1758382521
+            },
+            {
+              "p": 1299,
+              "t": 1758415392
+            },
+            {
+              "p": 1299,
+              "t": 1758481559
+            },
+            {
+              "p": 1299,
+              "t": 1758514394
+            },
+            {
+              "p": 1299,
+              "t": 1758547139
+            },
+            {
+              "p": 1299,
+              "t": 1758579528
+            },
+            {
+              "p": 1299,
+              "t": 1758643847
+            },
+            {
+              "p": 1299,
+              "t": 1758674794
+            },
+            {
+              "p": 1299,
+              "t": 1758706034
+            }
+          ],
+          "minPrice7d": 1299,
+          "maxPrice7d": 1299,
+          "stddevPopPrice7d": 0,
+          "covPrice7d": 0,
+          "iqrPrice7d": 0,
+          "trendSlope7d": 0,
+          "priceChangesCount7d": 0,
+          "priceChange30d": 0,
+          "avgPrice30d": 1299,
+          "priceHistory30d": [
+            {
+              "p": 1299,
+              "t": 1756155722
+            },
+            {
+              "p": 1299,
+              "t": 1756193189
+            },
+            {
+              "p": 1299,
+              "t": 1756230714
+            },
+            {
+              "p": 1299,
+              "t": 1756268071
+            },
+            {
+              "p": 1299,
+              "t": 1756305736
+            },
+            {
+              "p": 1299,
+              "t": 1756343075
+            },
+            {
+              "p": 1299,
+              "t": 1756380488
+            },
+            {
+              "p": 1299,
+              "t": 1756418128
+            },
+            {
+              "p": 1299,
+              "t": 1756455384
+            },
+            {
+              "p": 1299,
+              "t": 1756492547
+            },
+            {
+              "p": 1299,
+              "t": 1756529578
+            },
+            {
+              "p": 1299,
+              "t": 1756567117
+            },
+            {
+              "p": 1299,
+              "t": 1756604385
+            },
+            {
+              "p": 1299,
+              "t": 1756641801
+            },
+            {
+              "p": 1299,
+              "t": 1756678163
+            },
+            {
+              "p": 1299,
+              "t": 1756715317
+            },
+            {
+              "p": 1299,
+              "t": 1756752281
+            },
+            {
+              "p": 1299,
+              "t": 1756789397
+            },
+            {
+              "p": 1299,
+              "t": 1756826644
+            },
+            {
+              "p": 1299,
+              "t": 1756864199
+            },
+            {
+              "p": 1299,
+              "t": 1756901938
+            },
+            {
+              "p": 1299,
+              "t": 1756939473
+            },
+            {
+              "p": 1299,
+              "t": 1756977395
+            },
+            {
+              "p": 1299,
+              "t": 1757015061
+            },
+            {
+              "p": 1299,
+              "t": 1757085999
+            },
+            {
+              "p": 1299,
+              "t": 1757120008
+            },
+            {
+              "p": 1299,
+              "t": 1757154307
+            },
+            {
+              "p": 1299,
+              "t": 1757188158
+            },
+            {
+              "p": 1299,
+              "t": 1757222205
+            },
+            {
+              "p": 1299,
+              "t": 1757255991
+            },
+            {
+              "p": 1299,
+              "t": 1757290097
+            },
+            {
+              "p": 1299,
+              "t": 1757324327
+            },
+            {
+              "p": 1299,
+              "t": 1757358434
+            },
+            {
+              "p": 1299,
+              "t": 1757392546
+            },
+            {
+              "p": 1299,
+              "t": 1757426597
+            },
+            {
+              "p": 1299,
+              "t": 1757460509
+            },
+            {
+              "p": 1299,
+              "t": 1757494640
+            },
+            {
+              "p": 1299,
+              "t": 1757528723
+            },
+            {
+              "p": 1299,
+              "t": 1757562069
+            },
+            {
+              "p": 1299,
+              "t": 1757595573
+            },
+            {
+              "p": 1299,
+              "t": 1757629551
+            },
+            {
+              "p": 1299,
+              "t": 1757663587
+            },
+            {
+              "p": 1299,
+              "t": 1757697230
+            },
+            {
+              "p": 1299,
+              "t": 1757967318
+            },
+            {
+              "p": 1299,
+              "t": 1757998669
+            },
+            {
+              "p": 1299,
+              "t": 1758029646
+            },
+            {
+              "p": 1299,
+              "t": 1758060927
+            },
+            {
+              "p": 1299,
+              "t": 1758092137
+            },
+            {
+              "p": 1299,
+              "t": 1758123931
+            },
+            {
+              "p": 1299,
+              "t": 1758155012
+            },
+            {
+              "p": 1299,
+              "t": 1758187044
+            },
+            {
+              "p": 1299,
+              "t": 1758217973
+            },
+            {
+              "p": 1299,
+              "t": 1758250489
+            },
+            {
+              "p": 1299,
+              "t": 1758283591
+            },
+            {
+              "p": 1299,
+              "t": 1758316391
+            },
+            {
+              "p": 1299,
+              "t": 1758348159
+            },
+            {
+              "p": 1299,
+              "t": 1758382521
+            },
+            {
+              "p": 1299,
+              "t": 1758415392
+            },
+            {
+              "p": 1299,
+              "t": 1758481559
+            },
+            {
+              "p": 1299,
+              "t": 1758514394
+            },
+            {
+              "p": 1299,
+              "t": 1758547139
+            },
+            {
+              "p": 1299,
+              "t": 1758579528
+            },
+            {
+              "p": 1299,
+              "t": 1758643847
+            },
+            {
+              "p": 1299,
+              "t": 1758674794
+            },
+            {
+              "p": 1299,
+              "t": 1758706034
+            }
+          ],
+          "minPrice30d": 1299,
+          "maxPrice30d": 1299,
+          "stddevPopPrice30d": 0,
+          "covPrice30d": 0,
+          "iqrPrice30d": 0,
+          "trendSlope30d": 0,
+          "priceChangesCount30d": 0,
+          "priceRelativeTo30dRange": null,
+          "priceChange90d": -0.56,
+          "avgPrice90d": 1299.44,
+          "minPrice90d": 1299,
+          "maxPrice90d": 1306.33,
+          "stddevPopPrice90d": 1.74,
+          "covPrice90d": 0.0013421511597809079,
+          "iqrPrice90d": 0,
+          "trendSlope90d": -0.033795402311866,
+          "priceChangesCount90d": 1,
+          "priceRelativeTo90dRange": 0,
+          "minPrice1y": 1299,
+          "maxPrice1y": 1621.22,
+          "minPriceAllTime": 1299,
+          "minPriceAllTimeDate": "2025-09-24T09:27:13.614248+00:00",
+          "maxPriceAllTime": 1621.22,
+          "maxPriceAllTimeDate": "2025-05-18T01:57:00.781929+00:00"
+        },
+        {
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_near-mint_unlimited-holofoil",
+          "condition": "Near Mint",
+          "printing": "Unlimited Holofoil",
+          "language": "English",
+          "price": 1923.19,
+          "lastUpdated": 1758706033,
+          "priceChange24hr": 0,
+          "priceChange7d": 0,
+          "avgPrice": 1923.19,
+          "priceHistory": [
+            {
+              "p": 1923.19,
+              "t": 1758123931
+            },
+            {
+              "p": 1923.19,
+              "t": 1758155012
+            },
+            {
+              "p": 1923.19,
+              "t": 1758187044
+            },
+            {
+              "p": 1923.19,
+              "t": 1758217973
+            },
+            {
+              "p": 1923.19,
+              "t": 1758250489
+            },
+            {
+              "p": 1923.19,
+              "t": 1758283591
+            },
+            {
+              "p": 1923.19,
+              "t": 1758316391
+            },
+            {
+              "p": 1923.19,
+              "t": 1758348159
+            },
+            {
+              "p": 1923.19,
+              "t": 1758382521
+            },
+            {
+              "p": 1923.19,
+              "t": 1758415392
+            },
+            {
+              "p": 1923.19,
+              "t": 1758481559
+            },
+            {
+              "p": 1923.19,
+              "t": 1758514394
+            },
+            {
+              "p": 1923.19,
+              "t": 1758547139
+            },
+            {
+              "p": 1923.19,
+              "t": 1758579528
+            },
+            {
+              "p": 1923.19,
+              "t": 1758643847
+            },
+            {
+              "p": 1923.19,
+              "t": 1758674794
+            },
+            {
+              "p": 1923.19,
+              "t": 1758706034
+            }
+          ],
+          "minPrice7d": 1923.19,
+          "maxPrice7d": 1923.19,
+          "stddevPopPrice7d": 0,
+          "covPrice7d": 0,
+          "iqrPrice7d": 0,
+          "trendSlope7d": 0,
+          "priceChangesCount7d": 0,
+          "priceChange30d": 13.13,
+          "avgPrice30d": 1772.11,
+          "priceHistory30d": [
+            {
+              "p": 1700,
+              "t": 1756155722
+            },
+            {
+              "p": 1700,
+              "t": 1756193189
+            },
+            {
+              "p": 1700,
+              "t": 1756230714
+            },
+            {
+              "p": 1700,
+              "t": 1756268071
+            },
+            {
+              "p": 1700,
+              "t": 1756305736
+            },
+            {
+              "p": 1700,
+              "t": 1756343075
+            },
+            {
+              "p": 1700,
+              "t": 1756380488
+            },
+            {
+              "p": 1700,
+              "t": 1756418128
+            },
+            {
+              "p": 1700,
+              "t": 1756455384
+            },
+            {
+              "p": 1700,
+              "t": 1756492547
+            },
+            {
+              "p": 1700,
+              "t": 1756529578
+            },
+            {
+              "p": 1700,
+              "t": 1756567117
+            },
+            {
+              "p": 1700,
+              "t": 1756604385
+            },
+            {
+              "p": 1700,
+              "t": 1756641801
+            },
+            {
+              "p": 1700,
+              "t": 1756678163
+            },
+            {
+              "p": 1700,
+              "t": 1756715317
+            },
+            {
+              "p": 1700,
+              "t": 1756752281
+            },
+            {
+              "p": 1700,
+              "t": 1756789397
+            },
+            {
+              "p": 1700,
+              "t": 1756826644
+            },
+            {
+              "p": 1700,
+              "t": 1756864199
+            },
+            {
+              "p": 1700,
+              "t": 1756901938
+            },
+            {
+              "p": 1700,
+              "t": 1756939473
+            },
+            {
+              "p": 1700,
+              "t": 1756977395
+            },
+            {
+              "p": 1700,
+              "t": 1757015061
+            },
+            {
+              "p": 1700,
+              "t": 1757085999
+            },
+            {
+              "p": 1700,
+              "t": 1757120008
+            },
+            {
+              "p": 1700,
+              "t": 1757154307
+            },
+            {
+              "p": 1700,
+              "t": 1757188158
+            },
+            {
+              "p": 1700,
+              "t": 1757222205
+            },
+            {
+              "p": 1700,
+              "t": 1757255991
+            },
+            {
+              "p": 1700,
+              "t": 1757290097
+            },
+            {
+              "p": 1700,
+              "t": 1757324327
+            },
+            {
+              "p": 1700,
+              "t": 1757358434
+            },
+            {
+              "p": 1700,
+              "t": 1757392546
+            },
+            {
+              "p": 1700,
+              "t": 1757426597
+            },
+            {
+              "p": 1700,
+              "t": 1757460509
+            },
+            {
+              "p": 1700,
+              "t": 1757494640
+            },
+            {
+              "p": 1700,
+              "t": 1757528723
+            },
+            {
+              "p": 1700,
+              "t": 1757562069
+            },
+            {
+              "p": 1700,
+              "t": 1757595573
+            },
+            {
+              "p": 1700,
+              "t": 1757629551
+            },
+            {
+              "p": 1700,
+              "t": 1757663587
+            },
+            {
+              "p": 1700,
+              "t": 1757697230
+            },
+            {
+              "p": 1700,
+              "t": 1757967318
+            },
+            {
+              "p": 1923.19,
+              "t": 1757998669
+            },
+            {
+              "p": 1923.19,
+              "t": 1758029646
+            },
+            {
+              "p": 1923.19,
+              "t": 1758060927
+            },
+            {
+              "p": 1923.19,
+              "t": 1758092137
+            },
+            {
+              "p": 1923.19,
+              "t": 1758123931
+            },
+            {
+              "p": 1923.19,
+              "t": 1758155012
+            },
+            {
+              "p": 1923.19,
+              "t": 1758187044
+            },
+            {
+              "p": 1923.19,
+              "t": 1758217973
+            },
+            {
+              "p": 1923.19,
+              "t": 1758250489
+            },
+            {
+              "p": 1923.19,
+              "t": 1758283591
+            },
+            {
+              "p": 1923.19,
+              "t": 1758316391
+            },
+            {
+              "p": 1923.19,
+              "t": 1758348159
+            },
+            {
+              "p": 1923.19,
+              "t": 1758382521
+            },
+            {
+              "p": 1923.19,
+              "t": 1758415392
+            },
+            {
+              "p": 1923.19,
+              "t": 1758481559
+            },
+            {
+              "p": 1923.19,
+              "t": 1758514394
+            },
+            {
+              "p": 1923.19,
+              "t": 1758547139
+            },
+            {
+              "p": 1923.19,
+              "t": 1758579528
+            },
+            {
+              "p": 1923.19,
+              "t": 1758643847
+            },
+            {
+              "p": 1923.19,
+              "t": 1758674794
+            },
+            {
+              "p": 1923.19,
+              "t": 1758706034
+            }
+          ],
+          "minPrice30d": 1700,
+          "maxPrice30d": 1923.19,
+          "stddevPopPrice30d": 104.38,
+          "covPrice30d": 0.05889891412623509,
+          "iqrPrice30d": 223.19,
+          "trendSlope30d": 9.92619770838273,
+          "priceChangesCount30d": 1,
+          "priceRelativeTo30dRange": 1,
+          "priceChange90d": 16.59,
+          "avgPrice90d": 1724.28,
+          "minPrice90d": 1649.5,
+          "maxPrice90d": 1923.19,
+          "stddevPopPrice90d": 76.89,
+          "covPrice90d": 0.04459202510026518,
+          "iqrPrice90d": 0,
+          "trendSlope90d": 2.00429899779035,
+          "priceChangesCount90d": 2,
+          "priceRelativeTo90dRange": 1,
+          "minPrice1y": 1599,
+          "maxPrice1y": 1923.19,
+          "minPriceAllTime": 1599,
+          "minPriceAllTimeDate": "2025-04-26T01:41:26.955828+00:00",
+          "maxPriceAllTime": 1923.19,
+          "maxPriceAllTimeDate": "2025-09-24T09:27:13.614328+00:00"
+        },
+        {
+          "id": "pokemon-base-set-shadowless-charizard-holo-rare_moderately-played_1st-edition-holofoil",
+          "condition": "Moderately Played",
+          "printing": "1st Edition Holofoil",
+          "language": null,
+          "price": 5495,
+          "lastUpdated": 1754787579,
+          "priceChange24hr": 0,
+          "priceChange7d": 0,
+          "avgPrice": 5495,
+          "priceHistory": [
+            {
+              "p": 5495,
+              "t": 1754229788
+            },
+            {
+              "p": 5495,
+              "t": 1754281417
+            },
+            {
+              "p": 5495,
+              "t": 1754332739
+            },
+            {
+              "p": 5495,
+              "t": 1754384299
+            },
+            {
+              "p": 5495,
+              "t": 1754436219
+            },
+            {
+              "p": 5495,
+              "t": 1754488269
+            },
+            {
+              "p": 5495,
+              "t": 1754540466
+            },
+            {
+              "p": 5495,
+              "t": 1754592120
+            },
+            {
+              "p": 5495,
+              "t": 1754644160
+            },
+            {
+              "p": 5495,
+              "t": 1754696042
+            },
+            {
+              "p": 5495,
+              "t": 1754748503
+            },
+            {
+              "p": 5495,
+              "t": 1754787579
+            }
+          ],
+          "minPrice7d": 5495,
+          "maxPrice7d": 5495,
+          "stddevPopPrice7d": 0,
+          "covPrice7d": 0,
+          "iqrPrice7d": 0,
+          "trendSlope7d": 0,
+          "priceChangesCount7d": 0,
+          "priceChange30d": 0,
+          "avgPrice30d": 5495,
+          "priceHistory30d": [
+            {
+              "p": 5495,
+              "t": 1752235506
+            },
+            {
+              "p": 5495,
+              "t": 1752310022
+            },
+            {
+              "p": 5495,
+              "t": 1752382962
+            },
+            {
+              "p": 5495,
+              "t": 1752429937
+            },
+            {
+              "p": 5495,
+              "t": 1752484077
+            },
+            {
+              "p": 5495,
+              "t": 1752537749
+            },
+            {
+              "p": 5495,
+              "t": 1752548800
+            },
+            {
+              "p": 5495,
+              "t": 1752559842
+            },
+            {
+              "p": 5495,
+              "t": 1752614551
+            },
+            {
+              "p": 5495,
+              "t": 1752668701
+            },
+            {
+              "p": 5495,
+              "t": 1752722761
+            },
+            {
+              "p": 5495,
+              "t": 1752776772
+            },
+            {
+              "p": 5495,
+              "t": 1752830821
+            },
+            {
+              "p": 5495,
+              "t": 1752884751
+            },
+            {
+              "p": 5495,
+              "t": 1752938685
+            },
+            {
+              "p": 5495,
+              "t": 1752992859
+            },
+            {
+              "p": 5495,
+              "t": 1753046747
+            },
+            {
+              "p": 5495,
+              "t": 1753100834
+            },
+            {
+              "p": 5495,
+              "t": 1753155649
+            },
+            {
+              "p": 5495,
+              "t": 1753206594
+            },
+            {
+              "p": 5495,
+              "t": 1753258577
+            },
+            {
+              "p": 5495,
+              "t": 1753308329
+            },
+            {
+              "p": 5495,
+              "t": 1753358710
+            },
+            {
+              "p": 5495,
+              "t": 1753409981
+            },
+            {
+              "p": 5495,
+              "t": 1753461178
+            },
+            {
+              "p": 5495,
+              "t": 1753512302
+            },
+            {
+              "p": 5495,
+              "t": 1753563948
+            },
+            {
+              "p": 5495,
+              "t": 1753615000
+            },
+            {
+              "p": 5495,
+              "t": 1753666203
+            },
+            {
+              "p": 5495,
+              "t": 1753717375
+            },
+            {
+              "p": 5495,
+              "t": 1753765903
+            },
+            {
+              "p": 5495,
+              "t": 1753820558
+            },
+            {
+              "p": 5495,
+              "t": 1753875110
+            },
+            {
+              "p": 5495,
+              "t": 1753926316
+            },
+            {
+              "p": 5495,
+              "t": 1753977273
+            },
+            {
+              "p": 5495,
+              "t": 1754027425
+            },
+            {
+              "p": 5495,
+              "t": 1754078040
+            },
+            {
+              "p": 5495,
+              "t": 1754129337
+            },
+            {
+              "p": 5495,
+              "t": 1754179553
+            },
+            {
+              "p": 5495,
+              "t": 1754229788
+            },
+            {
+              "p": 5495,
+              "t": 1754281417
+            },
+            {
+              "p": 5495,
+              "t": 1754332739
+            },
+            {
+              "p": 5495,
+              "t": 1754384299
+            },
+            {
+              "p": 5495,
+              "t": 1754436219
+            },
+            {
+              "p": 5495,
+              "t": 1754488269
+            },
+            {
+              "p": 5495,
+              "t": 1754540466
+            },
+            {
+              "p": 5495,
+              "t": 1754592120
+            },
+            {
+              "p": 5495,
+              "t": 1754644160
+            },
+            {
+              "p": 5495,
+              "t": 1754696042
+            },
+            {
+              "p": 5495,
+              "t": 1754748503
+            },
+            {
+              "p": 5495,
+              "t": 1754787579
+            }
+          ],
+          "minPrice30d": 5495,
+          "maxPrice30d": 5495,
+          "stddevPopPrice30d": 0,
+          "covPrice30d": 0,
+          "iqrPrice30d": 0,
+          "trendSlope30d": 0,
+          "priceChangesCount30d": 0,
+          "priceRelativeTo30dRange": null,
+          "priceChange90d": null,
+          "avgPrice90d": null,
+          "minPrice90d": 5495,
+          "maxPrice90d": 5495,
+          "stddevPopPrice90d": null,
+          "covPrice90d": null,
+          "iqrPrice90d": null,
+          "trendSlope90d": null,
+          "priceChangesCount90d": null,
+          "priceRelativeTo90dRange": null,
+          "minPrice1y": 5495,
+          "maxPrice1y": 5495,
+          "minPriceAllTime": 5495,
+          "minPriceAllTimeDate": "2025-08-10T00:59:39.28684+00:00",
+          "maxPriceAllTime": 5495,
+          "maxPriceAllTimeDate": "2025-08-10T00:59:39.28684+00:00"
         }
       ]
     }
-  ]
+  ],
+  "_metadata": {
+    "apiRequestLimit": 1000,
+    "apiDailyLimit": 100,
+    "apiRateLimit": 10,
+    "apiRequestsUsed": 79,
+    "apiDailyRequestsUsed": 4,
+    "apiRequestsRemaining": 921,
+    "apiDailyRequestsRemaining": 96,
+    "apiPlan": "Free Tier"
+  }
 }

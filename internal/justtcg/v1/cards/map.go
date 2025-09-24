@@ -27,7 +27,7 @@ func Validate(responseDTO ResponseDTO) error {
 
 	for _, variant := range card.Variants {
 		if variant.Printing == "" {
-			return errors.New("card: variants: printings are empty")
+			return errors.New("card: variants: printing is empty")
 		}
 		if variant.Condition == "" {
 			return errors.New("card: variants: condition is empty")
