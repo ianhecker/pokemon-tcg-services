@@ -62,7 +62,7 @@ func (c *Client) GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Ca
 		return cards.Card{}, err
 	}
 
-	response, err := cards.Decode(result.Body)
+	response, err := cards.Decode(result.Body, cards.UseNumber())
 	if err != nil {
 		return cards.Card{}, err
 	}

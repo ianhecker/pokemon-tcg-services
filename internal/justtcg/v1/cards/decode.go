@@ -14,12 +14,6 @@ func UseNumber() DecodeOption {
 	}
 }
 
-func DisallowUnknownFields() DecodeOption {
-	return func(d *json.Decoder) {
-		d.DisallowUnknownFields()
-	}
-}
-
 func Decode(data []byte, opts ...DecodeOption) (ResponseDTO, error) {
 	var dto ResponseDTO
 
