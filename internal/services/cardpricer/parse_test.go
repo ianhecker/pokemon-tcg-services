@@ -25,8 +25,8 @@ func TestParseCardQuery(t *testing.T) {
 		{"happy path", newRequest(t, "?id=124014"), "124014", ""},
 		{"request is nil", nil, "", "request is nil"},
 		{"missing query", newRequest(t, ""), "", "missing required query: id"},
-		{"empty query", newRequest(t, "?id="), "", "invalid card ID: ''"},
-		{"bad ID", newRequest(t, "?id=bad ID"), "", "invalid card ID: 'bad ID'"},
+		{"empty query", newRequest(t, "?id="), "", "no regex match: ''"},
+		{"bad ID", newRequest(t, "?id=bad ID"), "", "no regex match: 'bad ID'"},
 	}
 
 	for _, test := range tests {
@@ -35,7 +35,7 @@ func TestParseCardQuery(t *testing.T) {
 
 			if test.err == "" {
 				assert.NoError(t, err)
-				assert.Equal(t, test.expected, ID)
+				assert.Equal(t, test.expected, string(ID))
 			} else {
 				assert.ErrorContains(t, err, test.err)
 			}

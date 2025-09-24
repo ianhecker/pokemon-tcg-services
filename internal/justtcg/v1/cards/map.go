@@ -82,7 +82,7 @@ func MakeTCGPlayerID(ID string) (TCGPlayerID, error) {
 	}
 	match := regex(string(ID))
 	if !match {
-		return "", fmt.Errorf("error parsing TCGPlayerID: no regex match")
+		return "", fmt.Errorf("error parsing TCGPlayerID: no regex match: '%s'", ID)
 	}
 	return TCGPlayerID(ID), nil
 }
