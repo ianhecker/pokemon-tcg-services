@@ -15,9 +15,6 @@ bin:
 build: bin
 	@go build -o $(BIN)/$(APP)
 
-run: build
-	@./$(BIN)/$(APP)
-
 tidy:
 	@go mod tidy
 
@@ -35,3 +32,7 @@ run-card-pricer: docker-build
 	 --env-file .env \
 	pokemon-tcg-services:latest \
 	card-pricer --port 8080
+
+# Requires run-card-pricer to be running
+hello-world:
+	./sh/hello-world.sh
