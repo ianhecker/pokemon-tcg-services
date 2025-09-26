@@ -18,7 +18,7 @@ Trading Card Game (TCG)
 
 ## Overview
 
-The Pokémon Trading Card Game (TCG) released its first set in the US in 1998
+The Pokémon Trading Card Game `TCG` released its first set in the US in 1998
 
 Card releases span decades, and collectors must keep up with constantly changing
 values
@@ -42,12 +42,12 @@ Existing pricing tools are defaulted for those conditions
 The largest segment of the trading card market are cards below `Mint` conditions
 
 Conditions:
-- Mint - **M**
-- Near Mint - **NM**
-- Lightly Played - **LP**
-- Moderately Played - **MP**
-- Heavily Played - **HP**
-- Damaged - **D**
+- **Mint** - `M`
+- **Near Mint** - `NM`
+- **Lightly Played** - `LP`
+- **Moderately Played** - `MP`
+- **Heavily Played** - `HP`
+- **Damaged** - `D`
 
 Even with standardized conditions, used cards are often ungraded, and their
 condition is negotiable
@@ -57,7 +57,7 @@ conditions
 
 ### Comps Across Conditions
 
-Some tools can comp for lower conditions, but only one at a time
+Some tools can `comp` for lower conditions, but only one at a time
 
 Checking multiple conditions means repeated searches and visual parsing
 
@@ -65,7 +65,7 @@ No aggregated price history is stored
 
 ### Project Goal
 
-This project simplifies checking comps
+This project simplifies checking `comps`
 
 It removes the need for repeated searches with endless scrolling in the
 TCG Player app.
@@ -88,7 +88,7 @@ This allows for easier packaging, distribution, and microservice execution
 Docker images mimic those commands and flags for intuitive deployments
 
 Services
-- card-pricer
+- `card-pricer`
 
 ### Card Pricer
 
@@ -127,8 +127,10 @@ conditions
 
 > All configuration happens via environment variables
 
-You will need to export:
+Required
 - JUST_TCG_API_KEY = [Get a JUST TCG API Key](https://justtcg.com/dashboard/plans)
+
+#### Just TCG API Key
 
 ```bash
 export JUST_TCG_API_KEY=
@@ -138,9 +140,12 @@ export JUST_TCG_API_KEY=
 
 > You only need a `.env` file to run Docker containers
 
-Services run in Docker containers get their environment variables when Docker
-run is provided with a `.env` file, which it then injects as environment
-variables into the container
+Docker containers get environment variables when `docker run` is provided with a
+`.env` file, which it then injects as environment variables into the container
+
+```bash
+docker run ... --env-file .env ...
+```
 
 Quickly create an `.env` from your already exported env variable
 ```bash

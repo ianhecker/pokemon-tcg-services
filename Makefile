@@ -22,7 +22,7 @@ tidy:
 mocks:
 	mockery
 
-test: tidy
+test: mocks tidy
 	@$(TESTCMD) -v -count=1 ./...
 
 docker-build:
