@@ -110,8 +110,14 @@ conditions
 ### Strongly Suggested
 
 - [JQ](https://jqlang.org/) - For pretty JSON
-- `make` - For running commands
+- Makefile - For easy commands
 - A Basic System Shell - For basic scripts in [sh](./sh)
+    - Located at `/bin/sh`
+
+### Optional
+
+- [gotest](https://github.com/rakyll/gotest) - For colorized test output
+    - `go install github.com/rakyll/gotest@latest`
 
 ---
 

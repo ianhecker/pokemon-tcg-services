@@ -1,7 +1,8 @@
+APP = pokemon-tcg-services
+BIN = "bin"
 
-APP=pokemon-tcg-services
-BIN="bin"
-GOTEST=gotest
+SHELL := /bin/sh
+TESTCMD ?= $(shell if command -v gotest >/dev/null 2>&1; then echo "gotest"; else echo "go test"; fi)
 
 .PHONY: clean bin build run tidy mocks test
 
@@ -22,7 +23,7 @@ mocks:
 	mockery
 
 test: tidy
-	@$(GOTEST) -v -count=1 ./...
+	@$(TESTCMD) -v -count=1 ./...
 
 docker-build:
 	docker build --no-cache -t pokemon-tcg-services .
