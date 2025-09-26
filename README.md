@@ -104,6 +104,8 @@ conditions
 ### Required
 
 - [Golang](https://go.dev/doc/install) - v1.24.2
+- [Mockery](https://vektra.github.io/mockery/latest/installation/) - mock generation
+    - `go install github.com/vektra/mockery/v3@3.5.2`
 - [Docker](https://docs.docker.com/desktop/) - To build images
     - [Ubuntu - Install via apt](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
 
@@ -170,6 +172,16 @@ cp .env.example .env
 ```bash
 make test
 ```
+
+#### Mock Generation
+
+Create or update mocks for Golang interfaces
+
+```bash
+make mock
+```
+
+See [.mockery.yaml](./.mockery.yaml) for configuration
 
 ### Running
 
