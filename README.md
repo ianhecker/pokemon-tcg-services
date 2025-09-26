@@ -20,26 +20,26 @@ Trading Card Game (TCG)
 
 The Pokémon Trading Card Game (TCG) released its first set in the US in 1998
 
-Released cards span decades, and any card collector will have to evaluate the
-values of cards at some point
+Card releases span decades, and collectors must keep up with constantly changing
+values
 
 ### Pricing Standards
 
 [TCG Player](https://www.tcgplayer.com/) marketplace is the gold standard
-for card pricing.
+for card pricing
 
-Both collectors and businesses use it to look up comparable listings, or “comps”,
-to estimate a card’s value by its condition
+Both collectors and businesses use it to look up `comps`, slang for comparable
+listings, to estimate card values
 
 ### The Mint Condition Problem
 
-Mainstream collecting heavily focuses on *Mint* and *Near Mint* conditions
+Mainstream collecting heavily focuses on `Mint` and `Near Mint` conditions
 
 Existing pricing tools are defaulted for those conditions
 
 ### Used Card Comps
 
-A large part of the trading card market are used cards below *Mint* Condition
+The largest segment of the trading card market are cards below `Mint` conditions
 
 Conditions:
 - Mint - **M**
@@ -49,31 +49,31 @@ Conditions:
 - Heavily Played - **HP**
 - Damaged - **D**
 
-Used cards are often not clearly graded, or can have their condition haggled
+Even with standardized conditions, used cards are often ungraded, and their
+condition is negotiable
 
-Estimating card value then means checking comps for multiple conditions
+As a result, estimating value requires checking `comps` across multiple
+conditions
 
 ### Comps Across Conditions
 
-> Some tools can check lower condition comps, but only one specific condition at
-a time
+Some tools can comp for lower conditions, but only one at a time
 
-Checking comps for multiple conditions requires repeated searches and scrolling
-with visual parsing
+Checking multiple conditions means repeated searches and visual parsing
 
-No price aggregated history is persisted
+No aggregated price history is stored
 
 ### Project Goal
 
-> This project aims to make comps simpler
+This project simplifies checking comps
 
-It removes the need to for multiple searches and scrolling endlessly in the TCG
-Player app
+It removes the need for repeated searches with endless scrolling in the
+TCG Player app.
 
-For a card, it shows recent sales for all conditions in one compact view
+For each card, it shows recent sales across all conditions in one view
 
-Prices are up-to-date and derived from aggregated data across multiple
-marketplaces from [Just TCG](https://justtcg.com/)
+Prices are current and aggregated from multiple marketplaces via
+[Just TCG](https://justtcg.com/)
 
 ---
 
