@@ -122,25 +122,7 @@ conditions
 
 ## Installation
 
-### Required
-
-- [Golang](https://go.dev/doc/install) - v1.24.2
-- [Mockery](https://vektra.github.io/mockery/latest/installation/) - mock generation
-    - `go install github.com/vektra/mockery/v3@3.5.2`
-- [Docker](https://docs.docker.com/desktop/) - To build images
-    - [Ubuntu - Install via apt](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
-
-### Strongly Suggested
-
-- [JQ](https://jqlang.org/) - For pretty JSON
-- Makefile - For easy commands
-- A Basic System Shell - For basic scripts in [sh](./sh)
-    - Located at `/bin/sh`
-
-### Optional
-
-- [gotest](https://github.com/rakyll/gotest) - For colorized test output
-    - `go install github.com/rakyll/gotest@latest`
+See [INSTALL.md](./docs/INSTALL.md)
 
 ---
 
