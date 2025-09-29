@@ -128,9 +128,7 @@ See [CONFIGURATION.md](./docs/CONFIGURATION.md)
 
 ### Testing
 
-```bash
-make test
-```
+See [TEST.md](./docs/TEST.md) for testing
 
 See [MOCKS.md](./docs/MOCKS.md) for mocks and mock generation
 
