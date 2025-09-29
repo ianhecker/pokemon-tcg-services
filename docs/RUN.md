@@ -39,3 +39,7 @@ See the [sh](../sh) directory for handy scripting tools
 
 Want to quickly fetch from the Just TCG API? See the [sh/justtcg/](../sh/justtcg/)
 directory
+
+## Kubernetes
+
+Coming soon!

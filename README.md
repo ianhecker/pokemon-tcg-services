@@ -98,6 +98,10 @@ This allows for easier packaging, distribution, and microservice execution
 
 Docker images mimic those commands and flags for intuitive deployments
 
+> Docker images are orchestrated by Kubernetes
+
+Coming soon!
+
 Services
 - `card-pricer`
 
