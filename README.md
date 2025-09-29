@@ -20,13 +20,7 @@ Microservices for collecting trading cards from the Pokemon Trading Card Game (T
 - [Architecture](#architecture)
     - [Card Pricer](#card-pricer)
 - [Installation](#installation)
-    - [Required](#required)
-    - [Strongly Suggested](#strongly-suggested)
-    - [Optional](#optional)
 - [Configuration](#configuration)
-    - [Environment Variables](#environment-variables)
-    - [Just TCG API Key](#just-tcg-api-key)
-    - [Environment Configuration File](#environment-configuration-file)
 - [Usage](#usage)
     - [Testing](#testing)
     - [Mock Generation](#mock-generation)
@@ -128,41 +122,7 @@ See [INSTALL.md](./docs/INSTALL.md)
 
 ## Configuration
 
-### Environment Variables
-
-> All configuration happens via environment variables
-
-Required
-- JUST_TCG_API_KEY = [Get a JUST TCG API Key](https://justtcg.com/dashboard/plans)
-
-#### Just TCG API Key
-
-```bash
-export JUST_TCG_API_KEY=
-```
-
-### Environment Configuration File
-
-> You only need a `.env` file to run Docker containers
-
-Docker containers get environment variables when `docker run` is provided with a
-`.env` file, which it then injects as environment variables into the container
-
-```bash
-docker run ... --env-file .env ...
-```
-
-Quickly create an `.env` from your already exported env variable
-```bash
-cat <<EOF > .env
-JUST_TCG_API_KEY=${JUST_TCG_API_KEY}
-EOF
-```
-
-Or, copy an empty template with `.env.example`
-```bash
-cp .env.example .env
-```
+See [CONFIGURATION.md](./docs/CONFIGURATION.md)
 
 ---
 
