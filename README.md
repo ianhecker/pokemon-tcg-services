@@ -23,7 +23,6 @@ Microservices for collecting trading cards from the Pokemon Trading Card Game (T
 - [Configuration](#configuration)
 - [Usage](#usage)
     - [Testing](#testing)
-    - [Mock Generation](#mock-generation)
     - [Running](#running)
     - [Docker Images](#docker-images)
     - [Hello World](#hello-world)
@@ -136,15 +135,7 @@ See [CONFIGURATION.md](./docs/CONFIGURATION.md)
 make test
 ```
 
-#### Mock Generation
-
-Create or update mocks for Golang interfaces
-
-```bash
-make mock
-```
-
-See [.mockery.yaml](./.mockery.yaml) for configuration
+See [MOCKS.md](./docs/MOCKS.md) for mocks and mock generation
 
 ### Running
 
