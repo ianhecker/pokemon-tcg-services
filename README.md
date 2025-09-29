@@ -4,9 +4,7 @@ Pokemon Trading Card Game (TCG) Services are microservices that help collectors
 acquire trading cards.
 
 <div align="center">
-
-![Pokemon TCG Services](assets/logo.png)
-
+  <img src="assets/logo.png" alt="My mascot" width="400"/>
 </div>
 
 [![Test](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml/badge.svg)](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml)
