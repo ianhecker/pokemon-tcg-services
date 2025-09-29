@@ -24,9 +24,6 @@ Microservices for collecting trading cards from the Pokemon Trading Card Game (T
 - [Usage](#usage)
     - [Testing](#testing)
     - [Running](#running)
-    - [Docker Images](#docker-images)
-    - [Hello World](#hello-world)
-    - [Handy Scripts](#handy-scripts)
 
 ---
 
@@ -139,51 +136,6 @@ See [MOCKS.md](./docs/MOCKS.md) for mocks and mock generation
 
 ### Running
 
-Build your binary
-```bash
-make build
-```
-
-Run the binary with the commands and flags you want
-```bash
-./bin/pokemon-tcg-services
-```
-
-Running card-pricer
-```bash
- ./bin/pokemon-tcg-services service card-pricer --port=8080
-```
-
-You can skip all of these steps by simply running
-```bash
-make run-card-pricer
-```
-
-### Docker Images
-
-```bash
-make docker-build
-```
-
-### Hello World
-
-Want to check if you can run services and fetch card prices?
-
-*Terminal #1*
-```bash
-make run-card-pricer
-```
-
-*Terminal #2*
-```bash
-make hello-world
-```
-
-### Handy Scripts
-
-See the [sh](./sh) directory for handy tools
-
-Want to quickly fetch from the Just TCG API? See the [sh/justtcg/](./sh/justtcg/)
-directory
+See [RUN.md](./docs/RUN.md)
 
 ---
