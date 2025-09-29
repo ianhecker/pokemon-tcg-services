@@ -1,7 +1,9 @@
 # Pokemon TCG Services
 
-This repository aims to assist collectors obtain trading cards from the Pokemon
-Trading Card Game (TCG)
+Pokemon Trading Card Game (TCG) Services are microservices that help collectors
+acquire trading cards.
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/ianhecker/pokemon-tcg-services)](https://goreportcard.com/report/github.com/ianhecker/pokemon-tcg-services)
 
 ---
 
