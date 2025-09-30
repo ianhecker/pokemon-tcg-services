@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"log"
 
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
@@ -21,7 +22,10 @@ var cardPricerCmd = &cobra.Command{
 }
 
 func RunCardService(port string) {
-	Config.FlightCheck()
+	err := Config.FlightCheck()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	base, _ := zap.NewProduction()
 	defer base.Sync()

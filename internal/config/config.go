@@ -1,7 +1,7 @@
 package config
 
 import (
-	"log"
+	"errors"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -39,10 +39,11 @@ type Config struct {
 	}
 }
 
-func (config Config) FlightCheck() {
+func (config Config) FlightCheck() error {
 	if config.JustTCG.APIKey.Reveal() == "" {
-		log.Fatal("config flight check: Just TCG API Key is empty")
+		return errors.New("config flight check: Just TCG API Key is empty")
 	}
+	return nil
 }
 
 func Load() (Config, error) {
