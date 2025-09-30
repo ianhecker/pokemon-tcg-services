@@ -20,7 +20,7 @@ build: bin
 tidy:
 	@go mod tidy
 
-.PHONY: mocks test coverage view-coverage
+.PHONY: mocks test coverage coverage-total view-coverage
 
 mocks:
 	mockery
@@ -29,7 +29,10 @@ test: mocks tidy
 	@$(TEST_CMD) -v -count=1 ./...
 
 coverage:
-	@go test -coverprofile=coverage.out $(TEST_PACKAGES)
+	@go test -coverprofile=coverage.out $(TEST_PACKAGES) > /dev/null
+
+coverage-total: coverage
+	@go tool cover -func=coverage.out | tail -n1 | grep -Eo '[0-9.]+%$$'
 
 view-coverage: coverage
 	@go tool cover -html=coverage.out
