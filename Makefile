@@ -31,7 +31,7 @@ test: mocks tidy
 coverage:
 	@go test -coverprofile=coverage.out $(TEST_PACKAGES)
 
-view-coverage: test-coverage
+view-coverage: coverage
 	@go tool cover -html=coverage.out
 
 .PHONY: docker-build run-card-pricer hello-world
