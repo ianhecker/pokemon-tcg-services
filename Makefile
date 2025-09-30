@@ -1,14 +1,16 @@
 APP = pokemon-tcg-services
 BIN = "bin"
-
 SHELL := /bin/sh
-TESTCMD ?= $(shell if command -v gotest >/dev/null 2>&1; then echo "gotest"; else echo "go test"; fi)
+
+TEST_CMD ?= $(shell if command -v gotest >/dev/null 2>&1; then echo "gotest"; else echo "go test"; fi)
+TEST_PACKAGES ?= $(shell go list ./... | grep -v 'mocks')
 
 .PHONY: clean bin build run tidy mocks test
 
 clean:
 	@rm -rf $(BIN)/$(APP)
 	@rm -rf $(BIN)
+	@rm coverage.out
 
 bin:
 	@mkdir -p $(BIN)
@@ -23,7 +25,17 @@ mocks:
 	mockery
 
 test: mocks tidy
-	@$(TESTCMD) -v -count=1 ./...
+	@$(TEST_CMD) -v -count=1 ./...
+
+.PHONY: test-coverage view-test-coverage
+
+test-coverage:
+	@go test -coverprofile=coverage.out $(TEST_PACKAGES)
+
+view-test-coverage: test-coverage
+	@go tool cover -html=coverage.out
+
+.PHONY: docker-build run-card-pricer hello-world
 
 docker-build:
 	docker build --no-cache -t pokemon-tcg-services .

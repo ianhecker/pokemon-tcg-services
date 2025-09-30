@@ -11,6 +11,7 @@
 - [JQ](https://jqlang.org/) - *Parseable JSON*
 - `make` - *Easy CLI commands*
 - `/bin/sh` - *Basic system shell for handy scripts*
+- `grep` - *For make commands*
 
 ## Docker
 
