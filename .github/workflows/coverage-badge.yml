@@ -1,0 +1,30 @@
+name: Coverage Badge
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - run: |
+          val=$(make coverage-total)
+          mkdir -p public
+          printf '{ "schemaVersion": 1, "label": "coverage", "message": "%s", "color": "green" }\n' "$val" > public/coverage.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - uses: actions/deploy-pages@v4
