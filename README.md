@@ -8,7 +8,7 @@ Microservices for collecting trading cards from the Pokemon Trading Card Game (T
 
 [![Test](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml/badge.svg)](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/ianhecker/pokemon-tcg-services)](https://goreportcard.com/report/github.com/ianhecker/pokemon-tcg-services)
-
+![coverage](https://img.shields.io/endpoint?url=https://<user>.github.io/<repo>/coverage.json)
 
 ## Table of Contents
 - [Overview](#overview)
