@@ -139,6 +139,24 @@ func TestRetryable_Retry(t *testing.T) {
 		sleepableMock.AssertExpectations(t)
 	})
 
+	t.Run("retry returns complete", func(t *testing.T) {
+		retries := 1
+		duration := time.Duration(0)
+		calls := 0
+		do := func(ctx context.Context) (retry.RetryState, error) {
+			calls++
+			return retry.Complete, nil
+		}
+
+		ctx := context.Background()
+		retry := retry.MakeRetryable(retries, duration, do)
+
+		repeat, err := retry.Retry(ctx)
+		assert.NoError(t, err)
+		assert.Equal(t, false, repeat)
+		assert.Equal(t, 1, calls)
+	})
+
 	t.Run("retry returns error", func(t *testing.T) {
 		retries := 1
 		duration := time.Duration(0)
@@ -173,18 +191,18 @@ func TestRetryable_Retry(t *testing.T) {
 		assert.Equal(t, false, repeat)
 	})
 
-	t.Run("given nil function", func(t *testing.T) {
+	t.Run("state starts at complete", func(t *testing.T) {
 		ctx := context.Background()
 		retry := retry.MakeRetryableFromRaw(
 			0,
-			1,
-			retry.Yes,
+			0,
+			retry.Complete,
 			nil,
 			nil,
 		)
 
 		repeat, err := retry.Retry(ctx)
-		assert.EqualError(t, err, "nil Do function")
+		assert.EqualError(t, err, "starting state is complete")
 		assert.Equal(t, false, repeat)
 	})
 
@@ -202,6 +220,28 @@ func TestRetryable_Retry(t *testing.T) {
 		assert.EqualError(t, err, "retries were zero")
 		assert.Equal(t, false, repeat)
 	})
+
+	t.Run("given nil function", func(t *testing.T) {
+		ctx := context.Background()
+		retry := retry.MakeRetryableFromRaw(
+			0,
+			1,
+			retry.Yes,
+			nil,
+			nil,
+		)
+
+		repeat, err := retry.Retry(ctx)
+		assert.EqualError(t, err, "nil Do function")
+		assert.Equal(t, false, repeat)
+	})
+}
+
+func TestRetryable_RetriesRemaining(t *testing.T) {
+	r := retry.Retryable{
+		Retries: 7,
+	}
+	assert.Equal(t, 7, r.RetriesRemaining())
 }
 
 func TestRunRetryable(t *testing.T) {
