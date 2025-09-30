@@ -5,6 +5,7 @@ import (
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestToken_String(t *testing.T) {
@@ -45,7 +46,7 @@ func TestToken_Reveal(t *testing.T) {
 	}
 }
 
-func TestConfg_FlightCheck(t *testing.T) {
+func TestConfig_FlightCheck(t *testing.T) {
 	var tests = []struct {
 		name     string
 		token    string
@@ -66,4 +67,21 @@ func TestConfg_FlightCheck(t *testing.T) {
 			assert.Equal(t, test.hasError, err != nil)
 		})
 	}
+}
+
+func TestLoad(t *testing.T) {
+	t.Run("happy path", func(t *testing.T) {
+		token := "1234"
+		t.Setenv(config.ENV_VAR_JUST_TCG_API_KEY, token)
+
+		config, err := config.Load()
+		require.NoError(t, err)
+
+		gotToken := config.JustTCG.APIKey
+		assert.Equal(t, token, gotToken.Reveal())
+	})
+	t.Run("missing Just TCG API key", func(t *testing.T) {
+		_, err := config.Load()
+		assert.ErrorContains(t, err, "Just TCG API Key is empty")
+	})
 }

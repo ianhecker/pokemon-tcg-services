@@ -7,6 +7,10 @@ import (
 	"github.com/spf13/viper"
 )
 
+const (
+	ENV_VAR_JUST_TCG_API_KEY string = "JUST_TCG_API_KEY"
+)
+
 type Token struct {
 	token string
 }
@@ -47,12 +51,17 @@ func (config Config) FlightCheck() error {
 }
 
 func Load() (Config, error) {
-	_ = viper.BindEnv("JUST_TCG_API_KEY")
+	_ = viper.BindEnv(ENV_VAR_JUST_TCG_API_KEY)
 	viper.AutomaticEnv()
 
 	var config Config
-	token := MakeToken(viper.GetString("JUST_TCG_API_KEY"))
+	token := MakeToken(viper.GetString(ENV_VAR_JUST_TCG_API_KEY))
 	config.JustTCG.APIKey = token
+
+	err := config.FlightCheck()
+	if err != nil {
+		return Config{}, err
+	}
 
 	return config, nil
 }
