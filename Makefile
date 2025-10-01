@@ -2,7 +2,7 @@ APP = pokemon-tcg-services
 BIN = "bin"
 
 TEST_CMD ?= $(shell if command -v gotest >/dev/null 2>&1; then echo "gotest"; else echo "go test"; fi)
-TEST_PACKAGES ?= $(shell go list ./... | grep -vE 'mocks|cmd')
+TEST_PACKAGES ?= $(shell go list ./... | grep -vE 'cmd|mocks|testkit')
 
 .PHONY: clean bin build run tidy
 
