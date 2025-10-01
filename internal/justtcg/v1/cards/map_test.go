@@ -59,8 +59,8 @@ func TestMap(t *testing.T) {
 		got, err := cards.Map(responseDTO)
 		require.NoError(t, err)
 
-		equal := cmp.Equal(expected, got)
-		assert.True(t, equal, cmp.Diff(expected, got))
+		equal := cmp.Equal(expected.Card, got)
+		assert.True(t, equal, cmp.Diff(expected.Card, got))
 	})
 
 	t.Run("errors", func(t *testing.T) {
@@ -91,65 +91,4 @@ func fptr(f float64) *cards.Price {
 
 func tptr(t time.Time) *time.Time {
 	return &t
-}
-
-var expected = cards.Card{
-	ID:          "pokemon-base-set-shadowless-charizard-holo-rare",
-	TCGPlayerID: "106999",
-	Name:        "Charizard",
-	Number:      "004/102",
-	Rarity:      "Holo Rare",
-	Set:         "Base Set (Shadowless)",
-	Prices: cards.Printings{
-		"1st Edition Holofoil": cards.Conditions{
-			NearMint: &cards.Prices{
-				Market:      fptr(503.49),
-				MinPrice30d: fptr(500.99),
-				MaxPrice30d: fptr(503.49),
-				LastUpdated: tptr(time.Unix(1758706033, 0).UTC()),
-			},
-			ModeratelyPlayed: &cards.Prices{
-				Market:      fptr(5495),
-				MinPrice30d: fptr(5495),
-				MaxPrice30d: fptr(5495),
-				LastUpdated: tptr(time.Unix(1754787579, 0).UTC()),
-			},
-			HeavilyPlayed: &cards.Prices{
-				Market:      cards.MakePrice(225),
-				LastUpdated: tptr(time.Unix(1743656485, 0).UTC()),
-			},
-		},
-		"Unlimited Holofoil": cards.Conditions{
-			NearMint: &cards.Prices{
-				Market:      fptr(1923.19),
-				MinPrice30d: fptr(1700),
-				MaxPrice30d: fptr(1923.19),
-				LastUpdated: tptr(time.Unix(1758706033, 0).UTC()),
-			},
-			LightlyPlayed: &cards.Prices{
-				Market:      fptr(1299),
-				MinPrice30d: fptr(1299),
-				MaxPrice30d: fptr(1299),
-				LastUpdated: tptr(time.Unix(1758706033, 0).UTC()),
-			},
-			ModeratelyPlayed: &cards.Prices{
-				Market:      fptr(764.78),
-				MinPrice30d: fptr(761.02),
-				MaxPrice30d: fptr(813.73),
-				LastUpdated: tptr(time.Unix(1758706033, 0).UTC()),
-			},
-			HeavilyPlayed: &cards.Prices{
-				Market:      fptr(645.05),
-				MinPrice30d: fptr(642.95),
-				MaxPrice30d: fptr(649),
-				LastUpdated: tptr(time.Unix(1758706033, 0).UTC()),
-			},
-			Damaged: &cards.Prices{
-				Market:      fptr(524.96),
-				MinPrice30d: fptr(523.77),
-				MaxPrice30d: fptr(533.29),
-				LastUpdated: tptr(time.Unix(1758706033, 0).UTC()),
-			},
-		},
-	},
 }
