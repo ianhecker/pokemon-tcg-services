@@ -30,6 +30,7 @@ test: mocks tidy
 
 coverage:
 	@go test -coverprofile=coverage.out $(TEST_PACKAGES) > /dev/null
+	@grep -v "main.go" coverage.out > coverage.tmp && mv coverage.tmp coverage.out
 
 coverage-total: coverage
 	@go tool cover -func=coverage.out | tail -n1 | grep -Eo '[0-9.]+%$$'
