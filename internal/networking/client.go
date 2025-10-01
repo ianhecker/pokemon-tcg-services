@@ -52,40 +52,21 @@ func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) 
 	duration, body, status, err := client.Do(req)
 	if err != nil {
 		if errors.Is(err, context.Canceled) {
-			log.Infow("request canceled",
-				"url", url,
-				"time", duration.String(),
-				"error", err,
-			)
+			log.Infow("request canceled", "url", url, "time", duration.String(), "error", err)
 		} else if errors.Is(err, context.DeadlineExceeded) {
-			log.Infow("request deadline exceeded",
-				"url", url,
-				"time", duration.String(),
-				"error", err,
-			)
+			log.Infow("request deadline exceeded", "url", url, "time", duration.String(), "error", err)
 		} else {
-			log.Errorw("request error",
-				"url", url,
-				"time", duration.String(),
-				"error", err,
-			)
+			log.Errorw("request error", "url", url, "time", duration.String(), "error", err)
 		}
 		return nil, status, fmt.Errorf("error doing request: %w", err)
 	}
 
 	if status != http.StatusOK {
-		log.Warnw("unexpected status code",
-			"url", url,
-			"time", duration.String(),
-			"status", status,
-			"body", string(body),
-		)
+		log.Warnw("unexpected status code", "url", url, "time", duration.String(), "status", status, "body", string(body))
 		return body, status, fmt.Errorf("unexpected status code: %d", status)
 	}
 
-	log.Infow("got response",
-		"url", url,
-		"time", duration.String())
+	log.Infow("got response", "url", url, "time", duration.String())
 	return body, status, nil
 }
 

@@ -62,7 +62,7 @@ func (c *Client) GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Ca
 		return cards.Card{}, fmt.Errorf("client retrying: %w", err)
 	}
 
-	response, err := cards.Decode(result.Body, cards.UseNumber())
+	response, err := cards.Decode(result.Body)
 	if err != nil {
 		return cards.Card{}, fmt.Errorf("client decoding: %w", err)
 	}

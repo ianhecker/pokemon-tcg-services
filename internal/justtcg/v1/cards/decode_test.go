@@ -1,7 +1,6 @@
 package cards_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
@@ -19,20 +18,6 @@ func TestDecode(t *testing.T) {
 		got, err := cards.Decode(bytes)
 
 		require.NoError(t, err)
-		assert.Equal(t, expected, got)
-	})
-	t.Run("happy path with options", func(t *testing.T) {
-		expected := generate.DefaultResponseDTO()
-
-		called := false
-		option := cards.DecodeOption(func(*json.Decoder) {
-			called = true
-		})
-		bytes := fixtures.Read(t, "response.json")
-		got, err := cards.Decode(bytes, option)
-
-		require.NoError(t, err)
-		assert.True(t, called)
 		assert.Equal(t, expected, got)
 	})
 	t.Run("error decoding", func(t *testing.T) {
