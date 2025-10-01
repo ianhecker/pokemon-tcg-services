@@ -38,7 +38,7 @@ coverage-total: coverage
 view-coverage: coverage
 	@go tool cover -html=coverage.out
 
-.PHONY: docker-build run-card-pricer hello-world
+.PHONY: docker-build run-card-pricer check-healthz hello-world
 
 docker-build:
 	docker build --no-cache -t pokemon-tcg-services .
@@ -49,6 +49,9 @@ run-card-pricer: docker-build
 	pokemon-tcg-services:latest \
 	card-pricer --port 8080
 
+check-healthz:
+	@./sh/check-healthz.sh
+
 # Requires run-card-pricer to be running
-hello-world:
-	./sh/hello-world.sh
+hello-world: check-healthz
+	@./sh/hello-world.sh
