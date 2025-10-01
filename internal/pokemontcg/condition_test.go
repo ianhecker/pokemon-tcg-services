@@ -1,12 +1,10 @@
 package pokemontcg_test
 
 import (
-	"encoding/json"
 	"testing"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/pokemontcg"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestCondition_ParseCondition(t *testing.T) {
@@ -53,12 +51,8 @@ func TestCondition_MarshalJSON(t *testing.T) {
 		t.Run(test.expected, func(t *testing.T) {
 
 			bytes, err := test.condition.MarshalJSON()
-			if test.expected != "Unknown" {
-				assert.NoError(t, err)
-				assert.Equal(t, test.expected, string(bytes))
-			} else {
-				assert.ErrorContains(t, err, "error marshaling condition")
-			}
+			assert.NoError(t, err)
+			assert.Equal(t, test.expected, string(bytes))
 		})
 	}
 }
@@ -68,29 +62,33 @@ func TestCondition_UnmarshalJSON(t *testing.T) {
 		input    string
 		expected pokemontcg.Condition
 	}{
-		{"Near Mint", pokemontcg.NearMint},
-		{"Lightly Played", pokemontcg.LightlyPlayed},
-		{"Moderately Played", pokemontcg.ModeratelyPlayed},
-		{"Heavily Played", pokemontcg.HeavilyPlayed},
-		{"Damaged", pokemontcg.Damaged},
-		{"Unknown", -1},
+		{`"Near Mint"`, pokemontcg.NearMint},
+		{`"Lightly Played"`, pokemontcg.LightlyPlayed},
+		{`"Moderately Played"`, pokemontcg.ModeratelyPlayed},
+		{`"Heavily Played"`, pokemontcg.HeavilyPlayed},
+		{`"Damaged"`, pokemontcg.Damaged},
 	}
 
 	for _, test := range tests {
 		t.Run(test.input, func(t *testing.T) {
 
-			bytes, err := json.Marshal(test.input)
-			require.NoError(t, err)
-
 			var condition pokemontcg.Condition
-			err = condition.UnmarshalJSON(bytes)
+			err := condition.UnmarshalJSON([]byte(test.input))
 
-			if test.input != "Unknown" {
-				assert.NoError(t, err)
-				assert.Equal(t, test.expected, condition)
-			} else {
-				assert.ErrorContains(t, err, "error unmarshaling condition")
-			}
+			assert.NoError(t, err)
+			assert.Equal(t, test.expected, condition)
 		})
 	}
+	t.Run("bad json", func(t *testing.T) {
+		var condition pokemontcg.Condition
+		err := condition.UnmarshalJSON([]byte(`bad json`))
+
+		assert.ErrorContains(t, err, "error unmarshaling bytes")
+	})
+	t.Run("bad condition", func(t *testing.T) {
+		var condition pokemontcg.Condition
+		err := condition.UnmarshalJSON([]byte(`"bad condition"`))
+
+		assert.ErrorContains(t, err, "error parsing condition")
+	})
 }

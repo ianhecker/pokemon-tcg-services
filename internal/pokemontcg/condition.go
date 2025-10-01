@@ -3,6 +3,7 @@ package pokemontcg
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 )
 
 type Condition int
@@ -12,22 +13,18 @@ func (condition Condition) String() string {
 }
 
 func (condition Condition) MarshalJSON() ([]byte, error) {
-	bytes, err := json.Marshal(condition.String())
-	if err != nil {
-		return nil, fmt.Errorf("error marshaling condition: %w", err)
-	}
-	return bytes, nil
+	return strconv.AppendQuote(nil, condition.String()), nil
 }
 
 func (condition *Condition) UnmarshalJSON(bytes []byte) error {
 	var tmp string
 	err := json.Unmarshal(bytes, &tmp)
 	if err != nil {
-		return fmt.Errorf("error unmarshaling condition: %w", err)
+		return fmt.Errorf("condition: error unmarshaling bytes: %w", err)
 	}
 	c, err := ParseCondition(tmp)
 	if err != nil {
-		return fmt.Errorf("error unmarshaling condition: %w", err)
+		return fmt.Errorf("condition: error parsing condition: %w", err)
 	}
 	*condition = c
 	return nil
