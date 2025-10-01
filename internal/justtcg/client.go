@@ -2,6 +2,7 @@ package justtcg
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"go.uber.org/zap"
@@ -26,9 +27,8 @@ type Result struct {
 }
 
 type Client struct {
-	log     *zap.SugaredLogger
-	client  networking.HttpClientInterface
-	timeout time.Duration
+	log    *zap.SugaredLogger
+	client networking.HttpClientInterface
 }
 
 func NewClient(
@@ -59,16 +59,16 @@ func (c *Client) GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Ca
 
 	err := retry.RunRetryable(ctx, retryable)
 	if err != nil {
-		return cards.Card{}, err
+		return cards.Card{}, fmt.Errorf("client retrying: %w", err)
 	}
 
 	response, err := cards.Decode(result.Body, cards.UseNumber())
 	if err != nil {
-		return cards.Card{}, err
+		return cards.Card{}, fmt.Errorf("client decoding: %w", err)
 	}
 	card, err := cards.Map(response)
 	if err != nil {
-		return cards.Card{}, err
+		return cards.Card{}, fmt.Errorf("client mapping: %w", err)
 	}
 	return card, nil
 }

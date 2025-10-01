@@ -7,12 +7,87 @@ import (
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
+	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
+	"github.com/ianhecker/pokemon-tcg-services/internal/testkit/fixtures"
+	"github.com/ianhecker/pokemon-tcg-services/internal/testkit/generate"
 )
+
+func TestClient_GetPricing(t *testing.T) {
+	t.Run("happy path", func(t *testing.T) {
+		expected := generate.DefaultCard()
+		ID := expected.TCGPlayerID
+
+		body := fixtures.Read(t, "response.json")
+		status := 200
+		url := cards.GetCardByID(ID)
+		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient.
+			On("Get", mock.Anything, url).
+			Return(body, status, nil)
+
+		logger := zap.NewNop().Sugar()
+		client := justtcg.NewClientFromRaw(logger, mockClient)
+
+		card, err := client.GetPricing(context.Background(), ID)
+		require.NoError(t, err)
+		assert.Equal(t, expected, card)
+	})
+	t.Run("retryable error", func(t *testing.T) {
+		expected := generate.DefaultCard()
+		ID := expected.TCGPlayerID
+
+		url := cards.GetCardByID(ID)
+		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient.
+			On("Get", mock.Anything, url).
+			Return(nil, 0, errors.New("error"))
+
+		logger := zap.NewNop().Sugar()
+		client := justtcg.NewClientFromRaw(logger, mockClient)
+
+		_, err := client.GetPricing(context.Background(), ID)
+		assert.ErrorContains(t, err, "client retrying")
+	})
+	t.Run("decode error", func(t *testing.T) {
+		body := []byte(`bad json`)
+		status := 200
+		url := cards.GetCardByID("")
+		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient.
+			On("Get", mock.Anything, url).
+			Return(body, status, nil)
+
+		logger := zap.NewNop().Sugar()
+		client := justtcg.NewClientFromRaw(logger, mockClient)
+
+		_, err := client.GetPricing(context.Background(), "")
+		assert.ErrorContains(t, err, "client decoding")
+	})
+	t.Run("map error", func(t *testing.T) {
+		expected := generate.DefaultCard()
+		ID := expected.TCGPlayerID
+
+		body := []byte(`{"data":[{"tcgplayerid":""}]}`)
+		status := 200
+		url := cards.GetCardByID(ID)
+		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient.
+			On("Get", mock.Anything, url).
+			Return(body, status, nil)
+
+		logger := zap.NewNop().Sugar()
+		client := justtcg.NewClientFromRaw(logger, mockClient)
+
+		_, err := client.GetPricing(context.Background(), ID)
+		assert.ErrorContains(t, err, "client mapping")
+	})
+}
 
 func TestClient_MakeRetryFunc(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
