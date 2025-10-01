@@ -6,9 +6,9 @@ Microservices for collecting trading cards from the Pokemon Trading Card Game (T
   <img src="assets/logo.png" alt="My mascot" height="400"/>
 </div>
 
-[![Test](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml/badge.svg)](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/ianhecker/pokemon-tcg-services)](https://goreportcard.com/report/github.com/ianhecker/pokemon-tcg-services)
+[![Test Status](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml/badge.svg)](https://github.com/ianhecker/pokemon-tcg-services/actions/workflows/test.yml)
 ![Test Coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fianhecker.github.io%2Fpokemon-tcg-services%2Fcoverage.json)
+[![Go Report Card](https://goreportcard.com/badge/github.com/ianhecker/pokemon-tcg-services)](https://goreportcard.com/report/github.com/ianhecker/pokemon-tcg-services)
 
 ## Table of Contents
 - [Overview](#overview)

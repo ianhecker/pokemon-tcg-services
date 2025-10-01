@@ -23,7 +23,7 @@ jobs:
       - run: |
           val=$(make coverage-total)
           mkdir -p public
-          printf '{ "schemaVersion": 1, "label": "coverage", "message": "%s", "color": "green" }\n' "$val" > public/coverage.json
+          printf '{ "schemaVersion": 1, "label": "Test Coverage", "message": "%s", "color": "brightgreen" }\n' "$val" > public/coverage.json
       - uses: actions/upload-pages-artifact@v3
         with:
           path: public
