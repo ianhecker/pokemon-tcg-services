@@ -1,8 +1,6 @@
 package cards_test
 
 import (
-	"os"
-	"path/filepath"
 	"testing"
 	"time"
 
@@ -13,10 +11,8 @@ import (
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 )
 
-func readTestData(t *testing.T, filename string) cards.ResponseDTO {
-	path := filepath.Join("testdata", filename)
-	bytes, err := os.ReadFile(path)
-	require.NoError(t, err)
+func testdataToResponseDTO(t *testing.T, filename string) cards.ResponseDTO {
+	bytes := readTestdata(t, filename)
 
 	responseDTO, err := cards.Decode(bytes, cards.UseNumber())
 	require.NoError(t, err)
@@ -25,7 +21,7 @@ func readTestData(t *testing.T, filename string) cards.ResponseDTO {
 
 func TestValidate(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		responseDTO := readTestData(t, "response.json")
+		responseDTO := testdataToResponseDTO(t, "response.json")
 
 		err := cards.Validate(responseDTO)
 		assert.NoError(t, err)
@@ -54,7 +50,7 @@ func TestValidate(t *testing.T) {
 
 func TestMap(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		responseDTO := readTestData(t, "response.json")
+		responseDTO := testdataToResponseDTO(t, "response.json")
 
 		got, err := cards.Map(responseDTO)
 		require.NoError(t, err)
@@ -76,7 +72,7 @@ func TestMap(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 
-				responseDTO := readTestData(t, test.filepath)
+				responseDTO := testdataToResponseDTO(t, test.filepath)
 				_, err := cards.Map(responseDTO)
 				assert.ErrorContains(t, err, test.err)
 			})

@@ -24,7 +24,7 @@ func Decode(data []byte, opts ...DecodeOption) (ResponseDTO, error) {
 
 	err := dec.Decode(&dto)
 	if err != nil {
-		return ResponseDTO{}, fmt.Errorf("decode: %w", err)
+		return ResponseDTO{}, fmt.Errorf("decode: responseDTO error: %w", err)
 	}
 
 	if dec.More() {
