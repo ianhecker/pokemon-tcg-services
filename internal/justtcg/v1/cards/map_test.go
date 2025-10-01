@@ -2,26 +2,19 @@ package cards_test
 
 import (
 	"testing"
-	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
+	"github.com/ianhecker/pokemon-tcg-services/internal/testkit"
+	"github.com/ianhecker/pokemon-tcg-services/internal/testkit/generate"
 )
-
-func testdataToResponseDTO(t *testing.T, filename string) cards.ResponseDTO {
-	bytes := readTestdata(t, filename)
-
-	responseDTO, err := cards.Decode(bytes, cards.UseNumber())
-	require.NoError(t, err)
-	return responseDTO
-}
 
 func TestValidate(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		responseDTO := testdataToResponseDTO(t, "response.json")
+		responseDTO := generate.DefaultResponseDTO()
 
 		err := cards.Validate(responseDTO)
 		assert.NoError(t, err)
@@ -50,13 +43,14 @@ func TestValidate(t *testing.T) {
 
 func TestMap(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		responseDTO := testdataToResponseDTO(t, "response.json")
+		responseDTO := generate.DefaultResponseDTO()
+		expected := generate.DefaultCard()
 
 		got, err := cards.Map(responseDTO)
 		require.NoError(t, err)
 
-		equal := cmp.Equal(expected.Card, got)
-		assert.True(t, equal, cmp.Diff(expected.Card, got))
+		equal := cmp.Equal(expected, got)
+		assert.True(t, equal, cmp.Diff(expected, got))
 	})
 
 	t.Run("errors", func(t *testing.T) {
@@ -72,19 +66,14 @@ func TestMap(t *testing.T) {
 		for _, test := range tests {
 			t.Run(test.name, func(t *testing.T) {
 
-				responseDTO := testdataToResponseDTO(t, test.filepath)
-				_, err := cards.Map(responseDTO)
+				bytes := testkit.ReadTestdata(t, test.filepath)
+
+				responseDTO, err := cards.Decode(bytes)
+				require.NoError(t, err)
+
+				_, err = cards.Map(responseDTO)
 				assert.ErrorContains(t, err, test.err)
 			})
 		}
 	})
-}
-
-func fptr(f float64) *cards.Price {
-	price := cards.Price(f)
-	return &price
-}
-
-func tptr(t time.Time) *time.Time {
-	return &t
 }
