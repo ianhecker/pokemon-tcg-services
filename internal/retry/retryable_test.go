@@ -68,7 +68,7 @@ func TestRetryable_Retry(t *testing.T) {
 
 		stop := func() bool { return true }
 		done := make(chan time.Time, 1)
-		sleepableMock := mocks.NewMockSleepable(t)
+		sleepableMock := mocks.NewMockSleepableInterface(t)
 		sleepableMock.
 			On("Duration").
 			Return(1 * time.Millisecond).
@@ -110,7 +110,7 @@ func TestRetryable_Retry(t *testing.T) {
 
 		stop := func() bool { return true }
 		done := make(chan time.Time, 1)
-		sleepableMock := mocks.NewMockSleepable(t)
+		sleepableMock := mocks.NewMockSleepableInterface(t)
 		sleepableMock.
 			On("Duration").
 			Return(1 * time.Millisecond).
