@@ -6,10 +6,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+
+	mocks "github.com/ianhecker/pokemon-tcg-services/internal/mocks/retrymocks"
 )
 
 func TestRetryable_Retry(t *testing.T) {
