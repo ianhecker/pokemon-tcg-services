@@ -18,7 +18,7 @@ type Retryable struct {
 	Attempt int
 	Retries int
 	State   RetryState
-	Sleeper Sleepable
+	Sleeper SleepableInterface
 	Do      RetryFunc
 }
 
@@ -39,7 +39,7 @@ func MakeRetryableFromRaw(
 	attempt int,
 	retries int,
 	state RetryState,
-	sleeper Sleepable,
+	sleeper SleepableInterface,
 	do RetryFunc,
 ) RetryableInterface {
 	return &Retryable{

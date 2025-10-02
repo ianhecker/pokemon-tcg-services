@@ -2,14 +2,14 @@ package retry
 
 import "time"
 
-type Sleepable interface {
+type SleepableInterface interface {
 	Sleep() (stop func() bool, done <-chan time.Time)
 	Duration() time.Duration
 }
 
 type Sleeper time.Duration
 
-func NewSleeper(duration time.Duration) Sleepable {
+func NewSleeper(duration time.Duration) SleepableInterface {
 	s := Sleeper(duration)
 	return &s
 }
