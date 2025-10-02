@@ -13,7 +13,7 @@ import (
 	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 )
 
-type HttpClientInterface interface {
+type ClientInterface interface {
 	Get(ctx context.Context, url string) (body []byte, status int, err error)
 }
 
@@ -26,7 +26,7 @@ type Client struct {
 func NewClient(
 	logger *zap.SugaredLogger,
 	token config.Token,
-) HttpClientInterface {
+) ClientInterface {
 	return &Client{
 		logger: logger,
 		httpclient: &http.Client{

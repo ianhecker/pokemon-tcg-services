@@ -28,7 +28,7 @@ type Result struct {
 
 type Client struct {
 	log    *zap.SugaredLogger
-	client networking.HttpClientInterface
+	client networking.ClientInterface
 }
 
 func NewClient(
@@ -44,7 +44,7 @@ func NewClient(
 
 func NewClientFromRaw(
 	logger *zap.SugaredLogger,
-	client networking.HttpClientInterface,
+	client networking.ClientInterface,
 ) *Client {
 	return &Client{
 		log:    logger,

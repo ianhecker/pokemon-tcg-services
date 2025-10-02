@@ -12,10 +12,11 @@ import (
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
-	"github.com/ianhecker/pokemon-tcg-services/internal/mocks"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
 	"github.com/ianhecker/pokemon-tcg-services/internal/testkit/fixtures"
 	"github.com/ianhecker/pokemon-tcg-services/internal/testkit/generate"
+
+	mocks "github.com/ianhecker/pokemon-tcg-services/internal/mocks/networkingmocks"
 )
 
 func TestClient_GetPricing(t *testing.T) {
@@ -26,7 +27,7 @@ func TestClient_GetPricing(t *testing.T) {
 		body := fixtures.Read(t, "response.json")
 		status := 200
 		url := cards.GetCardByID(ID)
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -43,7 +44,7 @@ func TestClient_GetPricing(t *testing.T) {
 		ID := expected.TCGPlayerID
 
 		url := cards.GetCardByID(ID)
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, errors.New("error"))
@@ -58,7 +59,7 @@ func TestClient_GetPricing(t *testing.T) {
 		body := []byte(`bad json`)
 		status := 200
 		url := cards.GetCardByID("")
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -76,7 +77,7 @@ func TestClient_GetPricing(t *testing.T) {
 		body := []byte(`{"data":[{"tcgplayerid":""}]}`)
 		status := 200
 		url := cards.GetCardByID(ID)
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -94,7 +95,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 200
 		url := "url"
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -115,7 +116,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 	t.Run("http client error", func(t *testing.T) {
 		url := "url"
 		expected := errors.New("error")
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(nil, 0, expected)
@@ -134,7 +135,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 504
 		url := "url"
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -156,7 +157,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 429
 		url := "url"
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -178,7 +179,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 1
 		url := "url"
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
@@ -200,7 +201,7 @@ func TestClient_MakeRetryFunc(t *testing.T) {
 		body := []byte(`{"message":"hi"}`)
 		status := 0
 		url := "url"
-		mockClient := mocks.NewMockHttpClientInterface(t)
+		mockClient := mocks.NewMockClientInterface(t)
 		mockClient.
 			On("Get", mock.Anything, url).
 			Return(body, status, nil)
