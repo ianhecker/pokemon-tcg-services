@@ -41,9 +41,9 @@ func (p Proxy) NewRequest(ctx context.Context, method Method, url string) (reque
 
 	req, err := http.NewRequestWithContext(ctx, method.String(), url, nil)
 	request.Req = req
-	request.Err = fmt.Errorf("proxy: new request: %w", err)
 
 	if err != nil {
+		request.Err = fmt.Errorf("proxy: new request: %w", err)
 		return request
 	}
 	return request

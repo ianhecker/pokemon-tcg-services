@@ -2,6 +2,7 @@ package proxy_test
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"io"
 	"net/http"
@@ -30,9 +31,42 @@ func (e *errorBody) Close() error {
 	return nil
 }
 
+func TestProxy_NewRequest(t *testing.T) {
+	t.Run("happy path", func(t *testing.T) {
+		method := proxy.GET
+		url := "www.google.com"
+		proxy := proxy.NewProxy()
+		request := proxy.NewRequest(context.Background(), method, url)
+
+		assert.NoError(t, request.Err)
+		assert.Equal(t, request.Req.Method, method.String())
+		assert.Equal(t, request.Req.URL.String(), url)
+	})
+	t.Run("request error", func(t *testing.T) {
+		method := proxy.GET
+		url := ":/bad-url"
+		proxy := proxy.NewProxy()
+		request := proxy.NewRequest(context.Background(), method, url)
+
+		assert.ErrorContains(t, request.Err, "proxy: new request")
+	})
+}
+
+func TestProxy_SetAuthorization(t *testing.T) {
+	req := &http.Request{
+		Header: make(http.Header),
+	}
+	request := proxy.Request{
+		Req: req,
+	}
+	proxy := proxy.NewProxy()
+	proxy.SetAuthorization(request, "ABC", "123")
+	assert.Equal(t, "123", req.Header.Get("ABC"))
+}
+
 func TestProxy_Do(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		url := URL(t, "www.ianhecker.com")
+		url := URL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		resp := &http.Response{
@@ -59,7 +93,7 @@ func TestProxy_Do(t *testing.T) {
 		client.AssertExpectations(t)
 	})
 	t.Run("nil response", func(t *testing.T) {
-		url := URL(t, "www.ianhecker.com")
+		url := URL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		client := proxymocks.NewMockClientInterface(t)
@@ -76,7 +110,7 @@ func TestProxy_Do(t *testing.T) {
 		client.AssertExpectations(t)
 	})
 	t.Run("response err", func(t *testing.T) {
-		url := URL(t, "www.ianhecker.com")
+		url := URL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		resp := &http.Response{
@@ -98,7 +132,7 @@ func TestProxy_Do(t *testing.T) {
 		client.AssertExpectations(t)
 	})
 	t.Run("read body error", func(t *testing.T) {
-		url := URL(t, "www.ianhecker.com")
+		url := URL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		resp := &http.Response{
