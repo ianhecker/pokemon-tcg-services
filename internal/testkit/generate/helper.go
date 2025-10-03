@@ -6,7 +6,7 @@ import (
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 )
 
-func fptr(f float64) *cards.Price {
+func ftop(f float64) *cards.Price {
 	price := cards.Price(f)
 	return &price
 }
