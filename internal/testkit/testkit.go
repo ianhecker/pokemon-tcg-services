@@ -1,6 +1,7 @@
 package testkit
 
 import (
+	"net/url"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -20,4 +21,10 @@ func ReadTestdata(t *testing.T, filename string) []byte {
 	require.NoError(t, err)
 
 	return bytes
+}
+
+func NewURL(t *testing.T, s string) *url.URL {
+	url, err := url.Parse(s)
+	require.NoError(t, err)
+	return url
 }

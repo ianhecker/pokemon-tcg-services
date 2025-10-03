@@ -6,20 +6,14 @@ import (
 	"errors"
 	"io"
 	"net/http"
-	"net/url"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/mocks/proxymocks"
 	"github.com/ianhecker/pokemon-tcg-services/internal/networking/proxy"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
+	"github.com/ianhecker/pokemon-tcg-services/internal/testkit"
 )
-
-func URL(t *testing.T, s string) *url.URL {
-	url, err := url.Parse(s)
-	require.NoError(t, err)
-	return url
-}
 
 type errorBody struct{}
 
@@ -66,7 +60,7 @@ func TestProxy_SetAuthorization(t *testing.T) {
 
 func TestProxy_Do(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {
-		url := URL(t, "www.google.com")
+		url := testkit.NewURL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		resp := &http.Response{
@@ -93,7 +87,7 @@ func TestProxy_Do(t *testing.T) {
 		client.AssertExpectations(t)
 	})
 	t.Run("nil response", func(t *testing.T) {
-		url := URL(t, "www.google.com")
+		url := testkit.NewURL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		client := proxymocks.NewMockClientInterface(t)
@@ -110,7 +104,7 @@ func TestProxy_Do(t *testing.T) {
 		client.AssertExpectations(t)
 	})
 	t.Run("response err", func(t *testing.T) {
-		url := URL(t, "www.google.com")
+		url := testkit.NewURL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		resp := &http.Response{
@@ -132,7 +126,7 @@ func TestProxy_Do(t *testing.T) {
 		client.AssertExpectations(t)
 	})
 	t.Run("read body error", func(t *testing.T) {
-		url := URL(t, "www.google.com")
+		url := testkit.NewURL(t, "www.google.com")
 		req := &http.Request{URL: url}
 
 		resp := &http.Response{
