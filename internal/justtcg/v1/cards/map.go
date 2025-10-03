@@ -87,7 +87,7 @@ func MakeTCGPlayerID(ID string) (TCGPlayerID, error) {
 	return TCGPlayerID(ID), nil
 }
 
-func MakePrice(priceDTO PriceDTO) *Price {
+func NewPrice(priceDTO PriceDTO) *Price {
 	if priceDTO == 0 {
 		return nil
 	}
@@ -103,9 +103,9 @@ func MapVariant(variant VariantDTO) (Printing, pokemontcg.Condition, *Prices, er
 		return "", 0, nil, fmt.Errorf("error parsing variant condition: %w", err)
 	}
 
-	market := MakePrice(variant.Price)
-	minPrice30d := MakePrice(variant.MinPrice30d)
-	maxPrice30d := MakePrice(variant.MaxPrice30d)
+	market := NewPrice(variant.Price)
+	minPrice30d := NewPrice(variant.MinPrice30d)
+	maxPrice30d := NewPrice(variant.MaxPrice30d)
 
 	lastUpdated := time.Unix(variant.LastUpdated, 0).UTC()
 
