@@ -16,8 +16,9 @@ import (
 const Retries int = 5
 const BackoffInSeconds = 1 * time.Second
 
-type APIClientInterface interface {
+type ClientInterface interface {
 	GetPricing(ctx context.Context, ID cards.TCGPlayerID) (cards.Card, error)
+	MakeRetryFunc(url string) (*Result, retry.RetryFunc)
 }
 
 type Result struct {
@@ -34,18 +35,15 @@ type Client struct {
 func NewClient(
 	logger *zap.SugaredLogger,
 	token config.Token,
-) *Client {
-	httpClient := networking.NewClient(logger, token)
-	return &Client{
-		log:    logger,
-		client: httpClient,
-	}
+) ClientInterface {
+	client := networking.NewClient(logger, token)
+	return NewClientFromRaw(logger, client)
 }
 
 func NewClientFromRaw(
 	logger *zap.SugaredLogger,
 	client networking.ClientInterface,
-) *Client {
+) ClientInterface {
 	return &Client{
 		log:    logger,
 		client: client,

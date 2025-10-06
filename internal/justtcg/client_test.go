@@ -10,6 +10,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap"
 
+	"github.com/ianhecker/pokemon-tcg-services/internal/config"
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg"
 	"github.com/ianhecker/pokemon-tcg-services/internal/justtcg/v1/cards"
 	"github.com/ianhecker/pokemon-tcg-services/internal/retry"
@@ -18,6 +19,14 @@ import (
 
 	mocks "github.com/ianhecker/pokemon-tcg-services/internal/mocks/networkingmocks"
 )
+
+func TestClient_NewClient(t *testing.T) {
+	logger := zap.NewNop().Sugar()
+	token := config.MakeToken("token")
+	client := justtcg.NewClient(logger, token)
+
+	assert.Implements(t, (*justtcg.ClientInterface)(nil), client)
+}
 
 func TestClient_GetPricing(t *testing.T) {
 	t.Run("happy path", func(t *testing.T) {

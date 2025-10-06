@@ -19,7 +19,7 @@ type CardPricerServiceInterface interface {
 
 type CardService struct {
 	log            *zap.SugaredLogger
-	client         justtcg.APIClientInterface
+	client         justtcg.ClientInterface
 	srv            *http.Server
 	handlerFactory *HandlerFactory
 	done           chan struct{}
@@ -29,7 +29,7 @@ type CardService struct {
 
 func NewService(
 	logger *zap.SugaredLogger,
-	client justtcg.APIClientInterface,
+	client justtcg.ClientInterface,
 	addr string,
 ) CardPricerServiceInterface {
 	srv := &http.Server{
@@ -49,7 +49,7 @@ func NewService(
 
 func NewServiceFromRaw(
 	logger *zap.SugaredLogger,
-	client justtcg.APIClientInterface,
+	client justtcg.ClientInterface,
 	srv *http.Server,
 	handlerFactory *HandlerFactory,
 	done chan struct{},

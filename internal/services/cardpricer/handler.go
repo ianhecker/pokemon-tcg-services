@@ -23,12 +23,12 @@ func WriteError(w http.ResponseWriter, status int, msg string) {
 type HandlerFactory struct {
 	log    *zap.SugaredLogger
 	mux    *http.ServeMux
-	client justtcg.APIClientInterface
+	client justtcg.ClientInterface
 }
 
 func NewHandlerFactory(
 	logger *zap.SugaredLogger,
-	client justtcg.APIClientInterface,
+	client justtcg.ClientInterface,
 ) *HandlerFactory {
 	return &HandlerFactory{
 		log:    logger,
