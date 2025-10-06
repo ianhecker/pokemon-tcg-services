@@ -2,121 +2,236 @@ package networking_test
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"net/http"
-	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/config"
+	"github.com/ianhecker/pokemon-tcg-services/internal/mocks/proxymocks"
 	"github.com/ianhecker/pokemon-tcg-services/internal/networking"
+	"github.com/ianhecker/pokemon-tcg-services/internal/networking/proxy"
+	"github.com/ianhecker/pokemon-tcg-services/internal/testkit"
 )
 
-func newTestServer(t *testing.T, status int, body string) *httptest.Server {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		token := r.Header.Get("X-API-Key")
-		assert.Equal(t, token, "token")
+func TestClient_NewClient(t *testing.T) {
+	logger := zap.NewNop().Sugar()
+	token := config.MakeToken("token")
+	client := networking.NewClient(logger, token)
 
-		w.WriteHeader(status)
-		if body != "" {
-			fmt.Fprint(w, body)
-		}
-	})
-	return httptest.NewServer(mux)
-}
-
-func newLazyTestServer(t *testing.T) *httptest.Server {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/sleeping", func(w http.ResponseWriter, r *http.Request) {
-		time.Sleep(5)
-	})
-
-	return httptest.NewServer(mux)
+	assert.Implements(t, (*networking.ClientInterface)(nil), client)
 }
 
 func TestClient_Get(t *testing.T) {
-	tests := []struct {
-		name   string
-		status int
-		body   string
-	}{
-		// Success cases
-		{"OK success", 200, `{"data":{"id":"xy7-54","name":"Gardevoir"}}`},
-
-		// Client errors (4xx)
-		{"Bad Request", 400, `{"error":"invalid ID format"}`},
-		{"Unauthorized", 401, `{"error":"missing API key"}`},
-		{"Forbidden", 403, `{"error":"access denied"}`},
-		{"Not Found", 404, `{"error":"card not found"}`},
-		{"Unprocessable Entity", 422, `{"error":"validation failed"}`},
-
-		// // Rate limiting / throttling
-		{"Too Many Requests", 429, `{"error":"rate limited","retry_after":30}`},
-
-		// // Server errors (5xx)
-		{"Internal Server Error", 500, `{"error":"server crashed"}`},
-		{"Bad Gateway", 502, `{"error":"upstream failed"}`},
-		{"Service Unavailable", 503, `{"error":"overloaded"}`},
-		{"Gateway Timeout", 504, `{"error":"timeout"}`},
-
-		// // Catch-all unexpected code
-		{"Weird code", 599, `{"error":"unknown"}`},
-	}
-
-	for _, test := range tests {
-		t.Run(test.name, func(t *testing.T) {
-			srv := newTestServer(t, test.status, test.body)
-			defer srv.Close()
-
-			ctx := context.Background()
-			logger := zap.NewNop().Sugar()
-			token := config.MakeToken("token")
-
-			client := networking.NewClient(logger, token)
-			body, status, err := client.Get(ctx, srv.URL+"/hello")
-
-			assert.Equal(t, test.status, status)
-			assert.Equal(t, string(test.body), string(body))
-
-			if 200 <= test.status && test.status < 400 {
-				assert.NoError(t, err)
-
-			} else {
-				expected := fmt.Sprintf("unexpected status code: %d", test.status)
-				assert.ErrorContains(t, err, expected)
-			}
-		})
-	}
-
-	t.Run("cancels with context", func(t *testing.T) {
-		srv := newLazyTestServer(t)
-		defer srv.Close()
-
+	t.Run("happy path", func(t *testing.T) {
 		ctx := context.Background()
-		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-		logger := zap.NewNop().Sugar()
+		method := proxy.GET
+		url := testkit.NewURL(t, "www.google.com")
+
+		request := proxy.Request{
+			Req: &http.Request{URL: url},
+			Err: nil,
+		}
 		token := config.MakeToken("token")
-
-		client := networking.NewClient(logger, token)
-
-		errorChan := make(chan error, 1)
-		go func() {
-			_, _, err := client.Get(ctx, srv.URL+"/sleeping")
-			errorChan <- err
-		}()
-		cancel()
-
-		select {
-		case err := <-errorChan:
-			assert.ErrorContains(t, err, "context canceled")
-
-		case <-time.After(1 * time.Second):
-			assert.Fail(t, "test timed out after 1 sec")
+		response := proxy.Response{
+			Body:   []byte(`{"message":"hello world"}`),
+			Status: 200,
+			Err:    nil,
 		}
 
+		proxy := proxymocks.NewMockProxyInterface(t)
+		proxy.
+			On("NewRequest", ctx, method, url.String()).
+			Return(request, nil).
+			On("SetAuthorization", request, "X-API-Key", token.Reveal()).
+			Return().
+			On("Do", request).
+			Return(response)
+
+		nop := zap.NewNop().Sugar()
+		logger := networking.MakeLogger(nop)
+
+		client := networking.NewClientFromRaw(logger, proxy, token)
+		bytes, status, err := client.Get(ctx, url.String())
+
+		assert.NoError(t, err)
+		assert.Equal(t, bytes, response.Body)
+		assert.Equal(t, status, response.Status)
+
+		proxy.AssertExpectations(t)
+	})
+	t.Run("new request error", func(t *testing.T) {
+		ctx := context.Background()
+		method := proxy.GET
+		url := testkit.NewURL(t, "www.google.com")
+
+		request := proxy.Request{
+			Req: &http.Request{URL: url},
+			Err: errors.New("error"),
+		}
+		token := config.MakeToken("token")
+
+		proxy := proxymocks.NewMockProxyInterface(t)
+		proxy.
+			On("NewRequest", ctx, method, url.String()).
+			Return(request, nil)
+
+		nop := zap.NewNop().Sugar()
+		logger := networking.MakeLogger(nop)
+
+		client := networking.NewClientFromRaw(logger, proxy, token)
+		_, status, err := client.Get(ctx, url.String())
+
+		assert.ErrorContains(t, err, "client: error")
+		assert.Equal(t, status, 0)
+
+		proxy.AssertExpectations(t)
+	})
+	t.Run("context canceled", func(t *testing.T) {
+		ctx := context.Background()
+		method := proxy.GET
+		url := testkit.NewURL(t, "www.google.com")
+
+		request := proxy.Request{
+			Req: &http.Request{URL: url},
+			Err: nil,
+		}
+		token := config.MakeToken("token")
+		response := proxy.Response{
+			Body:   nil,
+			Status: 200,
+			Err:    context.Canceled,
+		}
+
+		proxy := proxymocks.NewMockProxyInterface(t)
+		proxy.
+			On("NewRequest", ctx, method, url.String()).
+			Return(request, nil).
+			On("SetAuthorization", request, "X-API-Key", token.Reveal()).
+			Return().
+			On("Do", request).
+			Return(response)
+
+		nop := zap.NewNop().Sugar()
+		logger := networking.MakeLogger(nop)
+
+		client := networking.NewClientFromRaw(logger, proxy, token)
+		_, status, err := client.Get(ctx, url.String())
+
+		assert.ErrorContains(t, err, "client: context canceled")
+		assert.Equal(t, status, response.Status)
+
+		proxy.AssertExpectations(t)
+	})
+	t.Run("context deadline exceeded", func(t *testing.T) {
+		ctx := context.Background()
+		method := proxy.GET
+		url := testkit.NewURL(t, "www.google.com")
+
+		request := proxy.Request{
+			Req: &http.Request{URL: url},
+			Err: nil,
+		}
+		token := config.MakeToken("token")
+		response := proxy.Response{
+			Body:   nil,
+			Status: 200,
+			Err:    context.DeadlineExceeded,
+		}
+
+		proxy := proxymocks.NewMockProxyInterface(t)
+		proxy.
+			On("NewRequest", ctx, method, url.String()).
+			Return(request, nil).
+			On("SetAuthorization", request, "X-API-Key", token.Reveal()).
+			Return().
+			On("Do", request).
+			Return(response)
+
+		nop := zap.NewNop().Sugar()
+		logger := networking.MakeLogger(nop)
+
+		client := networking.NewClientFromRaw(logger, proxy, token)
+		_, status, err := client.Get(ctx, url.String())
+
+		assert.ErrorContains(t, err, "client: context deadline exceeded")
+		assert.Equal(t, status, response.Status)
+
+		proxy.AssertExpectations(t)
+	})
+	t.Run("other response error", func(t *testing.T) {
+		ctx := context.Background()
+		method := proxy.GET
+		url := testkit.NewURL(t, "www.google.com")
+
+		request := proxy.Request{
+			Req: &http.Request{URL: url},
+			Err: nil,
+		}
+		token := config.MakeToken("token")
+		response := proxy.Response{
+			Body:   []byte(`{"message":"hello world"}`),
+			Status: 200,
+			Err:    errors.New("error"),
+		}
+
+		proxy := proxymocks.NewMockProxyInterface(t)
+		proxy.
+			On("NewRequest", ctx, method, url.String()).
+			Return(request, nil).
+			On("SetAuthorization", request, "X-API-Key", token.Reveal()).
+			Return().
+			On("Do", request).
+			Return(response)
+
+		nop := zap.NewNop().Sugar()
+		logger := networking.MakeLogger(nop)
+
+		client := networking.NewClientFromRaw(logger, proxy, token)
+		_, status, err := client.Get(ctx, url.String())
+
+		assert.ErrorContains(t, err, "client: error")
+		assert.Equal(t, status, response.Status)
+
+		proxy.AssertExpectations(t)
+	})
+	t.Run("status not OK", func(t *testing.T) {
+		ctx := context.Background()
+		method := proxy.GET
+		url := testkit.NewURL(t, "www.google.com")
+
+		request := proxy.Request{
+			Req: &http.Request{URL: url},
+			Err: nil,
+		}
+		token := config.MakeToken("token")
+		response := proxy.Response{
+			Body:   []byte(`{"err":"error"}`),
+			Status: 1234,
+			Err:    nil,
+		}
+
+		proxy := proxymocks.NewMockProxyInterface(t)
+		proxy.
+			On("NewRequest", ctx, method, url.String()).
+			Return(request, nil).
+			On("SetAuthorization", request, "X-API-Key", token.Reveal()).
+			Return().
+			On("Do", request).
+			Return(response)
+
+		nop := zap.NewNop().Sugar()
+		logger := networking.MakeLogger(nop)
+
+		client := networking.NewClientFromRaw(logger, proxy, token)
+		body, status, err := client.Get(ctx, url.String())
+
+		assert.ErrorContains(t, err, "client: unexpected status code: 1234")
+		assert.Equal(t, status, response.Status)
+		assert.Equal(t, body, response.Body)
+
+		proxy.AssertExpectations(t)
 	})
 }

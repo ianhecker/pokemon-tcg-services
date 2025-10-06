@@ -4,13 +4,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
 	"net/http"
-	"time"
 
 	"go.uber.org/zap"
 
 	"github.com/ianhecker/pokemon-tcg-services/internal/config"
+	"github.com/ianhecker/pokemon-tcg-services/internal/networking/proxy"
 )
 
 type ClientInterface interface {
@@ -18,77 +17,63 @@ type ClientInterface interface {
 }
 
 type Client struct {
-	logger     *zap.SugaredLogger
-	httpclient *http.Client
-	token      config.Token
+	log   Logger
+	proxy proxy.ProxyInterface
+	token config.Token
 }
 
 func NewClient(
 	logger *zap.SugaredLogger,
 	token config.Token,
 ) ClientInterface {
+	return NewClientFromRaw(
+		MakeLogger(logger),
+		proxy.NewProxy(),
+		token,
+	)
+}
+
+func NewClientFromRaw(
+	logger Logger,
+	proxy proxy.ProxyInterface,
+	token config.Token,
+) ClientInterface {
 	return &Client{
-		logger: logger,
-		httpclient: &http.Client{
-			Timeout:   0,
-			Transport: NewTransport(),
-		},
+		log:   logger,
+		proxy: proxy,
 		token: token,
 	}
 }
 
 func (client *Client) Get(ctx context.Context, url string) ([]byte, int, error) {
-	log := client.logger
-	log.Infow("requesting", "url", url)
+	log := client.log
+	log.Set(url)
+	log.Requesting()
 
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
-	if err != nil {
-
-		log.Errorw("creating request", "url", url, "error", err)
-		return nil, 0, fmt.Errorf("error creating request: %w", err)
+	req := client.proxy.NewRequest(ctx, proxy.GET, url)
+	if req.Err != nil {
+		log.RequestError(req.Err)
+		return nil, 0, fmt.Errorf("client: %w", req.Err)
 	}
-	client.SetAuthorization(req)
+	client.proxy.SetAuthorization(req, "X-API-Key", client.token.Reveal())
 
-	duration, body, status, err := client.Do(req)
-	if err != nil {
-		if errors.Is(err, context.Canceled) {
-			log.Infow("request canceled", "url", url, "time", duration.String(), "error", err)
-		} else if errors.Is(err, context.DeadlineExceeded) {
-			log.Infow("request deadline exceeded", "url", url, "time", duration.String(), "error", err)
+	resp := client.proxy.Do(req)
+	elapsed := resp.Timer.Elapsed()
+	body, status, err := resp.Body, resp.Status, resp.Err
+
+	if resp.Err != nil {
+		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) {
+			log.ContextIssue(elapsed, err)
 		} else {
-			log.Errorw("request error", "url", url, "time", duration.String(), "error", err)
+			log.ResponseError(elapsed, err)
 		}
-		return nil, status, fmt.Errorf("error doing request: %w", err)
+		return nil, status, fmt.Errorf("client: %w", err)
 	}
 
 	if status != http.StatusOK {
-		log.Warnw("unexpected status code", "url", url, "time", duration.String(), "status", status, "body", string(body))
-		return body, status, fmt.Errorf("unexpected status code: %d", status)
+		log.UnexpectedStatus(elapsed, status, err)
+		return body, status, fmt.Errorf("client: unexpected status code: %d", status)
 	}
-
-	log.Infow("got response", "url", url, "time", duration.String())
+	log.Success(elapsed)
 	return body, status, nil
-}
-
-func (client *Client) SetAuthorization(request *http.Request) {
-	request.Header.Set("X-API-Key", client.token.Reveal())
-}
-
-func (client *Client) Do(request *http.Request) (time.Duration, []byte, int, error) {
-	start := time.Now()
-
-	resp, err := client.httpclient.Do(request)
-	if err != nil {
-		elapsed := time.Since(start)
-		return elapsed, nil, 0, err
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	elapsed := time.Since(start)
-
-	if err != nil {
-		return elapsed, nil, resp.StatusCode, fmt.Errorf("error reading body: %w", err)
-	}
-	return elapsed, body, resp.StatusCode, nil
 }
