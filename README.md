@@ -90,17 +90,17 @@ Prices are current and aggregated from multiple marketplaces via
 
 ## Architecture
 
-> All microservices are contained in one binary
+All microservices are contained in one binary
 
-This allows for easier packaging, distribution, and microservice execution
+> This allows for easier packaging, distribution, and microservice execution
 
-> Microservices are run through commands and flags
+Microservices are run through commands and flags
 
-Docker images mimic those commands and flags for intuitive deployments
+> Docker images mimic those commands and flags for intuitive deployments
 
-> Docker images are orchestrated by Kubernetes
+Docker images are orchestrated by Kubernetes
 
-Coming soon!
+> Coming soon!
 
 Services
 - `card-pricer`
@@ -111,6 +111,20 @@ For a card, for all printings, for all conditions, fetches *all available* price
 
 Using a unique TCG Player Product ID, queries Just TCG for card prices for all
 conditions
+
+### Card Identifier
+
+**Work in Progress**
+
+For a card, for query parameters, fetches matches of potential cards
+
+Query Parameters:
+- Pokemon Name
+- Set Name
+- Collector Number
+
+Using query parameters, queries possible cards and returns matches containing
+Just TCG Player IDs
 
 ---
 
